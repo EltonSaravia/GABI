@@ -32,6 +32,8 @@ android {
 }
 
 dependencies {
+    // add para que pueda conectar con las diferentes apis php
+    implementation ("com.android.volley:volley:1.2.1")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

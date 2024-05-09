@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/imagen_fondo_login"
+    tools:context=".MainActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:background="@drawable/custom_edittext"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/tituloRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Registro de Trabajador"
+                android:textAlignment="center"
+                android:textColor="@color/turquesa"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!-- Campos para datos personales -->
+            <EditText
+                android:id="@+id/dni"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_edittext"
+                android:drawablePadding="8dp"
+                android:hint="DNI"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/nombre"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="8dp"
+                android:hint="Nombre"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <!-- Apellidos -->
+            <EditText
+                android:id="@+id/apellido1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edittext"
+                android:drawablePadding="8dp"
+                android:hint="Primer Apellido"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/apellido2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edittext"
+                android:drawablePadding="8dp"
+                android:hint="Segundo Apellido"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <!-- Puesto con Spinner -->
+            <Spinner
+                android:id="@+id/spinnerPuesto"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edittext"
+                android:padding="8dp"
+                android:spinnerMode="dropdown" />
+
+            <!-- Teléfono y Email -->
+            <EditText
+                android:id="@+id/telefono"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edittext"
+                android:drawablePadding="8dp"
+                android:hint="Teléfono"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edittext"
+                android:drawablePadding="8dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/contrasena"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/icons8_bloquear"
+                android:drawablePadding="8dp"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/botonRegistrar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/turquesa"
+                android:text="Registrar"
+                android:textSize="18sp"
+                app:cornerRadius="20dp" />
+            <Button
+                android:id="@+id/botonCancelar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/turquesa"
+                android:text="Cancelar"
+                android:textSize="18sp"
+                app:cornerRadius="20dp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="¿Necesitas ayuda?"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:textColor="@color/turquesa"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
