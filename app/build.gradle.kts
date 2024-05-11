@@ -42,7 +42,9 @@ dependencies {
     implementation ("com.android.volley:volley:1.2.1")
     //implementacion temporal de pruba
     implementation ("com.google.android.material:material:1.4.0")
-
+    //segunda implementacion en pruebas
+    implementation("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.appcompat:appcompat:1.3.0")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

@@ -1,5 +1,4 @@
 package com.example.gabi;
-import com.example.gabi.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -26,19 +25,15 @@ public class AdministradorActivity extends AppCompatActivity {
 
         // Configura el listener para la navegación
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.homeAdministrador:
-                    replaceFragment(new HomeAdministrador());
-                    break;
-                case R.id.empleados:
-                    replaceFragment(new TrabajadoresAministrador());
-                    break;
-                case R.id.residentes:
-                    replaceFragment(new ResidentesAdministrador());
-                    break;
-                case R.id.documentos:
-                    replaceFragment(new DocumentosAdministrador());
-                    break;
+            int id = item.getItemId();
+            if (id == R.id.homeAdministrador) {
+                replaceFragment(new HomeAdministrador());
+            } else if (id == R.id.empleadosAdministrador) {
+                replaceFragment(new TrabajadoresAministrador());
+            } else if (id == R.id.residentesAdministrador) {
+                replaceFragment(new ResidentesAdministrador());
+            } else if (id == R.id.documentosAdministrador) {
+                replaceFragment(new DocumentosAdministrador());
             }
             return true;
         });

@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/homeAdministrador"
-        android:title="HomeAdministrador"
+        android:title="@string/homeadministrador"
         android:icon="@drawable/baseline_home_24"/>
     <item
-        android:id="@+id/empleados"
+        android:id="@+id/empleadosAdministrador"
         android:title="Empleados"
         android:icon="@drawable/baseline_people_24"/>
     <item
@@ -13,11 +13,11 @@
         android:title=""
         android:enabled="false"/>
     <item
-        android:id="@+id/residentes"
+        android:id="@+id/residentesAdministrador"
         android:title="Residentes"
         android:icon="@drawable/baseline_elderly_woman_24"/>
     <item
-        android:id="@+id/documentos"
+        android:id="@+id/documentosAdministrador"
         android:title="Documentos"
         android:icon="@drawable/baseline_document_scanner_24"/>
 </menu>
