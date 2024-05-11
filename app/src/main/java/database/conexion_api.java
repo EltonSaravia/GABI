@@ -1,4 +1,4 @@
-package database;
+/*package database;
 
 import android.util.Log;
 
@@ -23,4 +23,4 @@ public class conexion_api {
     });
 
 
-}
+}*/

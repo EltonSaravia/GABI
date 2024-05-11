@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeAdministrador"
+        android:title="HomeAdministrador"
+        android:icon="@drawable/baseline_home_24"/>
+    <item
+        android:id="@+id/empleados"
+        android:title="Empleados"
+        android:icon="@drawable/baseline_people_24"/>
+    <item
+        android:id="@+id/fab"
+        android:title=""
+        android:enabled="false"/>
+    <item
+        android:id="@+id/residentes"
+        android:title="Residentes"
+        android:icon="@drawable/baseline_elderly_woman_24"/>
+    <item
+        android:id="@+id/documentos"
+        android:title="Documentos"
+        android:icon="@drawable/baseline_document_scanner_24"/>
+</menu>

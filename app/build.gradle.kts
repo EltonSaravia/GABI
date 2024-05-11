@@ -25,15 +25,24 @@ android {
             )
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+
 }
 
 dependencies {
     // add para que pueda conectar con las diferentes apis php
     implementation ("com.android.volley:volley:1.2.1")
+    //implementacion temporal de pruba
+    implementation ("com.google.android.material:material:1.4.0")
+
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

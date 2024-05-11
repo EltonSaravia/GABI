@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">GABI</string>
+    <string name="fab_desc">Enviar mensaje</string>
     <string-array name="puestos_array">
         <item>administrador</item>
         <item>enfermero</item>
         <item>auxiliar</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="documentos">Documentos</string>
+    <string name="residentes">Residentes</string>
+    <string name="empleados">Empleados</string>
+    <string name="home">Home</string>
 </resources>
