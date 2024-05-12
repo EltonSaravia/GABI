@@ -1,13 +1,23 @@
 package com.example.gabi;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,37 +37,35 @@ public class MainActivity extends AppCompatActivity {
         botonEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Simulación de obtener el usuario y su rol
-                String user = usuario.getText().toString();
-                String pwd = contrasena.getText().toString();
-
-                // Simulación de la lógica de autenticación
-                if (authenticate(user, pwd)) {
-                    String userRole = getUserRole(user);  // Supón que esto devuelve el rol del usuario
-
-                    // Redirigir según el rol
-                    if (userRole.equals("administrador")) {
-                        Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
-                        startActivity(intent);
-                        finish();  // Cierra MainActivity
-                    } else {
-                        // Posibles otras redirecciones
-                        Toast.makeText(MainActivity.this, "Acceso no permitido", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(MainActivity.this, "Fallo acceso", Toast.LENGTH_SHORT).show();
-                }
+                login(usuario.getText().toString(), contrasena.getText().toString());
             }
         });
     }
 
-    // Simulación de método de autenticación
-    private boolean authenticate(String user, String pwd) {
-        return user.equals("admin") && pwd.equals("1234");  // Simulación de credenciales correctas
-    }
+    private void login(final String username, final String password) {
+        String url = "https://residencialontananza.com/api/login.php"; // URL del script PHP
 
-    // Simulación de obtener el rol del usuario
-    private String getUserRole(String user) {
-        return "administrador";  // Simula que todos los usuarios son administradores
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                response -> {
+                    if (response.contains("administrador")) {
+                        Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Acceso denegado", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> Toast.makeText(MainActivity.this, "Error de red", Toast.LENGTH_SHORT).show()) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", username);
+                params.put("password", password);
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(stringRequest);
     }
 }
