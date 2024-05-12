@@ -1,18 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/turquesa"
-    tools:context=".HomeAdministrador">
+    android:fillViewport="true"
+    android:background="@color/background_color">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="HomeAdministrador"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/white"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-</FrameLayout>
+        <!-- Sección de Empleados Trabajando -->
+        <TextView
+            android:id="@+id/title_current_workers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Empleados Actualmente Trabajando"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:marginBottom="8dp"/>
+
+        <!-- Lista o Resumen de Empleados -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCurrentWorkers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_trabajador"/>
+
+        <!-- Calendario de Eventos -->
+        <TextView
+            android:id="@+id/title_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calendario de Eventos del Día"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:marginTop="16dp"
+            android:marginBottom="8dp"/>
+
+        <!-- Componente de Calendario o Lista de Eventos -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_evento"/>
+
+        <!-- Turnos de Trabajo -->
+        <TextView
+            android:id="@+id/title_shifts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hoja de Turnos de Hoy"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:marginTop="16dp"
+            android:marginBottom="8dp"/>
+
+        <!-- Lista de Turnos -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewShifts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_turno"/>
+    </LinearLayout>
+</ScrollView>
