@@ -41,8 +41,8 @@
                     android:id="@+id/recyclerViewCurrentWorkers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_trabajador"/>
+                    android:layout_margin="8dp"
+                    tools:listitem="@layout/item_trabajador" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

@@ -1,28 +1,22 @@
 package com.example.gabi;
 
 import android.os.Bundle;
-
+import android.util.Log;  // Importar la clase Log
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.List;
-
-import com.example.gabi.AdaptadorEvento;
-import com.example.gabi.AdaptadorTrabajador;
-import com.example.gabi.AdaptadorTurno;
-import com.example.gabi.*;
-
-
 import dto.EventoDTO;
 import dto.TrabajadorDTO;
 import dto.TurnoDTO;
+import managers.EventosCallback;
 import managers.EventosManager;
+import managers.TrabajadorCallback;
 import managers.TrabajadorManager;
+import managers.TurnoCallback;
 import managers.TurnoManager;
 
 public class HomeAdministrador extends Fragment {
@@ -47,23 +41,42 @@ public class HomeAdministrador extends Fragment {
         rvEventos.setLayoutManager(new LinearLayoutManager(getContext()));
         rvTurnos.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        cargarTrabajadores();
+        cargarEventos();
+        cargarTurnos();
+
+        return view;
+    }
+
+    private void cargarTrabajadores() {
         TrabajadorManager trabajadorManager = new TrabajadorManager(getContext());
-        trabajadorManager.obtenerTrabajadoresEnJornada(new TrabajadorManager.TrabajadorCallback() {
+        trabajadorManager.obtenerTrabajadoresEnJornada(new TrabajadorCallback() {
             @Override
             public void onSuccess(List<TrabajadorDTO> trabajadores) {
                 listaTrabajadores = trabajadores;
                 adaptadorTrabajador = new AdaptadorTrabajador(getContext(), listaTrabajadores);
                 rvTrabajadores.setAdapter(adaptadorTrabajador);
+                adaptadorTrabajador.notifyDataSetChanged();  // Notificar cambios
+
+                // Verificación con logs
+                for (TrabajadorDTO trabajador : trabajadores) {
+                    Log.d("Trabajador", "Nombre: " + trabajador.getNombre());
+                    Log.d("Trabajador", "Apellido1: " + trabajador.getApellido1());
+                    Log.d("Trabajador", "Puesto: " + trabajador.getPuesto());
+                }
             }
 
             @Override
             public void onError(String error) {
                 // Manejar error
+                Log.e("TrabajadorError", "Error: " + error);
             }
         });
+    }
 
+    private void cargarEventos() {
         EventosManager eventosManager = new EventosManager(getContext());
-        eventosManager.obtenerEventosDelDia(new EventosManager.EventoCallback() {
+        eventosManager.obtenerEventosDelDia(new EventosCallback() {
             @Override
             public void onSuccess(List<EventoDTO> eventos) {
                 listaEventos = eventos;
@@ -76,9 +89,11 @@ public class HomeAdministrador extends Fragment {
                 // Manejar error
             }
         });
+    }
 
+    private void cargarTurnos() {
         TurnoManager turnoManager = new TurnoManager(getContext());
-        turnoManager.obtenerTurnosDelDia(new TurnoManager.TurnoCallback() {
+        turnoManager.obtenerTurnosDiaActual(new TurnoCallback() {
             @Override
             public void onSuccess(List<TurnoDTO> turnos) {
                 listaTurnos = turnos;
@@ -91,7 +106,5 @@ public class HomeAdministrador extends Fragment {
                 // Manejar error
             }
         });
-
-        return view;
     }
 }

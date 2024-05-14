@@ -23,12 +23,7 @@ public class TurnoManager {
         this.context = context;
     }
 
-    public interface TurnoCallback {
-        void onSuccess(List<TurnoDTO> listaTurnos);
-        void onError(String error);
-    }
-
-    public void obtenerTurnosDelDia(TurnoCallback callback) {
+    public void obtenerTurnosDiaActual(TurnoCallback callback) {
         new ObtenerTurnosTask(callback).execute();
     }
 
@@ -58,7 +53,6 @@ public class TurnoManager {
 
                 reader.close();
 
-                // Parsear el resultado JSON y añadir los turnos a la lista
                 JSONObject jsonResponse = new JSONObject(result.toString());
                 JSONArray jsonArray = jsonResponse.getJSONArray("turnos");
                 for (int i = 0; i < jsonArray.length(); i++) {

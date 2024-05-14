@@ -2,17 +2,15 @@ package managers;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
+import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import dto.TrabajadorDTO;
 
 public class TrabajadorManager {
@@ -20,11 +18,6 @@ public class TrabajadorManager {
 
     public TrabajadorManager(Context context) {
         this.context = context;
-    }
-
-    public interface TrabajadorCallback {
-        void onSuccess(List<TrabajadorDTO> listaTrabajadores);
-        void onError(String error);
     }
 
     public void obtenerTrabajadoresEnJornada(TrabajadorCallback callback) {
@@ -62,20 +55,21 @@ public class TrabajadorManager {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     TrabajadorDTO trabajador = new TrabajadorDTO(
-                            0,  // ID no está disponible en la respuesta
-                            "", // DNI no está disponible en la respuesta
+                            jsonObject.getInt("id"),
+                            jsonObject.getString("dni"),
                             jsonObject.getString("nombre"),
                             jsonObject.getString("apellido1"),
-                            "", // apellido_2 no está disponible en la respuesta
+                            jsonObject.getString("apellido2"),
                             jsonObject.getString("puesto"),
-                            "", // teléfono no está disponible en la respuesta
-                            "", // email no está disponible en la respuesta
-                            ""  // contraseña no está disponible en la respuesta
+                            jsonObject.getString("telefono"),
+                            jsonObject.getString("email"),
+                            ""  // La contraseña no debería ser parte del DTO desde el servidor por seguridad
                     );
                     listaTrabajadores.add(trabajador);
                 }
             } catch (Exception e) {
                 error = e.getMessage();
+                Log.e("TrabajadorError", "Error: " + error);
             }
             return listaTrabajadores;
         }

@@ -22,20 +22,15 @@ public class EventosManager {
         this.context = context;
     }
 
-    public interface EventoCallback {
-        void onSuccess(List<EventoDTO> listaEventos);
-        void onError(String error);
-    }
-
-    public void obtenerEventosDelDia(EventoCallback callback) {
+    public void obtenerEventosDelDia(EventosCallback callback) {
         new ObtenerEventosTask(callback).execute();
     }
 
     private class ObtenerEventosTask extends AsyncTask<Void, Void, List<EventoDTO>> {
-        private EventoCallback callback;
+        private EventosCallback callback;
         private String error;
 
-        public ObtenerEventosTask(EventoCallback callback) {
+        public ObtenerEventosTask(EventosCallback callback) {
             this.callback = callback;
         }
 
@@ -57,7 +52,6 @@ public class EventosManager {
 
                 reader.close();
 
-                // Parsear el resultado JSON y añadir los eventos a la lista
                 JSONArray jsonArray = new JSONArray(result.toString());
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);

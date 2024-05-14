@@ -5,14 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.gabi.R;
-
 import java.util.List;
-
 import dto.TrabajadorDTO;
 
 public class AdaptadorTrabajador extends RecyclerView.Adapter<AdaptadorTrabajador.ViewHolder> {
@@ -20,7 +15,6 @@ public class AdaptadorTrabajador extends RecyclerView.Adapter<AdaptadorTrabajado
     private List<TrabajadorDTO> listaTrabajadores;
     private LayoutInflater inflater;
 
-    // Constructor
     public AdaptadorTrabajador(Context context, List<TrabajadorDTO> listaTrabajadores) {
         this.inflater = LayoutInflater.from(context);
         this.listaTrabajadores = listaTrabajadores;
@@ -44,7 +38,6 @@ public class AdaptadorTrabajador extends RecyclerView.Adapter<AdaptadorTrabajado
         return listaTrabajadores.size();
     }
 
-    // ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtNombre, txtApellido1, txtApellido2, txtPuesto;
 
@@ -64,3 +57,4 @@ public class AdaptadorTrabajador extends RecyclerView.Adapter<AdaptadorTrabajado
         }
     }
 }
+
