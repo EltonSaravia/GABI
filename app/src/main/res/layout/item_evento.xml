@@ -6,7 +6,7 @@
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/tvEventDescription"
+        android:id="@+id/tvNombreEvento"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -14,7 +14,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/tvEventTime"
+        android:id="@+id/tvHoraEvento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hora"

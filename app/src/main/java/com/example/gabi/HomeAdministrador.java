@@ -12,17 +12,25 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import com.example.gabi.AdaptadorEvento;
+import com.example.gabi.AdaptadorTrabajador;
+import com.example.gabi.AdaptadorTurno;
+import com.example.gabi.*;
+
+
 import dto.EventoDTO;
 import dto.TrabajadorDTO;
 import dto.TurnoDTO;
 import managers.EventosManager;
+import managers.TrabajadorManager;
+import managers.TurnoManager;
 
 public class HomeAdministrador extends Fragment {
 
     private RecyclerView rvTrabajadores, rvEventos, rvTurnos;
     private AdaptadorTrabajador adaptadorTrabajador;
     private AdaptadorEvento adaptadorEvento;
-    private adapters.AdaptadorTurno adaptadorTurno;
+    private AdaptadorTurno adaptadorTurno;
     private List<TrabajadorDTO> listaTrabajadores;
     private List<EventoDTO> listaEventos;
     private List<TurnoDTO> listaTurnos;
@@ -39,25 +47,50 @@ public class HomeAdministrador extends Fragment {
         rvEventos.setLayoutManager(new LinearLayoutManager(getContext()));
         rvTurnos.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Supongamos que tienes un manager para cada tipo de datos
-        com.example.gabi.managers.TrabajadorManager trabajadorManager = new com.example.gabi.managers.TrabajadorManager(getContext());
-        trabajadorManager.obtenerTrabajadoresEnJornada();
+        TrabajadorManager trabajadorManager = new TrabajadorManager(getContext());
+        trabajadorManager.obtenerTrabajadoresEnJornada(new TrabajadorManager.TrabajadorCallback() {
+            @Override
+            public void onSuccess(List<TrabajadorDTO> trabajadores) {
+                listaTrabajadores = trabajadores;
+                adaptadorTrabajador = new AdaptadorTrabajador(getContext(), listaTrabajadores);
+                rvTrabajadores.setAdapter(adaptadorTrabajador);
+            }
+
+            @Override
+            public void onError(String error) {
+                // Manejar error
+            }
+        });
 
         EventosManager eventosManager = new EventosManager(getContext());
-        listaEventos = eventosManager.obtenerEventosDelDia(); // Usar la instancia para llamar al método
+        eventosManager.obtenerEventosDelDia(new EventosManager.EventoCallback() {
+            @Override
+            public void onSuccess(List<EventoDTO> eventos) {
+                listaEventos = eventos;
+                adaptadorEvento = new AdaptadorEvento(getContext(), listaEventos);
+                rvEventos.setAdapter(adaptadorEvento);
+            }
 
-        // Suponer que tienes una función para obtener los turnos
-        listaTurnos = obtenerTurnosDelDia(); // Asegúrate de implementar este método
+            @Override
+            public void onError(String error) {
+                // Manejar error
+            }
+        });
 
-        // Inicializar los adaptadores
-        adaptadorTrabajador = new AdaptadorTrabajador(getContext(), listaTrabajadores);
-        adaptadorEvento = new AdaptadorEvento(getContext(), listaEventos);
-        adaptadorTurno = new adapters.AdaptadorTurno(getContext(), listaTurnos);
+        TurnoManager turnoManager = new TurnoManager(getContext());
+        turnoManager.obtenerTurnosDelDia(new TurnoManager.TurnoCallback() {
+            @Override
+            public void onSuccess(List<TurnoDTO> turnos) {
+                listaTurnos = turnos;
+                adaptadorTurno = new AdaptadorTurno(getContext(), listaTurnos);
+                rvTurnos.setAdapter(adaptadorTurno);
+            }
 
-        // Asignar los adaptadores a los RecyclerViews
-        rvTrabajadores.setAdapter(adaptadorTrabajador);
-        rvEventos.setAdapter(adaptadorEvento);
-        rvTurnos.setAdapter(adaptadorTurno);
+            @Override
+            public void onError(String error) {
+                // Manejar error
+            }
+        });
 
         return view;
     }

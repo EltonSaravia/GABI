@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Colores existentes -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <!-- Color principal -->
     <color name="turquesa">#1BBFBF</color>
+    <!-- Agregar el color background_color -->
+
 </resources>

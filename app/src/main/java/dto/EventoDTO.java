@@ -1,6 +1,5 @@
 package dto;
 
-
 import java.sql.Time;
 import java.util.Date;
 
@@ -49,7 +48,7 @@ public class EventoDTO {
         this.fechaCita = fechaCita;
     }
 
-    public Date getHoraCita() {
+    public Time getHoraCita() {
         return horaCita;
     }
 

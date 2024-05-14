@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/background_color">
+    android:background="@drawable/imagen_fondo_login"
+    tools:context=".HomeAdministrador">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,56 +16,100 @@
         android:padding="16dp">
 
         <!-- Sección de Empleados Trabajando -->
-        <TextView
-            android:id="@+id/title_current_workers"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Empleados Actualmente Trabajando"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:marginBottom="8dp"/>
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
 
-        <!-- Lista o Resumen de Empleados -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewCurrentWorkers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_trabajador"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/title_current_workers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Empleados Actualmente Trabajando"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:layout_marginBottom="8dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewCurrentWorkers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_trabajador"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- Calendario de Eventos -->
-        <TextView
-            android:id="@+id/title_events"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Calendario de Eventos del Día"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:marginTop="16dp"
-            android:marginBottom="8dp"/>
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
 
-        <!-- Componente de Calendario o Lista de Eventos -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewEvents"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_evento"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/title_events"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Calendario de Eventos del Día"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:layout_marginBottom="8dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewEvents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_evento"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- Turnos de Trabajo -->
-        <TextView
-            android:id="@+id/title_shifts"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hoja de Turnos de Hoy"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:marginTop="16dp"
-            android:marginBottom="8dp"/>
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
 
-        <!-- Lista de Turnos -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewShifts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_turno"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/title_shifts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hoja de Turnos de Hoy"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:layout_marginBottom="8dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewShifts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_turno"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 </ScrollView>

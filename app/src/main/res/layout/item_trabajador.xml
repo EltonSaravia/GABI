@@ -2,24 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/tvNombreTrabajador"
+        android:id="@+id/txtNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre Trabajador"/>
+        android:text="Nombre"
+        android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/tvApellidoTrabajador"
+        android:id="@+id/txtApellido1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre Trabajador"/>
-    <TextView
-        android:id="@+id/tvPuestoTrabajador"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Puesto Trabajador"/>
+        android:text="Apellido 1"
+        android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/txtApellido2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apellido 2"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtPuesto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Puesto"
+        android:textSize="16sp" />
 </LinearLayout>

@@ -2,21 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/tvShiftType"
-        android:layout_width="0dp"
+        android:id="@+id/txtNombre"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Tipo de Turno"
+        android:text="Nombre"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/tvShiftTime"
+        android:id="@+id/txtApellido1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hora del Turno"
+        android:text="Apellido 1"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtApellido2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apellido 2"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtPuesto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Puesto"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtTipoTurno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo de Turno"
         android:textSize="16sp" />
 </LinearLayout>

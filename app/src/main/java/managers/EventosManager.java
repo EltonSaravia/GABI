@@ -1,19 +1,17 @@
 package managers;
 
 import android.content.Context;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
+import android.os.AsyncTask;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import dto.EventoDTO;
 
@@ -24,40 +22,69 @@ public class EventosManager {
         this.context = context;
     }
 
-    public void obtenerEventosDelDia() {
-        String url = "https://residencialontananza.com/api/obtenerEventosDelDia.php";
+    public interface EventoCallback {
+        void onSuccess(List<EventoDTO> listaEventos);
+        void onError(String error);
+    }
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        ArrayList<EventoDTO> eventos = new ArrayList<>();
-                        try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject obj = response.getJSONObject(i);
-                                eventos.add(new EventoDTO(
-                                        obj.getInt("id"),
-                                        obj.getInt("residente_id"),
-                                        java.sql.Date.valueOf(obj.getString("fecha_cita")),
-                                        java.sql.Time.valueOf(obj.getString("hora_cita")),
-                                        obj.getString("lugar_cita"),
-                                        obj.getString("motivo_cita"),
-                                        obj.getString("detalles")
-                                ));
-                            }
-                            // Aquí actualizas la UI con los datos, como actualizar un RecyclerView
-                        } catch (Exception e) {
-                            Toast.makeText(context, "Error al parsear los datos: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error de red: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+    public void obtenerEventosDelDia(EventoCallback callback) {
+        new ObtenerEventosTask(callback).execute();
+    }
+
+    private class ObtenerEventosTask extends AsyncTask<Void, Void, List<EventoDTO>> {
+        private EventoCallback callback;
+        private String error;
+
+        public ObtenerEventosTask(EventoCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected List<EventoDTO> doInBackground(Void... voids) {
+            List<EventoDTO> listaEventos = new ArrayList<>();
+            try {
+                URL url = new URL("https://residencialontananza.com/api/obtenerEventosDiaActual.php");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                reader.close();
+
+                // Parsear el resultado JSON y añadir los eventos a la lista
+                JSONArray jsonArray = new JSONArray(result.toString());
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    EventoDTO evento = new EventoDTO(
+                            jsonObject.getInt("id"),
+                            jsonObject.getInt("residente_id"),
+                            new java.util.Date(jsonObject.getLong("fecha_cita")),
+                            new java.sql.Time(jsonObject.getLong("hora_cita")),
+                            jsonObject.getString("lugar_cita"),
+                            jsonObject.getString("motivo_cita"),
+                            jsonObject.getString("detalles")
+                    );
+                    listaEventos.add(evento);
+                }
+            } catch (Exception e) {
+                error = e.getMessage();
             }
-        });
+            return listaEventos;
+        }
 
-        RequestQueue queue = Volley.newRequestQueue(context);
-        queue.add(jsonArrayRequest);
+        @Override
+        protected void onPostExecute(List<EventoDTO> eventos) {
+            if (error != null) {
+                callback.onError(error);
+            } else {
+                callback.onSuccess(eventos);
+            }
+        }
     }
 }

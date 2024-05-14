@@ -1,21 +1,17 @@
-package com.example.gabi.managers;
+package managers;
 
 import android.content.Context;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.gabi.*;
+import android.os.AsyncTask;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import dto.TrabajadorDTO;
 
@@ -26,32 +22,71 @@ public class TrabajadorManager {
         this.context = context;
     }
 
-    public void obtenerTrabajadoresEnJornada() {
-        String url = "https://residencialontananza.com/api/obtenerTrabajadoresEnJornada.php";
+    public interface TrabajadorCallback {
+        void onSuccess(List<TrabajadorDTO> listaTrabajadores);
+        void onError(String error);
+    }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                response -> {
-                    try {
-                        ArrayList<TrabajadorDTO> trabajadores = new ArrayList<>();
-                        JSONArray array = response.getJSONArray("trabajadores");
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject obj = array.getJSONObject(i);
-                            String nombre = obj.getString("nombre");
-                            String apellido1 = obj.getString("apellido1");
-                            String puesto = obj.getString("puesto");
-                            trabajadores.add(new TrabajadorDTO(0, "", nombre, apellido1, "", puesto, "", "", ""));
-                        }
-                        // Aquí deberías actualizar la interfaz con esta lista
-                        // Por ejemplo, si estás en una Activity o Fragment puedes llamar a un método que actualice el adaptador
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(context, "Error parsing data", Toast.LENGTH_SHORT).show();
-                    }
-                },
-                error -> Toast.makeText(context, "Error de red: " + error.getMessage(), Toast.LENGTH_SHORT).show()
-        );
+    public void obtenerTrabajadoresEnJornada(TrabajadorCallback callback) {
+        new ObtenerTrabajadoresTask(callback).execute();
+    }
 
-        RequestQueue queue = Volley.newRequestQueue(context);
-        queue.add(jsonObjectRequest);
+    private class ObtenerTrabajadoresTask extends AsyncTask<Void, Void, List<TrabajadorDTO>> {
+        private TrabajadorCallback callback;
+        private String error;
+
+        public ObtenerTrabajadoresTask(TrabajadorCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected List<TrabajadorDTO> doInBackground(Void... voids) {
+            List<TrabajadorDTO> listaTrabajadores = new ArrayList<>();
+            try {
+                URL url = new URL("https://residencialontananza.com/api/obtenerTrabajadoresEnJornada.php");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                reader.close();
+
+                // Parsear el resultado JSON y añadir los trabajadores a la lista
+                JSONArray jsonArray = new JSONArray(result.toString());
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    TrabajadorDTO trabajador = new TrabajadorDTO(
+                            0,  // ID no está disponible en la respuesta
+                            "", // DNI no está disponible en la respuesta
+                            jsonObject.getString("nombre"),
+                            jsonObject.getString("apellido1"),
+                            "", // apellido_2 no está disponible en la respuesta
+                            jsonObject.getString("puesto"),
+                            "", // teléfono no está disponible en la respuesta
+                            "", // email no está disponible en la respuesta
+                            ""  // contraseña no está disponible en la respuesta
+                    );
+                    listaTrabajadores.add(trabajador);
+                }
+            } catch (Exception e) {
+                error = e.getMessage();
+            }
+            return listaTrabajadores;
+        }
+
+        @Override
+        protected void onPostExecute(List<TrabajadorDTO> trabajadores) {
+            if (error != null) {
+                callback.onError(error);
+            } else {
+                callback.onSuccess(trabajadores);
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-package adapters;
+package com.example.gabi;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -49,18 +49,22 @@ public class AdaptadorTurno extends RecyclerView.Adapter<AdaptadorTurno.ViewHold
 
     // ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtFechaInicio, txtFechaFin, txtTipoTurno;
+        TextView txtNombre, txtApellido1, txtApellido2, txtPuesto, txtTipoTurno;
 
         ViewHolder(View itemView) {
             super(itemView);
-            txtFechaInicio = itemView.findViewById(R.id.txtFechaInicio);
-            txtFechaFin = itemView.findViewById(R.id.txtFechaFin);
+            txtNombre = itemView.findViewById(R.id.txtNombre);
+            txtApellido1 = itemView.findViewById(R.id.txtApellido1);
+            txtApellido2 = itemView.findViewById(R.id.txtApellido2);
+            txtPuesto = itemView.findViewById(R.id.txtPuesto);
             txtTipoTurno = itemView.findViewById(R.id.txtTipoTurno);
         }
 
         void bind(TurnoDTO turno) {
-            txtFechaInicio.setText(sdf.format(turno.getFechaInicio()));
-            txtFechaFin.setText(sdf.format(turno.getFechaFin()));
+            txtNombre.setText(turno.getNombre());
+            txtApellido1.setText(turno.getApellido1());
+            txtApellido2.setText(turno.getApellido2());
+            txtPuesto.setText(turno.getPuesto());
             txtTipoTurno.setText(turno.getTipo());
         }
     }

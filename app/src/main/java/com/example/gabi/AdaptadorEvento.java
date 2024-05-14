@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gabi.R;
+
 import java.util.List;
 
 import dto.EventoDTO;
@@ -16,25 +18,24 @@ import dto.EventoDTO;
 public class AdaptadorEvento extends RecyclerView.Adapter<AdaptadorEvento.ViewHolder> {
 
     private List<EventoDTO> eventos;
-    private Context context;
+    private LayoutInflater inflater;
 
     public AdaptadorEvento(Context context, List<EventoDTO> eventos) {
-        this.context = context;
+        this.inflater = LayoutInflater.from(context);
         this.eventos = eventos;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_evento, parent, false);
+        View view = inflater.inflate(R.layout.item_evento, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         EventoDTO evento = eventos.get(position);
-        holder.tvNombre.setText(evento.getNombreResidente());
-        holder.tvHora.setText(evento.getHoraEvento());
+        holder.bind(evento);
     }
 
     @Override
@@ -49,6 +50,11 @@ public class AdaptadorEvento extends RecyclerView.Adapter<AdaptadorEvento.ViewHo
             super(itemView);
             tvNombre = itemView.findViewById(R.id.tvNombreEvento);
             tvHora = itemView.findViewById(R.id.tvHoraEvento);
+        }
+
+        void bind(EventoDTO evento) {
+            tvNombre.setText(evento.getLugarCita());  // Asumiendo que "lugar_cita" es equivalente a "nombre del evento"
+            tvHora.setText(evento.getHoraCita().toString());
         }
     }
 }
