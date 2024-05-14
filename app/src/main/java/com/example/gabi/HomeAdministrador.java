@@ -2,12 +2,9 @@ package com.example.gabi;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.graphics.drawable.Drawable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,14 +41,6 @@ public class HomeAdministrador extends Fragment {
         rvEventos.setLayoutManager(new LinearLayoutManager(getContext()));
         rvTurnos.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Añadir DividerItemDecoration
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvTrabajadores.getContext(), DividerItemDecoration.VERTICAL);
-        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
-        if (dividerDrawable != null) {
-            dividerItemDecoration.setDrawable(dividerDrawable);
-            rvTrabajadores.addItemDecoration(dividerItemDecoration);
-        }
-
         cargarTrabajadores();
         cargarEventos();
         cargarTurnos();
@@ -67,19 +56,11 @@ public class HomeAdministrador extends Fragment {
                 listaTrabajadores = trabajadores;
                 adaptadorTrabajador = new AdaptadorTrabajador(getContext(), listaTrabajadores);
                 rvTrabajadores.setAdapter(adaptadorTrabajador);
-                adaptadorTrabajador.notifyDataSetChanged();  // Notificar cambios
-
-                // Verificación con logs
-                for (TrabajadorDTO trabajador : trabajadores) {
-                    Log.d("Trabajador", "Nombre: " + trabajador.getNombre());
-                    Log.d("Trabajador", "Apellido1: " + trabajador.getApellido1());
-                    Log.d("Trabajador", "Puesto: " + trabajador.getPuesto());
-                }
+                adaptadorTrabajador.notifyDataSetChanged();
             }
 
             @Override
             public void onError(String error) {
-                // Manejar error
                 Log.e("TrabajadorError", "Error: " + error);
             }
         });
@@ -91,13 +72,17 @@ public class HomeAdministrador extends Fragment {
             @Override
             public void onSuccess(List<EventoDTO> eventos) {
                 listaEventos = eventos;
+                for (EventoDTO evento : eventos) {
+                    Log.d("Evento", "Evento recibido: " + evento.getMotivoCita());
+                }
                 adaptadorEvento = new AdaptadorEvento(getContext(), listaEventos);
                 rvEventos.setAdapter(adaptadorEvento);
+                adaptadorEvento.notifyDataSetChanged();
             }
 
             @Override
             public void onError(String error) {
-                // Manejar error
+                Log.e("EventosError", "Error: " + error);
             }
         });
     }
@@ -114,7 +99,7 @@ public class HomeAdministrador extends Fragment {
 
             @Override
             public void onError(String error) {
-                // Manejar error
+                Log.e("TurnoError", "Error: " + error);
             }
         });
     }

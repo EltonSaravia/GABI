@@ -5,56 +5,50 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.gabi.R;
-
 import java.util.List;
-
 import dto.EventoDTO;
 
-public class AdaptadorEvento extends RecyclerView.Adapter<AdaptadorEvento.ViewHolder> {
+public class AdaptadorEvento extends RecyclerView.Adapter<AdaptadorEvento.EventoViewHolder> {
 
+    private Context context;
     private List<EventoDTO> eventos;
-    private LayoutInflater inflater;
 
     public AdaptadorEvento(Context context, List<EventoDTO> eventos) {
-        this.inflater = LayoutInflater.from(context);
+        this.context = context;
         this.eventos = eventos;
     }
 
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_evento, parent, false);
-        return new ViewHolder(view);
+    public EventoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_evento, parent, false);
+        return new EventoViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(EventoViewHolder holder, int position) {
         EventoDTO evento = eventos.get(position);
-        holder.bind(evento);
+        holder.tvHoraEvento.setText(evento.getHoraCita().toString()); // Convertimos Time a String
+        holder.tvMotivoEvento.setText(evento.getMotivoCita());
+        holder.tvLugarEvento.setText(evento.getLugarCita());
+        holder.tvDetallesEvento.setText(evento.getDetalles());
     }
+
 
     @Override
     public int getItemCount() {
         return eventos.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNombre, tvHora;
+    public class EventoViewHolder extends RecyclerView.ViewHolder {
+        TextView tvHoraEvento, tvMotivoEvento, tvLugarEvento, tvDetallesEvento;
 
-        public ViewHolder(@NonNull View itemView) {
+        public EventoViewHolder(View itemView) {
             super(itemView);
-            tvNombre = itemView.findViewById(R.id.tvNombreEvento);
-            tvHora = itemView.findViewById(R.id.tvHoraEvento);
-        }
-
-        void bind(EventoDTO evento) {
-            tvNombre.setText(evento.getLugarCita());  // Asumiendo que "lugar_cita" es equivalente a "nombre del evento"
-            tvHora.setText(evento.getHoraCita().toString());
+            tvHoraEvento = itemView.findViewById(R.id.tvHoraEvento);
+            tvMotivoEvento = itemView.findViewById(R.id.tvMotivoEvento);
+            tvLugarEvento = itemView.findViewById(R.id.tvLugarEvento);
+            tvDetallesEvento = itemView.findViewById(R.id.tvDetallesEvento);
         }
     }
 }
