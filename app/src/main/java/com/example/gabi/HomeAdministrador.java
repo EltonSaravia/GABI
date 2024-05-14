@@ -1,10 +1,13 @@
 package com.example.gabi;
 
 import android.os.Bundle;
-import android.util.Log;  // Importar la clase Log
+import android.util.Log;
+import android.graphics.drawable.Drawable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +43,14 @@ public class HomeAdministrador extends Fragment {
         rvTrabajadores.setLayoutManager(new LinearLayoutManager(getContext()));
         rvEventos.setLayoutManager(new LinearLayoutManager(getContext()));
         rvTurnos.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Añadir DividerItemDecoration
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvTrabajadores.getContext(), DividerItemDecoration.VERTICAL);
+        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
+        if (dividerDrawable != null) {
+            dividerItemDecoration.setDrawable(dividerDrawable);
+            rvTrabajadores.addItemDecoration(dividerItemDecoration);
+        }
 
         cargarTrabajadores();
         cargarEventos();

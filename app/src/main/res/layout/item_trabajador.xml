@@ -4,41 +4,41 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="8dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/rounded_corners">
 
-    tools:ignore="MissingPrefix">
+    <TextView
+        android:id="@+id/txtNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:textColor="@android:color/holo_blue_light"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp" />
 
-<TextView
-android:id="@+id/txtNombre"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:layout_weight="1"
-android:text="Nombre"
-android:textAppearance="?android:attr/textAppearanceMedium"
-android:textColor="@android:color/holo_blue_light" /> <!-- Turquesa -->
+    <TextView
+        android:id="@+id/txtApellido1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apellido1"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp" />
 
-<TextView
-android:id="@+id/txtApellido1"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:layout_weight="1"
-android:text="Apellido1"
-android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
+        android:id="@+id/txtApellido2"
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:text="Apellido2"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-<TextView
-android:id="@+id/txtApellido2"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:layout_weight="1"
-android:text="Apellido2"
-android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
+        android:id="@+id/txtPuesto"
+        android:layout_width="112dp"
+        android:layout_height="wrap_content"
+        android:text="Puesto"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-<TextView
-android:id="@+id/txtPuesto"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:layout_weight="1"
-android:text="Puesto"
-android:textAppearance="?android:attr/textAppearanceSmall" />
-    </LinearLayout>
+</LinearLayout>

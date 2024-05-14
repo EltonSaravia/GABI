@@ -57,4 +57,3 @@ public class AdaptadorTrabajador extends RecyclerView.Adapter<AdaptadorTrabajado
         }
     }
 }
-
