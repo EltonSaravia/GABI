@@ -11,13 +11,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
+
 import dto.EventoDTO;
 
 public class EventosManager {
@@ -58,14 +56,12 @@ public class EventosManager {
                 reader.close();
 
                 JSONArray jsonArray = new JSONArray(result.toString());
-                // Definir el formato de fecha y hora que coincide con el formato en tu JSON
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     try {
-                        // Parsear fecha y hora correctamente
                         Date fechaCita = dateFormat.parse(jsonObject.getString("fecha_cita"));
                         Date horaCita = timeFormat.parse(jsonObject.getString("hora_cita"));
 
@@ -76,11 +72,12 @@ public class EventosManager {
                                 new java.sql.Time(horaCita.getTime()),
                                 jsonObject.getString("lugar_cita"),
                                 jsonObject.getString("motivo_cita"),
-                                jsonObject.getString("detalles")
+                                jsonObject.getString("detalles"),
+                                jsonObject.getString("nombre_residente"),  // Asumiendo que tu JSON incluye estos campos
+                                jsonObject.getString("apellidos_residente") // Asumiendo que tu JSON incluye estos campos
                         );
                         listaEventos.add(evento);
-                    } catch (ParseException e) {
-                        // Manejar error de parseo
+                    } catch (Exception e) {
                         error = e.getMessage();
                         Log.e("EventosError", "Error parsing date or time: " + error);
                     }

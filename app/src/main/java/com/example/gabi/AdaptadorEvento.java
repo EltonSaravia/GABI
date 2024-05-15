@@ -37,6 +37,9 @@ public class AdaptadorEvento extends RecyclerView.Adapter<AdaptadorEvento.Evento
         holder.tvLugarEvento.setText(evento.getLugarCita());
         holder.tvDetallesEvento.setText(evento.getDetalles());
 
+        // Mostrar el nombre y apellidos del residente
+        holder.tvNombreResidente.setText(evento.getNombreResidente() + " " + evento.getApellidosResidente());
+
         final boolean isExpanded = holder.getAdapterPosition() == expandedPosition;
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.itemView.setActivated(isExpanded);
@@ -56,7 +59,7 @@ public class AdaptadorEvento extends RecyclerView.Adapter<AdaptadorEvento.Evento
     }
 
     class EventoViewHolder extends RecyclerView.ViewHolder {
-        TextView tvHoraEvento, tvMotivoEvento, tvLugarEvento, tvDetallesEvento;
+        TextView tvHoraEvento, tvMotivoEvento, tvLugarEvento, tvDetallesEvento, tvNombreResidente;
         LinearLayout expandableLayout;
 
         public EventoViewHolder(View itemView) {
@@ -65,6 +68,7 @@ public class AdaptadorEvento extends RecyclerView.Adapter<AdaptadorEvento.Evento
             tvMotivoEvento = itemView.findViewById(R.id.tvMotivoEvento);
             tvLugarEvento = itemView.findViewById(R.id.tvLugarEvento);
             tvDetallesEvento = itemView.findViewById(R.id.tvDetallesEvento);
+            tvNombreResidente = itemView.findViewById(R.id.tvNombreResidente);
             expandableLayout = itemView.findViewById(R.id.expandableLayout);
         }
     }
