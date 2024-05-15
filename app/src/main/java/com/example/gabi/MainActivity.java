@@ -1,7 +1,9 @@
 package com.example.gabi;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,10 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,15 +50,41 @@ public class MainActivity extends AppCompatActivity {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 response -> {
-                    if (response.contains("administrador")) {
-                        Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(MainActivity.this, "Acceso denegado", Toast.LENGTH_SHORT).show();
+                    try {
+                        // Verificar si la respuesta es JSON válida
+                        if (response.startsWith("{")) {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            Log.d("LoginResponse", response); // Log the response for debugging
+                            if (jsonResponse.getString("status").equals("success")) {
+                                String token = jsonResponse.getString("token");
+                                // Guarda el token en SharedPreferences
+                                SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("token", token);
+                                editor.apply();
+
+                                // Navegar a la actividad adecuada
+                                if (jsonResponse.getString("role").equals("administrador")) {
+                                    Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            } else {
+                                Toast.makeText(MainActivity.this, jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            // Manejar la respuesta de error si no es JSON
+                            Toast.makeText(MainActivity.this, "Respuesta del servidor no válida: " + response, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        Toast.makeText(MainActivity.this, "Error en la respuesta del servidor: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("LoginError", "Error parsing JSON: " + e.getMessage()); // Log the error for debugging
                     }
                 },
-                error -> Toast.makeText(MainActivity.this, "Error de red", Toast.LENGTH_SHORT).show()) {
+                error -> {
+                    Toast.makeText(MainActivity.this, "Error de red: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("NetworkError", "Error in network request: " + error.getMessage()); // Log the error for debugging
+                }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();

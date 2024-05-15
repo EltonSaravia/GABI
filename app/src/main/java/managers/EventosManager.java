@@ -1,20 +1,23 @@
 package managers;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
 import android.util.Log;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dto.EventoDTO;
 
@@ -26,77 +29,58 @@ public class EventosManager {
     }
 
     public void obtenerEventosDelDia(EventosCallback callback) {
-        new ObtenerEventosTask(callback).execute();
-    }
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", null);
+        String url = "https://residencialontananza.com/api/obtenerEventosDelDia.php";
 
-    private class ObtenerEventosTask extends AsyncTask<Void, Void, List<EventoDTO>> {
-        private EventosCallback callback;
-        private String error;
-
-        public ObtenerEventosTask(EventosCallback callback) {
-            this.callback = callback;
-        }
-
-        @Override
-        protected List<EventoDTO> doInBackground(Void... voids) {
-            List<EventoDTO> listaEventos = new ArrayList<>();
-            try {
-                URL url = new URL("https://residencialontananza.com/api/obtenerEventosDelDia.php");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder result = new StringBuilder();
-                String line;
-
-                while ((line = reader.readLine()) != null) {
-                    result.append(line);
-                }
-
-                reader.close();
-
-                JSONArray jsonArray = new JSONArray(result.toString());
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                response -> {
                     try {
-                        Date fechaCita = dateFormat.parse(jsonObject.getString("fecha_cita"));
-                        Date horaCita = timeFormat.parse(jsonObject.getString("hora_cita"));
+                        JSONArray jsonArray = new JSONArray(response);
+                        List<EventoDTO> listaEventos = new ArrayList<>();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
-                        EventoDTO evento = new EventoDTO(
-                                jsonObject.getInt("id"),
-                                jsonObject.getInt("residente_id"),
-                                fechaCita,
-                                new java.sql.Time(horaCita.getTime()),
-                                jsonObject.getString("lugar_cita"),
-                                jsonObject.getString("motivo_cita"),
-                                jsonObject.getString("detalles"),
-                                jsonObject.getString("nombre_residente"),  // Asumiendo que tu JSON incluye estos campos
-                                jsonObject.getString("apellidos_residente") // Asumiendo que tu JSON incluye estos campos
-                        );
-                        listaEventos.add(evento);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                            Date fechaCita = dateFormat.parse(jsonObject.getString("fecha_cita"));
+                            Date horaCita = timeFormat.parse(jsonObject.getString("hora_cita"));
+
+                            EventoDTO evento = new EventoDTO(
+                                    jsonObject.getInt("id"),
+                                    jsonObject.getInt("residente_id"),
+                                    fechaCita,
+                                    new java.sql.Time(horaCita.getTime()),
+                                    jsonObject.getString("lugar_cita"),
+                                    jsonObject.getString("motivo_cita"),
+                                    jsonObject.getString("detalles"),
+                                    jsonObject.getString("nombre_residente"),
+                                    jsonObject.getString("apellidos_residente")
+                            );
+                            listaEventos.add(evento);
+                        }
+
+                        callback.onSuccess(listaEventos);
+
                     } catch (Exception e) {
-                        error = e.getMessage();
-                        Log.e("EventosError", "Error parsing date or time: " + error);
+                        Log.e("EventosError", "Error parsing JSON: " + e.getMessage());
+                        callback.onError(e.getMessage());
                     }
-                }
-            } catch (Exception e) {
-                error = e.getMessage();
+                },
+                error -> {
+                    Log.e("EventosError", "Error de red: " + error.getMessage());
+                    callback.onError(error.getMessage());
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
             }
-            return listaEventos;
-        }
+        };
 
-        @Override
-        protected void onPostExecute(List<EventoDTO> eventos) {
-            if (error != null) {
-                Log.e("EventosError", "Error: " + error);
-                callback.onError(error);
-            } else {
-                Log.d("Eventos", "Eventos recibidos: " + eventos.size());
-                callback.onSuccess(eventos);
-            }
-        }
+        RequestQueue queue = Volley.newRequestQueue(context);
+        queue.add(stringRequest);
     }
 }
