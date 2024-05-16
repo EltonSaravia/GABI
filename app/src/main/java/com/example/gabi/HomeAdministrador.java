@@ -1,5 +1,7 @@
 package com.example.gabi;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.fragment.app.Fragment;
@@ -28,10 +30,15 @@ public class HomeAdministrador extends Fragment {
     private List<TrabajadorDTO> listaTrabajadores;
     private List<EventoDTO> listaEventos;
     private List<TurnoDTO> listaTurnos;
+    private String token;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_administrador, container, false);
+
+        // Obtener el token de SharedPreferences
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        token = sharedPreferences.getString("token", null);
 
         rvTrabajadores = view.findViewById(R.id.recyclerViewCurrentWorkers);
         rvEventos = view.findViewById(R.id.recyclerViewEvents);
@@ -72,9 +79,6 @@ public class HomeAdministrador extends Fragment {
             @Override
             public void onSuccess(List<EventoDTO> eventos) {
                 listaEventos = eventos;
-                for (EventoDTO evento : eventos) {
-                    Log.d("Evento", "Evento recibido: " + evento.getMotivoCita());
-                }
                 adaptadorEvento = new AdaptadorEvento(getContext(), listaEventos);
                 rvEventos.setAdapter(adaptadorEvento);
                 adaptadorEvento.notifyDataSetChanged();
@@ -88,13 +92,20 @@ public class HomeAdministrador extends Fragment {
     }
 
     private void cargarTurnos() {
-        TurnoManager turnoManager = new TurnoManager(getContext());
+        TurnoManager turnoManager = new TurnoManager(getContext(), token); // Pasar el token aquí
+        Log.d("HomeAdministrador", "Token: " + token); // Log del token
+
         turnoManager.obtenerTurnosDiaActual(new TurnoCallback() {
             @Override
             public void onSuccess(List<TurnoDTO> turnos) {
+                Log.d("HomeAdministrador", "Received turnos: " + turnos.size());
+                for (TurnoDTO turno : turnos) {
+                    Log.d("HomeAdministrador", "Turno: " + turno.getNombre() + " " + turno.getApellido1() + " " + turno.getApellido2());
+                }
                 listaTurnos = turnos;
                 adaptadorTurno = new AdaptadorTurno(getContext(), listaTurnos);
                 rvTurnos.setAdapter(adaptadorTurno);
+                adaptadorTurno.notifyDataSetChanged();
             }
 
             @Override

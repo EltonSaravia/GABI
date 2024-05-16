@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 response -> {
                     try {
-                        // Verificar si la respuesta es JSON válida
                         if (response.startsWith("{")) {
                             JSONObject jsonResponse = new JSONObject(response);
                             Log.d("LoginResponse", response); // Log the response for debugging
@@ -66,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                                 // Navegar a la actividad adecuada
                                 if (jsonResponse.getString("role").equals("administrador")) {
                                     Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
+                                    intent.putExtra("token", token); // Pasar el token a la nueva actividad
                                     startActivity(intent);
                                     finish();
                                 }
@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            // Manejar la respuesta de error si no es JSON
                             Toast.makeText(MainActivity.this, "Respuesta del servidor no válida: " + response, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
@@ -96,5 +95,4 @@ public class MainActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(stringRequest);
-    }
-}
+    }}
