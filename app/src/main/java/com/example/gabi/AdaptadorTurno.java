@@ -5,12 +5,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import dto.TurnoDTO;
-
 public class AdaptadorTurno extends RecyclerView.Adapter<AdaptadorTurno.TurnoViewHolder> {
 
     private List<TurnoDTO> listaTurnos;
@@ -37,7 +37,25 @@ public class AdaptadorTurno extends RecyclerView.Adapter<AdaptadorTurno.TurnoVie
         holder.txtApellido1.setText(turno.getApellido1());
         holder.txtApellido2.setText(turno.getApellido2());
         holder.txtPuesto.setText(turno.getPuesto());
-        holder.txtTipoTurno.setText(turno.getTipo());
+
+        // Cambiar el color de fondo según el tipo de turno
+        int color;
+        switch (turno.getTipo()) {
+            case "diurno":
+                color = context.getResources().getColor(R.color.colorDiurno);
+                break;
+            case "vespertino":
+                color = context.getResources().getColor(R.color.colorVespertino);
+                break;
+            case "nocturno":
+                color = context.getResources().getColor(R.color.colorNocturno);
+                break;
+            default:
+                color = context.getResources().getColor(android.R.color.white);
+                break;
+        }
+        // Aplicar el color de fondo sin cambiar el drawable
+        holder.linearLayoutItem.setBackgroundColor(color);
     }
 
     @Override
@@ -46,7 +64,8 @@ public class AdaptadorTurno extends RecyclerView.Adapter<AdaptadorTurno.TurnoVie
     }
 
     public static class TurnoViewHolder extends RecyclerView.ViewHolder {
-        TextView txtNombre, txtApellido1, txtApellido2, txtPuesto, txtTipoTurno;
+        TextView txtNombre, txtApellido1, txtApellido2, txtPuesto;
+        LinearLayout linearLayoutItem;
 
         public TurnoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,7 +73,7 @@ public class AdaptadorTurno extends RecyclerView.Adapter<AdaptadorTurno.TurnoVie
             txtApellido1 = itemView.findViewById(R.id.txtApellido1);
             txtApellido2 = itemView.findViewById(R.id.txtApellido2);
             txtPuesto = itemView.findViewById(R.id.txtPuesto);
-            txtTipoTurno = itemView.findViewById(R.id.txtTipoTurno);
+            linearLayoutItem = itemView.findViewById(R.id.linearLayoutItem);
         }
     }
 }

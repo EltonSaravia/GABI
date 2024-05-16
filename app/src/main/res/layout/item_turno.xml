@@ -1,41 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="@drawable/rounded_corners">
 
     <TextView
         android:id="@+id/txtNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nombre"
-        android:textSize="16sp" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp" />
 
     <TextView
         android:id="@+id/txtApellido1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Apellido 1"
-        android:textSize="16sp" />
+        android:text="Apellido1"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp" />
 
     <TextView
         android:id="@+id/txtApellido2"
-        android:layout_width="wrap_content"
+        android:layout_width="96dp"
         android:layout_height="wrap_content"
-        android:text="Apellido 2"
-        android:textSize="16sp" />
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:text="Apellido2"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtPuesto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="119dp"
+        android:layout_height="match_parent"
         android:text="Puesto"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/txtTipoTurno"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tipo de Turno"
-        android:textSize="16sp" />
+        android:textAlignment="textEnd"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold" />
 </LinearLayout>

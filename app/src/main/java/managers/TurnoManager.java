@@ -19,6 +19,8 @@ import java.text.ParseException;
 
 import dto.TurnoDTO;
 import managers.TurnoCallback;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class TurnoManager {
 
@@ -86,6 +88,14 @@ public class TurnoManager {
                         );
                         listaTurnos.add(turno);
                     }
+
+                    // Ordenar por tipo de turno
+                    Collections.sort(listaTurnos, new Comparator<TurnoDTO>() {
+                        @Override
+                        public int compare(TurnoDTO t1, TurnoDTO t2) {
+                            return t1.getTipo().compareTo(t2.getTipo());
+                        }
+                    });
                 } else {
                     error = "HTTP error code: " + responseCode;
                     Log.e("TurnoManager", "HTTP error code: " + responseCode);
