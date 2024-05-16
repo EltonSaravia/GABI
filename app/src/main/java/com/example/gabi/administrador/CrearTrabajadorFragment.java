@@ -1,18 +1,14 @@
-package com.example.gabi;
+package com.example.gabi.administrador;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,17 +16,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
+import com.example.gabi.R;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegistrarTrabajadorFragment extends Fragment {
+public class CrearTrabajadorFragment extends Fragment {
 
     EditText txtDNI, txtNombre, txtApellido1, txtApellido2, txtTelefono, txtEmail, txtContrasena;
     Spinner spnPuesto;
-    Button btnRegistrar;
+    Button btnRegistrar, btnCancelar;
 
-    public RegistrarTrabajadorFragment() {
+    public CrearTrabajadorFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +46,19 @@ public class RegistrarTrabajadorFragment extends Fragment {
         txtContrasena = view.findViewById(R.id.contrasena);
         spnPuesto = view.findViewById(R.id.spinnerPuesto);
         btnRegistrar = view.findViewById(R.id.botonRegistrar);
+        btnCancelar = view.findViewById(R.id.botonCancelar);
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 registrarTrabajador();
+            }
+        });
+
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Código para manejar la cancelación, por ejemplo, volver a la lista de trabajadores
             }
         });
 
@@ -71,16 +75,13 @@ public class RegistrarTrabajadorFragment extends Fragment {
         final String contrasena = txtContrasena.getText().toString().trim();
         final String puesto = spnPuesto.getSelectedItem().toString();
 
-        // Validación de campos vacíos
-        if (nombre.isEmpty() || email.isEmpty() || dni.isEmpty()) {
+        // Validar campos vacíos
+        if (dni.isEmpty() || nombre.isEmpty() || email.isEmpty() || contrasena.isEmpty()) {
             Toast.makeText(getContext(), "Faltan campos por llenar", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
-        final String token = sharedPreferences.getString("token", "");
-
-        StringRequest request = new StringRequest(Request.Method.POST, "https://residencialontananza.com/api/insertarUsuario.php",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://residencialontananza.com/public_html/api/insertarUsuario.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -105,17 +106,9 @@ public class RegistrarTrabajadorFragment extends Fragment {
                 params.put("puesto", puesto);
                 return params;
             }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", token);
-                return headers;
-            }
         };
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(request);
     }
 }
-

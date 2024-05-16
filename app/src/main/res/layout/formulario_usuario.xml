@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:background="@drawable/custom_edittext"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp">
 
@@ -45,7 +44,8 @@
                 android:drawablePadding="8dp"
                 android:hint="DNI"
                 android:padding="8dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:inputType="text" />
 
             <EditText
                 android:id="@+id/nombre"
@@ -57,7 +57,8 @@
                 android:drawablePadding="8dp"
                 android:hint="Nombre"
                 android:padding="8dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:inputType="textCapWords" />
 
             <!-- Apellidos -->
             <EditText
@@ -69,7 +70,8 @@
                 android:drawablePadding="8dp"
                 android:hint="Primer Apellido"
                 android:padding="8dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:inputType="textCapWords" />
 
             <EditText
                 android:id="@+id/apellido2"
@@ -80,7 +82,8 @@
                 android:drawablePadding="8dp"
                 android:hint="Segundo Apellido"
                 android:padding="8dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:inputType="textCapWords" />
 
             <!-- Puesto con Spinner -->
             <Spinner
@@ -102,7 +105,8 @@
                 android:drawablePadding="8dp"
                 android:hint="Teléfono"
                 android:padding="8dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:inputType="phone" />
 
             <EditText
                 android:id="@+id/email"

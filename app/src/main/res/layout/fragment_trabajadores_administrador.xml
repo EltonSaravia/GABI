@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/imagen_fondo_login"
+    tools:context=".TrabajadoresAministrador">
+
+    <Button
+        android:id="@+id/btnCrearTrabajador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear Trabajador"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/turquesa"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:cornerRadius="20dp"/>
+
+    <Button
+        android:id="@+id/btnListarTrabajadores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Listar Trabajadores"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/turquesa"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:cornerRadius="20dp"/>
+
+    <Button
+        android:id="@+id/btnActualizarTrabajador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Actualizar Trabajador"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/turquesa"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:cornerRadius="20dp"/>
+
+    <Button
+        android:id="@+id/btnEliminarTrabajador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eliminar Trabajador"
+        android:backgroundTint="@color/turquesa"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:cornerRadius="20dp"/>
+</LinearLayout>
