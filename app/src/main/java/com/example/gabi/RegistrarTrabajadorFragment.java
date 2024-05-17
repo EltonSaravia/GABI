@@ -51,6 +51,12 @@ public class RegistrarTrabajadorFragment extends Fragment {
         spnPuesto = view.findViewById(R.id.spinnerPuesto);
         btnRegistrar = view.findViewById(R.id.botonRegistrar);
 
+        // Configurar el Spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.puestos_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnPuesto.setAdapter(adapter);
+
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,16 +75,13 @@ public class RegistrarTrabajadorFragment extends Fragment {
         final String telefono = txtTelefono.getText().toString().trim();
         final String email = txtEmail.getText().toString().trim();
         final String contrasena = txtContrasena.getText().toString().trim();
-        final String puesto = spnPuesto.getSelectedItem().toString();
+        final String puesto = spnPuesto.getSelectedItem() != null ? spnPuesto.getSelectedItem().toString() : null;
 
         // Validación de campos vacíos
-        if (nombre.isEmpty() || email.isEmpty() || dni.isEmpty()) {
+        if (dni.isEmpty() || nombre.isEmpty() || email.isEmpty() || contrasena.isEmpty() || puesto == null) {
             Toast.makeText(getContext(), "Faltan campos por llenar", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
-        final String token = sharedPreferences.getString("token", "");
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://residencialontananza.com/api/insertarUsuario.php",
                 new Response.Listener<String>() {
@@ -109,7 +112,9 @@ public class RegistrarTrabajadorFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", token);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+                final String token = sharedPreferences.getString("token", "");
+                headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
         };
@@ -118,4 +123,3 @@ public class RegistrarTrabajadorFragment extends Fragment {
         queue.add(request);
     }
 }
-

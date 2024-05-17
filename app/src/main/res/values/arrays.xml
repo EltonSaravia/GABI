@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="puestos_array">
+        <item>administrador</item>
+        <item>enfermero</item>
+        <item>auxiliar</item>
+    </string-array>
 </resources>
