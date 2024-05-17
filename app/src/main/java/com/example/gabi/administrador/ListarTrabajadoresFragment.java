@@ -5,9 +5,12 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ListarTrabajadoresFragment extends Fragment {
@@ -27,6 +31,8 @@ public class ListarTrabajadoresFragment extends Fragment {
     private RecyclerView recyclerViewTrabajadores;
     private TrabajadoresInfoCompletaAdapter trabajadoresAdapter;
     private ArrayList<TrabajadorDTO> listaTrabajadores;
+    private ArrayList<TrabajadorDTO> listaTrabajadoresFiltrada;
+    private EditText searchEditText;
 
     public ListarTrabajadoresFragment() {
         // Required empty public constructor
@@ -41,9 +47,24 @@ public class ListarTrabajadoresFragment extends Fragment {
         recyclerViewTrabajadores = view.findViewById(R.id.recyclerViewTrabajadores);
         recyclerViewTrabajadores.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        searchEditText = view.findViewById(R.id.searchEditText);
         listaTrabajadores = new ArrayList<>();
-        trabajadoresAdapter = new TrabajadoresInfoCompletaAdapter(listaTrabajadores);
+        listaTrabajadoresFiltrada = new ArrayList<>();
+        trabajadoresAdapter = new TrabajadoresInfoCompletaAdapter(listaTrabajadoresFiltrada);
         recyclerViewTrabajadores.setAdapter(trabajadoresAdapter);
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filtrarTrabajadores(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         obtenerTrabajadores();
 
@@ -77,6 +98,7 @@ public class ListarTrabajadoresFragment extends Fragment {
                                 );
                                 listaTrabajadores.add(trabajador);
                             }
+                            listaTrabajadoresFiltrada.addAll(listaTrabajadores);
                             trabajadoresAdapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(getContext(), "Error: " + jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
@@ -96,5 +118,23 @@ public class ListarTrabajadoresFragment extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(stringRequest);
+    }
+
+    private void filtrarTrabajadores(String texto) {
+        listaTrabajadoresFiltrada.clear();
+        if (texto.isEmpty()) {
+            listaTrabajadoresFiltrada.addAll(listaTrabajadores);
+        } else {
+            for (TrabajadorDTO trabajador : listaTrabajadores) {
+                if (trabajador.getNombre().toLowerCase().contains(texto.toLowerCase()) ||
+                        trabajador.getApellido1().toLowerCase().contains(texto.toLowerCase()) ||
+                        trabajador.getApellido2().toLowerCase().contains(texto.toLowerCase()) ||
+                        trabajador.getPuesto().toLowerCase().contains(texto.toLowerCase()) ||
+                        trabajador.getEmail().toLowerCase().contains(texto.toLowerCase())) {
+                    listaTrabajadoresFiltrada.add(trabajador);
+                }
+            }
+        }
+        trabajadoresAdapter.notifyDataSetChanged();
     }
 }
