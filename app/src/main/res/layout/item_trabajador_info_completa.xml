@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@drawable/rounded_corners">
+
+    <TextView
+        android:id="@+id/txtNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:textColor="@android:color/holo_blue_light"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp" />
+
+    <TextView
+        android:id="@+id/txtApellido1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apellido1"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp" />
+
+    <TextView
+        android:id="@+id/txtApellido2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:text="Apellido2"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txtPuesto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Puesto"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txtTelefono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Telefono"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+</LinearLayout>
