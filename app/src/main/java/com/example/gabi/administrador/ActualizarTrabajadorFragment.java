@@ -1,11 +1,9 @@
 package com.example.gabi.administrador;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +21,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gabi.R;
+import managers.TrabajadorManager;
+import dto.TrabajadorDTO;
+import managers.TrabajadorCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ActualizarTrabajadorFragment extends Fragment {
@@ -35,7 +37,8 @@ public class ActualizarTrabajadorFragment extends Fragment {
     private EditText txtDNI, txtNombre, txtApellido1, txtApellido2, txtTelefono, txtEmail, txtContrasena;
     private Spinner spnPuesto;
     private Button btnBuscar, btnActualizar, btnCancelar;
-    private int trabajadorId;
+    private int trabajadorId; // ID del trabajador buscado
+    private String token;
 
     public ActualizarTrabajadorFragment() {
         // Required empty public constructor
@@ -60,6 +63,10 @@ public class ActualizarTrabajadorFragment extends Fragment {
         btnActualizar = view.findViewById(R.id.botonActualizar);
         btnCancelar = view.findViewById(R.id.botonCancelar);
 
+        // Obtener el token desde SharedPreferences
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", getContext().MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
+
         // Configurar el Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.puestos_array, android.R.layout.simple_spinner_item);
@@ -76,7 +83,7 @@ public class ActualizarTrabajadorFragment extends Fragment {
         btnActualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mostrarConfirmacionActualizacion();
+                actualizarTrabajador();
             }
         });
 
@@ -98,73 +105,36 @@ public class ActualizarTrabajadorFragment extends Fragment {
             return;
         }
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", getContext().MODE_PRIVATE);
-        final String token = sharedPreferences.getString("token", "");
+        TrabajadorManager trabajadorManager = new TrabajadorManager(getContext());
+        trabajadorManager.buscarTrabajador(dni, token, new TrabajadorCallback() {
+            @Override
+            public void onSuccess(List<TrabajadorDTO> trabajadores) {
+                if (!trabajadores.isEmpty()) {
+                    TrabajadorDTO trabajador = trabajadores.get(0);
+                    trabajadorId = trabajador.getId(); // Guardar el ID del trabajador
+                    txtNombre.setText(trabajador.getNombre());
+                    txtApellido1.setText(trabajador.getApellido1());
+                    txtApellido2.setText(trabajador.getApellido2());
+                    txtTelefono.setText(trabajador.getTelefono());
+                    txtEmail.setText(trabajador.getEmail());
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://residencialontananza.com/api/buscarTrabajadorParaActualizar.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getString("status").equals("success")) {
-                                JSONObject data = jsonObject.getJSONObject("data");
-                                trabajadorId = data.getInt("id");
-                                txtNombre.setText(data.getString("nombre"));
-                                txtApellido1.setText(data.getString("apellido_1"));
-                                txtApellido2.setText(data.getString("apellido_2"));
-                                txtTelefono.setText(data.getString("telefono"));
-                                txtEmail.setText(data.getString("email"));
-                                String puesto = data.getString("puesto");
-                                ArrayAdapter<CharSequence> adapter = (ArrayAdapter<CharSequence>) spnPuesto.getAdapter();
-                                if (adapter != null) {
-                                    int spinnerPosition = adapter.getPosition(puesto);
-                                    spnPuesto.setSelection(spinnerPosition);
-                                }
-                            } else {
-                                Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            Toast.makeText(getContext(), "Error al procesar los datos", Toast.LENGTH_SHORT).show();
-                        }
+                    // Set the spinner position to match the puesto
+                    String puesto = trabajador.getPuesto();
+                    ArrayAdapter<CharSequence> adapter = (ArrayAdapter<CharSequence>) spnPuesto.getAdapter();
+                    if (adapter != null) {
+                        int spinnerPosition = adapter.getPosition(puesto);
+                        spnPuesto.setSelection(spinnerPosition);
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Error de conexión: " + error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
-                return headers;
+                } else {
+                    Toast.makeText(getContext(), "Trabajador no encontrado", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("dni", dni);
-                return params;
+            public void onError(String error) {
+                Toast.makeText(getContext(), "Error al buscar trabajador: " + error, Toast.LENGTH_SHORT).show();
             }
-        };
-
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        queue.add(request);
-    }
-
-    private void mostrarConfirmacionActualizacion() {
-        new AlertDialog.Builder(getContext())
-                .setTitle("Confirmación")
-                .setMessage("¿Está seguro de que desea actualizar los datos del trabajador?")
-                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        actualizarTrabajador();
-                    }
-                })
-                .setNegativeButton("No", null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+        });
     }
 
     private void actualizarTrabajador() {
@@ -182,14 +152,20 @@ public class ActualizarTrabajadorFragment extends Fragment {
             return;
         }
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", getContext().MODE_PRIVATE);
-        final String token = sharedPreferences.getString("token", "");
-
         StringRequest request = new StringRequest(Request.Method.POST, "https://residencialontananza.com/api/actualizarDatosTrabajador.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.getString("status").equals("success")) {
+                                Toast.makeText(getContext(), "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(getContext(), "Error al procesar los datos", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -197,13 +173,6 @@ public class ActualizarTrabajadorFragment extends Fragment {
                 Toast.makeText(getContext(), "Error de conexión: " + error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
-                return headers;
-            }
-
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -217,6 +186,13 @@ public class ActualizarTrabajadorFragment extends Fragment {
                 params.put("contrasena", contrasena);
                 params.put("puesto", puesto);
                 return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
             }
         };
 

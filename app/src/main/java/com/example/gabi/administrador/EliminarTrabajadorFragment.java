@@ -1,12 +1,16 @@
 package com.example.gabi.administrador;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -17,17 +21,23 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gabi.R;
+import managers.TrabajadorManager;
+import dto.TrabajadorDTO;
+import managers.TrabajadorCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EliminarTrabajadorFragment extends Fragment {
 
-    private EditText txtIdTrabajador;
-    private Button btnEliminar, btnCancelar;
+    private EditText txtDNI, txtNombre, txtApellido1, txtApellido2, txtTelefono, txtEmail;
+    private Spinner spnPuesto;
+    private Button btnBuscar, btnEliminar, btnCancelar;
+    private int trabajadorId; // ID del trabajador buscado
     private String token;
 
     public EliminarTrabajadorFragment() {
@@ -40,12 +50,34 @@ public class EliminarTrabajadorFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_eliminar_trabajador, container, false);
 
-        txtIdTrabajador = view.findViewById(R.id.id_trabajador);
-        btnEliminar = view.findViewById(R.id.boton_eliminar);
-        btnCancelar = view.findViewById(R.id.boton_cancelar);
+        // Asociar los controles
+        txtDNI = view.findViewById(R.id.dni);
+        txtNombre = view.findViewById(R.id.nombre);
+        txtApellido1 = view.findViewById(R.id.apellido1);
+        txtApellido2 = view.findViewById(R.id.apellido2);
+        txtTelefono = view.findViewById(R.id.telefono);
+        txtEmail = view.findViewById(R.id.email);
+        spnPuesto = view.findViewById(R.id.spinnerPuesto);
+        btnBuscar = view.findViewById(R.id.botonBuscar);
+        btnEliminar = view.findViewById(R.id.botonEliminar);
+        btnCancelar = view.findViewById(R.id.botonCancelar);
 
         // Obtener el token desde SharedPreferences
-        token = getActivity().getSharedPreferences("MyAppPrefs", getContext().MODE_PRIVATE).getString("token", null);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", getContext().MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
+
+        // Configurar el Spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.puestos_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnPuesto.setAdapter(adapter);
+
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buscarTrabajador();
+            }
+        });
 
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,21 +96,59 @@ public class EliminarTrabajadorFragment extends Fragment {
         return view;
     }
 
-    private void eliminarTrabajador() {
-        final String id = txtIdTrabajador.getText().toString().trim();
+    private void buscarTrabajador() {
+        final String dni = txtDNI.getText().toString().trim();
 
-        if (id.isEmpty()) {
-            Toast.makeText(getContext(), "Por favor ingrese el ID del trabajador", Toast.LENGTH_SHORT).show();
+        if (dni.isEmpty()) {
+            Toast.makeText(getContext(), "Por favor ingrese el DNI", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        TrabajadorManager trabajadorManager = new TrabajadorManager(getContext());
+        trabajadorManager.buscarTrabajador(dni, token, new TrabajadorCallback() {
+            @Override
+            public void onSuccess(List<TrabajadorDTO> trabajadores) {
+                if (!trabajadores.isEmpty()) {
+                    TrabajadorDTO trabajador = trabajadores.get(0);
+                    trabajadorId = trabajador.getId(); // Guardar el ID del trabajador
+                    txtNombre.setText(trabajador.getNombre());
+                    txtApellido1.setText(trabajador.getApellido1());
+                    txtApellido2.setText(trabajador.getApellido2());
+                    txtTelefono.setText(trabajador.getTelefono());
+                    txtEmail.setText(trabajador.getEmail());
+
+                    // Set the spinner position to match the puesto
+                    String puesto = trabajador.getPuesto();
+                    ArrayAdapter<CharSequence> adapter = (ArrayAdapter<CharSequence>) spnPuesto.getAdapter();
+                    if (adapter != null) {
+                        int spinnerPosition = adapter.getPosition(puesto);
+                        spnPuesto.setSelection(spinnerPosition);
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Trabajador no encontrado", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getContext(), "Error al buscar trabajador: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void eliminarTrabajador() {
         StringRequest request = new StringRequest(Request.Method.POST, "https://residencialontananza.com/api/eliminarTrabajador.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            if (jsonObject.getString("status").equals("success")) {
+                                Toast.makeText(getContext(), "Trabajador eliminado correctamente", Toast.LENGTH_SHORT).show();
+                                getParentFragmentManager().popBackStack();
+                            } else {
+                                Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
                         } catch (JSONException e) {
                             Toast.makeText(getContext(), "Error al procesar los datos", Toast.LENGTH_SHORT).show();
                         }
@@ -92,14 +162,14 @@ public class EliminarTrabajadorFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", id);
+                params.put("id", String.valueOf(trabajadorId));
                 return params;
             }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token); // Usa el token almacenado
+                headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
         };
