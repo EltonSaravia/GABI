@@ -47,6 +47,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Eliminar Trabajador"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/turquesa"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:cornerRadius="20dp"/>
+
+    <Button
+        android:id="@+id/btnAsignarTareas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Asignar Tareas"
         android:backgroundTint="@color/turquesa"
         android:textColor="@android:color/white"
         android:textSize="18sp"
