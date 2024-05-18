@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                                 // Navegar a la actividad adecuada
                                 if (jsonResponse.getString("role").equals("administrador")) {
                                     Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
-                                    intent.putExtra("token", token); // Pasar el token a la nueva actividad
                                     startActivity(intent);
                                     finish();
                                 }
@@ -95,4 +94,5 @@ public class MainActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(stringRequest);
-    }}
+    }
+}

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.gabi.administrador.ListarTrabajadoresFragment;
-import com.example.gabi.RegistrarTrabajadorFragment;
+import com.example.gabi.administrador.ActualizarTrabajadorFragment;
 
 public class TrabajadoresAministrador extends Fragment {
 
@@ -23,6 +23,7 @@ public class TrabajadoresAministrador extends Fragment {
 
         Button btnCrear = view.findViewById(R.id.btnCrearTrabajador);
         Button btnListar = view.findViewById(R.id.btnListarTrabajadores);
+        Button btnActualizar = view.findViewById(R.id.btnActualizarTrabajador);
 
         btnCrear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +40,16 @@ public class TrabajadoresAministrador extends Fragment {
             public void onClick(View v) {
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.frame_layout, new ListarTrabajadoresFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        btnActualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, new ActualizarTrabajadorFragment())
                         .addToBackStack(null)
                         .commit();
             }
