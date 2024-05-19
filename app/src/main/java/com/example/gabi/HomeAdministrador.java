@@ -118,6 +118,11 @@ public class HomeAdministrador extends Fragment {
             }
 
             @Override
+            public void onSuccess(String message) {
+
+            }
+
+            @Override
             public void onError(String error) {
                 Log.e("TurnoError", "Error: " + error);
             }

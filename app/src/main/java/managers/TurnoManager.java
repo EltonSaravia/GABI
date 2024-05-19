@@ -9,18 +9,14 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.text.SimpleDateFormat;
-import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dto.TurnoDTO;
-import managers.TurnoCallback;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class TurnoManager {
 
@@ -34,6 +30,10 @@ public class TurnoManager {
 
     public void obtenerTurnosDiaActual(final TurnoCallback callback) {
         new ObtenerTurnosTask(callback).execute();
+    }
+
+    public void asignarTurno(int trabajadorId, String turno, final TurnoCallback callback) {
+        new AsignarTurnoTask(trabajadorId, turno, callback).execute();
     }
 
     private class ObtenerTurnosTask extends AsyncTask<Void, Void, List<TurnoDTO>> {
@@ -88,14 +88,6 @@ public class TurnoManager {
                         );
                         listaTurnos.add(turno);
                     }
-
-                    // Ordenar por tipo de turno
-                    Collections.sort(listaTurnos, new Comparator<TurnoDTO>() {
-                        @Override
-                        public int compare(TurnoDTO t1, TurnoDTO t2) {
-                            return t1.getTipo().compareTo(t2.getTipo());
-                        }
-                    });
                 } else {
                     error = "HTTP error code: " + responseCode;
                     Log.e("TurnoManager", "HTTP error code: " + responseCode);
@@ -113,6 +105,63 @@ public class TurnoManager {
                 callback.onError(error);
             } else {
                 callback.onSuccess(turnos);
+            }
+        }
+    }
+
+    private class AsignarTurnoTask extends AsyncTask<Void, Void, String> {
+        private int trabajadorId;
+        private String turno;
+        private TurnoCallback callback;
+        private String error;
+
+        public AsignarTurnoTask(int trabajadorId, String turno, TurnoCallback callback) {
+            this.trabajadorId = trabajadorId;
+            this.turno = turno;
+            this.callback = callback;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL("https://residencialontananza.com/api/asignarTurno.php");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Authorization", "Bearer " + token);
+                connection.setDoOutput(true);
+
+                String postData = "trabajador_id=" + trabajadorId + "&turno=" + turno;
+                connection.getOutputStream().write(postData.getBytes());
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                reader.close();
+                JSONObject jsonResponse = new JSONObject(result.toString());
+
+                if (jsonResponse.getString("status").equals("success")) {
+                    return jsonResponse.getString("message");
+                } else {
+                    error = jsonResponse.getString("message");
+                }
+            } catch (Exception e) {
+                error = e.getMessage();
+                Log.e("TurnoManager", "Error: " + error, e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (error != null) {
+                callback.onError(error);
+            } else {
+                callback.onSuccess(result);
             }
         }
     }
