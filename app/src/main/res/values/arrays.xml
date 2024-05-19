@@ -5,4 +5,18 @@
         <item>enfermero</item>
         <item>auxiliar</item>
     </string-array>
+
+
+    <string-array name="tareas_auxiliar">
+        <item>Revisar Armarios</item>
+        <item>Administrar Medicamentos</item>
+        <item>Aseo Personal</item>
+        <item>Ayuda en la Movilidad</item>
+        <item>Control de Signos Vitales</item>
+        <item>Alimentación Asistida</item>
+        <item>Preparación de Comidas</item>
+        <item>Limpieza de Habitaciones</item>
+        <item>Revisar Equipo Médico</item>
+        <item>Actividades Recreativas</item>
+    </string-array>
 </resources>

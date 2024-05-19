@@ -228,6 +228,7 @@ public class TrabajadorManager {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             TrabajadorTurnoDTO trabajador = new TrabajadorTurnoDTO(
+                                    jsonObject.getInt("id"), // Extraer el id
                                     jsonObject.getString("nombre"),
                                     jsonObject.getString("apellido_1"),
                                     jsonObject.getString("apellido_2"),
