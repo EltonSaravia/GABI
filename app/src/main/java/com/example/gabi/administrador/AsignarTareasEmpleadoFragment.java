@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,10 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import com.example.gabi.R;
 import dto.TrabajadorTurnoDTO;
+import dto.TareaDTO;
 import managers.TareaManager;
+import managers.TareaCallback;
+import java.util.List;
 
 public class AsignarTareasEmpleadoFragment extends Fragment {
 
@@ -25,6 +30,7 @@ public class AsignarTareasEmpleadoFragment extends Fragment {
     private EditText editTextNotas;
     private TimePicker timePickerHora;
     private Button btnAsignarTarea;
+    private RecyclerView recyclerViewTareasAsignadas;
     private TrabajadorTurnoDTO trabajador;
 
     public AsignarTareasEmpleadoFragment() {
@@ -40,6 +46,7 @@ public class AsignarTareasEmpleadoFragment extends Fragment {
         editTextNotas = view.findViewById(R.id.editTextNotas);
         timePickerHora = view.findViewById(R.id.timePickerHora);
         btnAsignarTarea = view.findViewById(R.id.btnAsignarTarea);
+        recyclerViewTareasAsignadas = view.findViewById(R.id.recyclerViewTareasAsignadas);
 
         // Configurar el Spinner con las tareas
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
@@ -60,6 +67,8 @@ public class AsignarTareasEmpleadoFragment extends Fragment {
             }
         });
 
+        cargarTareasAsignadas();
+
         return view;
     }
 
@@ -74,15 +83,46 @@ public class AsignarTareasEmpleadoFragment extends Fragment {
         String token = sharedPreferences.getString("token", "");
 
         TareaManager tareaManager = new TareaManager(getContext(), token);
-        tareaManager.asignarTarea(trabajador.getId(), tituloTarea, notas, "2024-05-19", horaTareaAsignada, new TareaManager.TareaCallback() {
+        tareaManager.asignarTarea(trabajador.getId(), tituloTarea, notas, "2024-05-19", horaTareaAsignada, new TareaCallback() {
             @Override
             public void onSuccess(String message) {
                 Toast.makeText(getContext(), "Tarea asignada: " + message, Toast.LENGTH_SHORT).show();
+                cargarTareasAsignadas(); // Recargar las tareas asignadas después de agregar una nueva
             }
 
             @Override
             public void onError(String error) {
                 Toast.makeText(getContext(), "Error al asignar tarea: " + error, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(List<TareaDTO> tareaList) {
+                // No se usa aquí
+            }
+        });
+    }
+
+    private void cargarTareasAsignadas() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+
+        TareaManager tareaManager = new TareaManager(getContext(), token);
+        tareaManager.obtenerTareasAsignadas(trabajador.getId(), new TareaCallback() {
+            @Override
+            public void onSuccess(String message) {
+                // No se usa aquí
+            }
+
+            @Override
+            public void onSuccess(List<TareaDTO> tareaList) {
+                TareaAdapter tareaAdapter = new TareaAdapter(getContext(), tareaList);
+                recyclerViewTareasAsignadas.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerViewTareasAsignadas.setAdapter(tareaAdapter);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getContext(), "Error al cargar tareas: " + error, Toast.LENGTH_SHORT).show();
             }
         });
     }
