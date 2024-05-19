@@ -13,12 +13,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.gabi.R;
+
+import java.util.List;
+
 import dto.TrabajadorTurnoDTO;
 import dto.TurnoDTO;
 import managers.TurnoManager;
 import managers.TurnoCallback;
-
-import java.util.List;
 
 public class AsignarTurnosEmpleadoFragment extends Fragment {
 
@@ -27,6 +28,7 @@ public class AsignarTurnosEmpleadoFragment extends Fragment {
     private RadioButton radioButtonDiurno, radioButtonVespertino, radioButtonNocturno;
     private Button btnAsignarTurno;
     private TrabajadorTurnoDTO trabajador;
+    private String fechaSeleccionada; // Nueva variable para almacenar la fecha seleccionada
 
     public AsignarTurnosEmpleadoFragment() {
         // Required empty public constructor
@@ -45,6 +47,7 @@ public class AsignarTurnosEmpleadoFragment extends Fragment {
 
         if (getArguments() != null) {
             trabajador = (TrabajadorTurnoDTO) getArguments().getSerializable("trabajador");
+            fechaSeleccionada = getArguments().getString("fechaSeleccionada"); // Obtener la fecha seleccionada del bundle
             textViewNombreEmpleado.setText(trabajador.getNombre() + " " + trabajador.getApellido1() + " " + trabajador.getApellido2());
         }
 
@@ -62,11 +65,11 @@ public class AsignarTurnosEmpleadoFragment extends Fragment {
         String turno = "";
         int selectedId = radioGroupTurno.getCheckedRadioButtonId();
         if (selectedId == radioButtonDiurno.getId()) {
-            turno = "Diurno";
+            turno = "diurno";
         } else if (selectedId == radioButtonVespertino.getId()) {
-            turno = "Vespertino";
+            turno = "vespertino";
         } else if (selectedId == radioButtonNocturno.getId()) {
-            turno = "Nocturno";
+            turno = "nocturno";
         }
 
         if (turno.isEmpty()) {
@@ -78,12 +81,7 @@ public class AsignarTurnosEmpleadoFragment extends Fragment {
         String token = sharedPreferences.getString("token", "");
 
         TurnoManager turnoManager = new TurnoManager(getContext(), token);
-        turnoManager.asignarTurno(trabajador.getId(), turno, new TurnoCallback() {
-            @Override
-            public void onSuccess(List<TurnoDTO> turnos) {
-                // No se usa en este contexto
-            }
-
+        turnoManager.asignarTurno(trabajador.getId(), turno, fechaSeleccionada, new TurnoCallback() {
             @Override
             public void onSuccess(String message) {
                 Toast.makeText(getContext(), "Turno asignado: " + message, Toast.LENGTH_SHORT).show();
@@ -93,6 +91,11 @@ public class AsignarTurnosEmpleadoFragment extends Fragment {
             @Override
             public void onError(String error) {
                 Toast.makeText(getContext(), "Error al asignar turno: " + error, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(List<TurnoDTO> turnos) {
+                // No se usa aquí
             }
         });
     }

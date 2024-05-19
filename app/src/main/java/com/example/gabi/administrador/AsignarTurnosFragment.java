@@ -23,6 +23,7 @@ public class AsignarTurnosFragment extends Fragment {
     private DatePicker datePicker;
     private Button btnBuscarTrabajadores;
     private RecyclerView recyclerViewTrabajadores;
+    private String fechaSeleccionada; // Nueva variable para almacenar la fecha seleccionada
 
     public AsignarTurnosFragment() {
         // Required empty public constructor
@@ -50,13 +51,13 @@ public class AsignarTurnosFragment extends Fragment {
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();
         int year = datePicker.getYear();
-        String fecha = String.format("%04d-%02d-%02d", year, month + 1, day);
+        fechaSeleccionada = String.format("%04d-%02d-%02d", year, month + 1, day); // Almacenar la fecha seleccionada
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
 
         TrabajadorManager trabajadorManager = new TrabajadorManager(getContext());
-        trabajadorManager.obtenerTrabajadoresPorFecha(fecha, new TrabajadorManager.TrabajadorTurnoCallback() {
+        trabajadorManager.obtenerTrabajadoresPorFecha(fechaSeleccionada, new TrabajadorManager.TrabajadorTurnoCallback() {
             @Override
             public void onSuccess(List<TrabajadorTurnoDTO> trabajadorList) {
                 AdaptadorTrabajadorTurnoAsignar adaptador = new AdaptadorTrabajadorTurnoAsignar(getContext(), trabajadorList);
@@ -65,6 +66,7 @@ public class AsignarTurnosFragment extends Fragment {
                     public void onItemClick(TrabajadorTurnoDTO trabajador) {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("trabajador", trabajador);
+                        bundle.putString("fechaSeleccionada", fechaSeleccionada); // Pasar la fecha seleccionada al siguiente fragmento
                         AsignarTurnosEmpleadoFragment fragment = new AsignarTurnosEmpleadoFragment();
                         fragment.setArguments(bundle);
 

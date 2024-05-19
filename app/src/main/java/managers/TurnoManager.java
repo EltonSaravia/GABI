@@ -32,8 +32,8 @@ public class TurnoManager {
         new ObtenerTurnosTask(callback).execute();
     }
 
-    public void asignarTurno(int trabajadorId, String turno, final TurnoCallback callback) {
-        new AsignarTurnoTask(trabajadorId, turno, callback).execute();
+    public void asignarTurno(int trabajadorId, String tipoTurno, String fecha, TurnoCallback callback) {
+        new AsignarTurnoTask(trabajadorId, tipoTurno, fecha, callback).execute();
     }
 
     private class ObtenerTurnosTask extends AsyncTask<Void, Void, List<TurnoDTO>> {
@@ -111,13 +111,15 @@ public class TurnoManager {
 
     private class AsignarTurnoTask extends AsyncTask<Void, Void, String> {
         private int trabajadorId;
-        private String turno;
+        private String tipoTurno;
+        private String fecha;
         private TurnoCallback callback;
         private String error;
 
-        public AsignarTurnoTask(int trabajadorId, String turno, TurnoCallback callback) {
+        public AsignarTurnoTask(int trabajadorId, String tipoTurno, String fecha, TurnoCallback callback) {
             this.trabajadorId = trabajadorId;
-            this.turno = turno;
+            this.tipoTurno = tipoTurno;
+            this.fecha = fecha;
             this.callback = callback;
         }
 
@@ -128,32 +130,41 @@ public class TurnoManager {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Authorization", "Bearer " + token);
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 connection.setDoOutput(true);
 
-                String postData = "trabajador_id=" + trabajadorId + "&turno=" + turno;
-                connection.getOutputStream().write(postData.getBytes());
+                String postData = "trabajador_id=" + trabajadorId + "&tipo_turno=" + tipoTurno + "&fecha=" + fecha;
+                OutputStream os = connection.getOutputStream();
+                os.write(postData.getBytes());
+                os.flush();
+                os.close();
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder result = new StringBuilder();
-                String line;
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String inputLine;
+                    StringBuilder response = new StringBuilder();
 
-                while ((line = reader.readLine()) != null) {
-                    result.append(line);
-                }
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
 
-                reader.close();
-                JSONObject jsonResponse = new JSONObject(result.toString());
-
-                if (jsonResponse.getString("status").equals("success")) {
-                    return jsonResponse.getString("message");
+                    JSONObject jsonResponse = new JSONObject(response.toString());
+                    if (jsonResponse.getString("status").equals("success")) {
+                        return jsonResponse.getString("message");
+                    } else {
+                        error = jsonResponse.getString("message");
+                        return null;
+                    }
                 } else {
-                    error = jsonResponse.getString("message");
+                    error = "HTTP error code: " + responseCode;
+                    return null;
                 }
             } catch (Exception e) {
                 error = e.getMessage();
-                Log.e("TurnoManager", "Error: " + error, e);
+                return null;
             }
-            return null;
         }
 
         @Override
