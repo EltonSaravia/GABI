@@ -1,17 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/turquesa"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@drawable/imagen_fondo_login"
     tools:context=".ResidentesAdministrador">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="ResidentesAdministrador"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/white"/>
-</FrameLayout>
+    <Button
+        android:id="@+id/btnAgregarResidente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar Residente"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/turquesa"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/btnListarResidentes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Listar Residentes"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/turquesa"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/btnModificarResidente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modificar Residente"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/turquesa"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/btnEliminarResidente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eliminar Residente"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/turquesa"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
+</LinearLayout>
