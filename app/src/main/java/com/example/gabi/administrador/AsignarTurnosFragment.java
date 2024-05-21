@@ -21,9 +21,9 @@ import managers.TrabajadorManager;
 public class AsignarTurnosFragment extends Fragment {
 
     private DatePicker datePicker;
-    private Button btnBuscarTrabajadores;
+    private Button btnBuscarTrabajadores, btnAsignarNuevoTurno;
     private RecyclerView recyclerViewTrabajadores;
-    private String fechaSeleccionada; // Nueva variable para almacenar la fecha seleccionada
+    private String fechaSeleccionada;
 
     public AsignarTurnosFragment() {
         // Required empty public constructor
@@ -35,12 +35,28 @@ public class AsignarTurnosFragment extends Fragment {
 
         datePicker = view.findViewById(R.id.datePicker);
         btnBuscarTrabajadores = view.findViewById(R.id.btnBuscarTrabajadores);
+        btnAsignarNuevoTurno = view.findViewById(R.id.btnAsignarNuevoTurno);
         recyclerViewTrabajadores = view.findViewById(R.id.recyclerViewTrabajadores);
 
         btnBuscarTrabajadores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 buscarTrabajadores();
+            }
+        });
+
+        btnAsignarNuevoTurno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("fechaSeleccionada", fechaSeleccionada); // Pasar la fecha seleccionada al siguiente fragmento
+                AsignarTurnosEmpleadoFragment fragment = new AsignarTurnosEmpleadoFragment();
+                fragment.setArguments(bundle);
+
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
@@ -51,7 +67,7 @@ public class AsignarTurnosFragment extends Fragment {
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();
         int year = datePicker.getYear();
-        fechaSeleccionada = String.format("%04d-%02d-%02d", year, month + 1, day); // Almacenar la fecha seleccionada
+        fechaSeleccionada = String.format("%04d-%02d-%02d", year, month + 1, day);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
