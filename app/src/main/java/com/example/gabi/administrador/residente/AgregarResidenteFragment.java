@@ -2,7 +2,9 @@ package com.example.gabi.administrador.residente;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -72,17 +74,17 @@ public class AgregarResidenteFragment extends Fragment {
         btnSeleccionarFoto = view.findViewById(R.id.btnSeleccionarFoto);
         imageViewFoto = view.findViewById(R.id.imageViewFoto);
 
-        txtFechaNacimiento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });
-
         btnSeleccionarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openImageChooser();
+            }
+        });
+
+        txtFechaNacimiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
             }
         });
 
@@ -101,25 +103,6 @@ public class AgregarResidenteFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void showDatePickerDialog() {
-        final Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                getContext(),
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
-                        txtFechaNacimiento.setText(selectedDate);
-                    }
-                },
-                year, month, day);
-        datePickerDialog.show();
     }
 
     private void openImageChooser() {
@@ -142,6 +125,23 @@ public class AgregarResidenteFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void showDatePickerDialog() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                String selectedDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                txtFechaNacimiento.setText(selectedDate);
+            }
+        }, year, month, day);
+
+        datePickerDialog.show();
     }
 
     private void registrarResidente() {
@@ -191,10 +191,21 @@ public class AgregarResidenteFragment extends Fragment {
                 params.put("nss", nss);
                 params.put("numero_cuenta_bancaria", numeroCuentaBancaria);
                 params.put("empadronamiento", empadronamiento);
-                params.put("foto", encodeImageToBase64(selectedBitmap));
+                if (selectedBitmap != null) {
+                    params.put("foto", encodeImageToBase64(selectedBitmap));
+                }
                 params.put("estado", "1"); // Estado true
                 params.put("activo", "1"); // Activo true
                 return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+                String token = sharedPreferences.getString("token", "");
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
             }
         };
 
