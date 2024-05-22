@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/imagen_fondo_login"
+    tools:context=".administrador.residente.AsignarHabitacionFragment">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="30dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/tituloHabitaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Asignar Habitación"
+                android:textAlignment="center"
+                android:textColor="@color/turquesa"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewHabitaciones"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edittext" />
+
+            <Button
+                android:id="@+id/btnConfirmarAsignacion"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/turquesa"
+                android:text="Confirmar Asignación"
+                android:textSize="18sp"
+                app:cornerRadius="20dp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

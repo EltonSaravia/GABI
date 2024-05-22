@@ -9,8 +9,11 @@ import android.widget.Button;
 
 import com.example.gabi.R;
 import com.example.gabi.administrador.residente.AgregarResidenteFragment;
+import com.example.gabi.administrador.residente.AsignarHabitacionFragment;
 
 public class ResidentesAdministrador extends Fragment {
+
+    private int residenteId; // Agrega esta línea para declarar residenteId
 
     public ResidentesAdministrador() {
         // Required empty public constructor
@@ -26,6 +29,7 @@ public class ResidentesAdministrador extends Fragment {
         Button btnListar = view.findViewById(R.id.btnListarResidentes);
         Button btnModificar = view.findViewById(R.id.btnModificarResidente);
         Button btnEliminar = view.findViewById(R.id.btnEliminarResidente);
+        Button btnAsignarHabitacion = view.findViewById(R.id.btnAsignarHabitacion);
 
         btnAgregar.setOnClickListener(v -> {
             getParentFragmentManager().beginTransaction()
@@ -34,27 +38,22 @@ public class ResidentesAdministrador extends Fragment {
                     .commit();
         });
 
-        /*btnListar.setOnClickListener(v -> {
-            getParentFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, new ListarResidentesFragment())
-                    .addToBackStack(null)
-                    .commit();
+        btnAsignarHabitacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AsignarHabitacionFragment fragment = new AsignarHabitacionFragment();
+                Bundle args = new Bundle();
+                args.putInt("residente_id", residenteId); // Pasar el ID del residente seleccionado
+                fragment.setArguments(args);
+
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, fragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
         });
 
-        btnModificar.setOnClickListener(v -> {
-            getParentFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, new ModificarResidenteFragment())
-                    .addToBackStack(null)
-                    .commit();
-        });
-
-        btnEliminar.setOnClickListener(v -> {
-            getParentFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, new EliminarResidenteFragment())
-                    .addToBackStack(null)
-                    .commit();
-        });*/
-
+        // Deja los otros botones comentados si no se están utilizando ahora.
         return view;
     }
 }

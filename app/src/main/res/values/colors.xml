@@ -13,4 +13,9 @@
     <color name="colorDiurno">#4DFFD700</color>
     <color name="colorVespertino">#41FF8C00</color>
     <color name="colorNocturno">#2C1E90FF</color>
+    <color name="red">#D0330202</color>
+    <color name="green">#EE011901</color>
+    <color name="amarillo">#423909</color>
+    <color name="rojo">#4B0500</color>
+    <color name="verde">#003603</color>
 </resources>

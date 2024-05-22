@@ -21,13 +21,13 @@
 
     <Button
         android:id="@+id/btnListarResidentes"
-        android:layout_width="wrap_content"
+        android:layout_width="212dp"
         android:layout_height="wrap_content"
-        android:text="Listar Residentes"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/turquesa"
+        android:text="Listar Residentes"
         android:textColor="@android:color/white"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btnModificarResidente"
@@ -48,4 +48,13 @@
         android:backgroundTint="@color/turquesa"
         android:textColor="@android:color/white"
         android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/btnAsignarHabitacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/turquesa"
+        android:text="Asignar Habitación"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 </LinearLayout>
