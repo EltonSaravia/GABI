@@ -29,25 +29,32 @@ public class ResidenteAdapter extends RecyclerView.Adapter<ResidenteAdapter.Resi
     @Override
     public void onBindViewHolder(@NonNull ResidenteViewHolder holder, int position) {
         ResidenteDTO residente = residentes.get(position);
-        holder.nombre.setText(residente.getNombre());
-        holder.dni.setText(residente.getDni());
-        holder.telefono.setText(residente.getTelefono());
-        holder.email.setText(residente.getEmail());
 
-        // Cambiar el color de fondo y el color del texto basado en el estado activo
+        // Cambiar el fondo según el estado activo del residente
         if ("false".equals(residente.getActivo())) {
             holder.itemView.setBackgroundColor(Color.RED);
-            holder.nombre.setTextColor(Color.WHITE);
-            holder.dni.setTextColor(Color.WHITE);
-            holder.telefono.setTextColor(Color.WHITE);
-            holder.email.setTextColor(Color.WHITE);
         } else {
             holder.itemView.setBackgroundColor(Color.WHITE);
-            holder.nombre.setTextColor(Color.BLACK);
-            holder.dni.setTextColor(Color.BLACK);
-            holder.telefono.setTextColor(Color.BLACK);
-            holder.email.setTextColor(Color.BLACK);
         }
+
+        holder.nombre.setText(residente.getNombre() != null ? residente.getNombre() : "");
+        holder.dni.setText(residente.getDni() != null ? residente.getDni() : "");
+        holder.telefono.setText(residente.getTelefono() != null ? residente.getTelefono() : "");
+        holder.email.setText(residente.getEmail() != null ? residente.getEmail() : "");
+        holder.apellidos.setText(residente.getApellidos() != null ? residente.getApellidos() : "");
+        holder.fechaNacimiento.setText(residente.getFechaNacimiento() != null ? residente.getFechaNacimiento().toString() : "");
+        holder.ar.setText(residente.getAr() != null ? residente.getAr() : "");
+        holder.nss.setText(residente.getNss() != null ? residente.getNss() : "");
+        holder.numeroCuentaBancaria.setText(residente.getNumeroCuentaBancaria() != null ? residente.getNumeroCuentaBancaria() : "");
+        holder.observaciones.setText(residente.getObservaciones() != null ? residente.getObservaciones() : "");
+        holder.medicamentos.setText(String.valueOf(residente.getMedicamentos()));
+        holder.fechaIngreso.setText(residente.getFechaIngreso() != null ? residente.getFechaIngreso().toString() : "");
+        holder.activo.setText(residente.getActivo() != null ? residente.getActivo() : "");
+        holder.empadronamiento.setText(residente.getEmpadronamiento() != null ? residente.getEmpadronamiento() : "");
+        holder.edad.setText(String.valueOf(residente.getEdad()));
+        holder.mesCumple.setText(String.valueOf(residente.getMesCumple()));
+        holder.habitacionId.setText(String.valueOf(residente.getHabitacionId()));
+        holder.estado.setText(String.valueOf(residente.isEstado()));
     }
 
     @Override
@@ -56,7 +63,7 @@ public class ResidenteAdapter extends RecyclerView.Adapter<ResidenteAdapter.Resi
     }
 
     static class ResidenteViewHolder extends RecyclerView.ViewHolder {
-        TextView nombre, dni, telefono, email;
+        TextView nombre, dni, telefono, email, apellidos, fechaNacimiento, ar, nss, numeroCuentaBancaria, observaciones, medicamentos, fechaIngreso, activo, empadronamiento, edad, mesCumple, habitacionId, estado;
 
         ResidenteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +71,20 @@ public class ResidenteAdapter extends RecyclerView.Adapter<ResidenteAdapter.Resi
             dni = itemView.findViewById(R.id.dni);
             telefono = itemView.findViewById(R.id.telefono);
             email = itemView.findViewById(R.id.email);
+            apellidos = itemView.findViewById(R.id.apellidos);
+            fechaNacimiento = itemView.findViewById(R.id.fecha_nacimiento);
+            ar = itemView.findViewById(R.id.ar);
+            nss = itemView.findViewById(R.id.nss);
+            numeroCuentaBancaria = itemView.findViewById(R.id.numero_cuenta_bancaria);
+            observaciones = itemView.findViewById(R.id.observaciones);
+            medicamentos = itemView.findViewById(R.id.medicamentos);
+            fechaIngreso = itemView.findViewById(R.id.fecha_ingreso);
+            activo = itemView.findViewById(R.id.activo);
+            empadronamiento = itemView.findViewById(R.id.empadronamiento);
+            edad = itemView.findViewById(R.id.edad);
+            mesCumple = itemView.findViewById(R.id.mes_cumple);
+            habitacionId = itemView.findViewById(R.id.habitacion_id);
+            estado = itemView.findViewById(R.id.estado);
         }
     }
 }
