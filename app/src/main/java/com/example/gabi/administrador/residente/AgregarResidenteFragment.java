@@ -149,6 +149,7 @@ public class AgregarResidenteFragment extends Fragment {
         final String nombre = txtNombre.getText().toString().trim();
         final String apellido1 = txtApellido1.getText().toString().trim();
         final String apellido2 = txtApellido2.getText().toString().trim();
+        final String apellidos = apellido1 + " " + apellido2; // Combinar apellidos
         final String fechaNacimiento = txtFechaNacimiento.getText().toString().trim();
         final String telefono = txtTelefono.getText().toString().trim();
         final String email = txtEmail.getText().toString().trim();
@@ -158,9 +159,9 @@ public class AgregarResidenteFragment extends Fragment {
         final String numeroCuentaBancaria = txtNumeroCuentaBancaria.getText().toString().trim();
         final String empadronamiento = txtEmpadronamiento.getText().toString().trim();
 
-        // Validar campos vacíos
-        if (dni.isEmpty() || nombre.isEmpty() || apellido1.isEmpty() || apellido2.isEmpty() || ar.isEmpty() || nss.isEmpty() || numeroCuentaBancaria.isEmpty() || empadronamiento.isEmpty()) {
-            Toast.makeText(getContext(), "Faltan campos por llenar", Toast.LENGTH_SHORT).show();
+        // Validar campos obligatorios
+        if (dni.isEmpty() || nombre.isEmpty() || apellido1.isEmpty() || apellido2.isEmpty() || ar.isEmpty() || nss.isEmpty() || fechaNacimiento.isEmpty()) {
+            Toast.makeText(getContext(), "Faltan campos obligatorios", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -181,16 +182,15 @@ public class AgregarResidenteFragment extends Fragment {
                 Map<String, String> params = new HashMap<>();
                 params.put("dni", dni);
                 params.put("nombre", nombre);
-                params.put("apellido1", apellido1);
-                params.put("apellido2", apellido2);
-                params.put("fecha_nacimiento", fechaNacimiento);
-                params.put("telefono", telefono);
-                params.put("email", email);
-                params.put("observaciones", observaciones);
-                params.put("ar", ar);
-                params.put("nss", nss);
-                params.put("numero_cuenta_bancaria", numeroCuentaBancaria);
-                params.put("empadronamiento", empadronamiento);
+                params.put("apellidos", apellidos); // Usar el campo combinado
+                params.put("fecha_nacimiento", fechaNacimiento.isEmpty() ? "" : fechaNacimiento);
+                params.put("telefono", telefono.isEmpty() ? "No hay" : telefono);
+                params.put("email", email.isEmpty() ? "No hay" : email);
+                params.put("observaciones", observaciones.isEmpty() ? "No hay" : observaciones);
+                params.put("ar", ar.isEmpty() ? "" : ar);
+                params.put("nss", nss.isEmpty() ? "" : nss);
+                params.put("numero_cuenta_bancaria", numeroCuentaBancaria.isEmpty() ? "No hay" : numeroCuentaBancaria);
+                params.put("empadronamiento", empadronamiento.isEmpty() ? "No hay" : empadronamiento);
                 if (selectedBitmap != null) {
                     params.put("foto", encodeImageToBase64(selectedBitmap));
                 }
