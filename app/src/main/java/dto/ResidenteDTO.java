@@ -21,11 +21,13 @@ public class ResidenteDTO {
     private byte[] foto;
     private int habitacionId;
     private boolean estado;
+    private String email;
+    private String telefono;
 
-    // Constructor
+    // Constructor completo
     public ResidenteDTO(int id, String dni, String nombre, String apellidos, Date fechaNacimiento, String ar, String nss,
                         String numeroCuentaBancaria, String observaciones, int medicamentos, Date fechaIngreso,
-                        String activo, String empadronamiento, int edad, int mesCumple, byte[] foto, int habitacionId, boolean estado) {
+                        String activo, String empadronamiento, int edad, int mesCumple, byte[] foto, int habitacionId, boolean estado, String email, String telefono) {
         this.id = id;
         this.dni = dni;
         this.nombre = nombre;
@@ -44,7 +46,10 @@ public class ResidenteDTO {
         this.foto = foto;
         this.habitacionId = habitacionId;
         this.estado = estado;
+        this.email = email;
+        this.telefono = telefono;
     }
+
 
     // Getters y setters
     public int getId() { return id; }
@@ -100,4 +105,10 @@ public class ResidenteDTO {
 
     public boolean isEstado() { return estado; }
     public void setEstado(boolean estado) { this.estado = estado; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
 }

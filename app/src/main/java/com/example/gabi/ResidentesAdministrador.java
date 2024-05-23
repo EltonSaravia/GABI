@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.gabi.R;
 import com.example.gabi.administrador.residente.AgregarResidenteFragment;
 import com.example.gabi.administrador.residente.AsignarHabitacionFragment;
+import com.example.gabi.administrador.residente.ListarResidentesFragment;
 
 public class ResidentesAdministrador extends Fragment {
 
-    private int residenteId; // Agrega esta línea para declarar residenteId
+    private int residenteId;
 
     public ResidentesAdministrador() {
         // Required empty public constructor
@@ -36,6 +36,16 @@ public class ResidentesAdministrador extends Fragment {
                     .replace(R.id.frame_layout, new AgregarResidenteFragment())
                     .addToBackStack(null)
                     .commit();
+        });
+
+        btnListar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, new ListarResidentesFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
         });
 
         btnAsignarHabitacion.setOnClickListener(new View.OnClickListener() {
