@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <!-- Color principal -->
-    <color name="turquesa">#1BBFBF</color>
+    <color name="turquesa">#10425E</color>
     <!-- Agregar el color background_color -->
     <color name="colorDiurno">#4DFFD700</color>
     <color name="colorVespertino">#41FF8C00</color>
