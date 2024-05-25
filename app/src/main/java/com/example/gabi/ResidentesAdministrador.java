@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.gabi.administrador.residente.ActualizarResidenteFragment;
 import com.example.gabi.administrador.residente.AgregarResidenteFragment;
 import com.example.gabi.administrador.residente.AsignarHabitacionFragment;
 import com.example.gabi.administrador.residente.ListarResidentesFragment;
@@ -43,6 +44,16 @@ public class ResidentesAdministrador extends Fragment {
             public void onClick(View v) {
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.frame_layout, new ListarResidentesFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        btnModificar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, new ActualizarResidenteFragment())
                         .addToBackStack(null)
                         .commit();
             }

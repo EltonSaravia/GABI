@@ -19,7 +19,7 @@ public class ResidenteDTO {
     private int edad;
     private int mesCumple;
     private byte[] foto;
-    private int habitacionId;
+    private Integer habitacionId;  // Cambio de int a Integer
     private boolean estado;
     private String email;
     private String telefono;
@@ -27,7 +27,7 @@ public class ResidenteDTO {
     // Constructor completo
     public ResidenteDTO(int id, String dni, String nombre, String apellidos, Date fechaNacimiento, String ar, String nss,
                         String numeroCuentaBancaria, String observaciones, int medicamentos, Date fechaIngreso,
-                        String activo, String empadronamiento, int edad, int mesCumple, byte[] foto, int habitacionId, boolean estado, String email, String telefono) {
+                        String activo, String empadronamiento, int edad, int mesCumple, byte[] foto, Integer habitacionId, boolean estado, String email, String telefono) {
         this.id = id;
         this.dni = dni;
         this.nombre = nombre;
@@ -99,8 +99,8 @@ public class ResidenteDTO {
     public byte[] getFoto() { return foto; }
     public void setFoto(byte[] foto) { this.foto = foto; }
 
-    public int getHabitacionId() { return habitacionId; }
-    public void setHabitacionId(int habitacionId) { this.habitacionId = habitacionId; }
+    public Integer getHabitacionId() { return habitacionId; }
+    public void setHabitacionId(Integer habitacionId) { this.habitacionId = habitacionId; }
 
     public boolean isEstado() { return estado; }
     public void setEstado(boolean estado) { this.estado = estado; }

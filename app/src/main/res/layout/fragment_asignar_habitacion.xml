@@ -45,7 +45,7 @@
             <Button
                 android:id="@+id/btnConfirmarAsignacion"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="122dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/turquesa"
                 android:text="Confirmar Asignación"
