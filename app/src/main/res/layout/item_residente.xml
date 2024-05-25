@@ -6,6 +6,16 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Añadir ImageView para la foto del residente -->
+    <ImageView
+        android:id="@+id/foto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="Foto del residente"
+        android:scaleType="centerCrop"
+        android:src="@drawable/foto_generica"
+        android:layout_gravity="center"/>
+
     <TextView
         android:id="@+id/nombre"
         android:layout_width="wrap_content"
@@ -149,6 +159,8 @@
         android:textSize="16sp"
         android:textColor="@android:color/black"
         android:padding="4dp"/>
+
+
 
     <!-- Añadir un separador -->
     <View

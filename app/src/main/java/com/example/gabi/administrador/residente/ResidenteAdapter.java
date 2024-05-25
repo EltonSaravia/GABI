@@ -1,9 +1,12 @@
 package com.example.gabi.administrador.residente;
 
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,9 +35,9 @@ public class ResidenteAdapter extends RecyclerView.Adapter<ResidenteAdapter.Resi
 
         // Cambiar el fondo según el estado activo del residente
         if ("false".equals(residente.getActivo())) {
-            holder.itemView.setBackgroundColor(Color.RED);
+            holder.itemView.setBackgroundColor(android.graphics.Color.RED);
         } else {
-            holder.itemView.setBackgroundColor(Color.WHITE);
+            holder.itemView.setBackgroundColor(android.graphics.Color.WHITE);
         }
 
         holder.nombre.setText(residente.getNombre() != null ? residente.getNombre() : "");
@@ -55,6 +58,13 @@ public class ResidenteAdapter extends RecyclerView.Adapter<ResidenteAdapter.Resi
         holder.mesCumple.setText(String.valueOf(residente.getMesCumple()));
         holder.habitacionId.setText(String.valueOf(residente.getHabitacionId()));
         holder.estado.setText(String.valueOf(residente.isEstado()));
+
+        if (residente.getFoto() != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(residente.getFoto(), 0, residente.getFoto().length);
+            holder.foto.setImageBitmap(bitmap);
+        } else {
+            holder.foto.setImageResource(R.drawable.foto_generica);
+        }
     }
 
     @Override
@@ -64,6 +74,7 @@ public class ResidenteAdapter extends RecyclerView.Adapter<ResidenteAdapter.Resi
 
     static class ResidenteViewHolder extends RecyclerView.ViewHolder {
         TextView nombre, dni, telefono, email, apellidos, fechaNacimiento, ar, nss, numeroCuentaBancaria, observaciones, medicamentos, fechaIngreso, activo, empadronamiento, edad, mesCumple, habitacionId, estado;
+        ImageView foto;
 
         ResidenteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,6 +96,7 @@ public class ResidenteAdapter extends RecyclerView.Adapter<ResidenteAdapter.Resi
             mesCumple = itemView.findViewById(R.id.mes_cumple);
             habitacionId = itemView.findViewById(R.id.habitacion_id);
             estado = itemView.findViewById(R.id.estado);
+            foto = itemView.findViewById(R.id.foto);
         }
     }
 }

@@ -1,12 +1,15 @@
 package com.example.gabi.administrador.residente;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +107,11 @@ public class ListarResidentesFragment extends Fragment {
                                 String empadronamiento = jsonObject.getString("empadronamiento");
                                 int edad = jsonObject.isNull("edad") ? 0 : jsonObject.getInt("edad");
                                 int mesCumple = jsonObject.isNull("mes_cumple") ? 0 : jsonObject.getInt("mes_cumple");
-                                byte[] foto = null; // Manejar la conversión de blob según sea necesario
+                                byte[] foto = null;
+                                if (!jsonObject.isNull("foto")) {
+                                    String fotoBase64 = jsonObject.getString("foto");
+                                    foto = Base64.decode(fotoBase64, Base64.DEFAULT);
+                                }
                                 int habitacionId = jsonObject.isNull("habitacion_id") ? 0 : jsonObject.getInt("habitacion_id");
                                 boolean estado = jsonObject.getInt("estado") == 1;
                                 String telefono = jsonObject.getString("telefono");
@@ -134,6 +141,7 @@ public class ListarResidentesFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(stringRequest);
     }
+
 
     private void filtrarResidentes(String texto) {
         listaResidentesFiltrada.clear();
