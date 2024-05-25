@@ -1,128 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center"
-    tools:context=".administrador.residente.ActualizarResidenteFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/imagen_fondo_login">
 
-    <EditText
-        android:id="@+id/dni"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="DNI"
-        android:inputType="text" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
 
-    <Button
-        android:id="@+id/botonBuscar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Buscar"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="20dp">
 
-    <EditText
-        android:id="@+id/nombre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nombre"
-        android:inputType="text" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="24dp">
 
-    <EditText
-        android:id="@+id/apellidos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Apellidos"
-        android:inputType="text" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="DNI"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp" />
 
-    <EditText
-        android:id="@+id/fecha_nacimiento"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Fecha de Nacimiento"
-        android:focusable="false"
-        android:clickable="true" />
+                <EditText
+                    android:id="@+id/dni"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="DNI"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="text" />
 
-    <EditText
-        android:id="@+id/telefono"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Teléfono"
-        android:inputType="phone" />
+                <Button
+                    android:id="@+id/botonBuscar"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/turquesa"
+                    android:text="Buscar"
+                    android:textSize="18sp"
+                    app:cornerRadius="20dp" />
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
-    <EditText
-        android:id="@+id/observaciones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Observaciones"
-        android:inputType="textMultiLine" />
+                <EditText
+                    android:id="@+id/nombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="Nombre"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="textCapWords" />
 
-    <EditText
-        android:id="@+id/ar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="AR"
-        android:inputType="text" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Apellidos"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
-    <EditText
-        android:id="@+id/nss"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="NSS"
-        android:inputType="text" />
+                <EditText
+                    android:id="@+id/apellidos"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="Apellidos"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="textCapWords" />
 
-    <EditText
-        android:id="@+id/numero_cuenta_bancaria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Número de Cuenta Bancaria"
-        android:inputType="text" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha de Nacimiento"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
-    <EditText
-        android:id="@+id/empadronamiento"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Empadronamiento"
-        android:inputType="text" />
+                <EditText
+                    android:id="@+id/fecha_nacimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="Fecha de Nacimiento"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:focusable="false"
+                    android:clickable="true" />
 
-    <Button
-        android:id="@+id/btnSeleccionarFoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Seleccionar Foto"
-        android:layout_gravity="center" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Teléfono"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
-    <ImageView
-        android:id="@+id/imageViewFoto"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:visibility="gone"
-        android:layout_gravity="center"
-        android:contentDescription="Foto del residente" />
+                <EditText
+                    android:id="@+id/telefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="Teléfono"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="phone" />
 
-    <Button
-        android:id="@+id/botonActualizar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Actualizar"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
-    <Button
-        android:id="@+id/botonCancelar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancelar"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp" />
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
 
-</LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Observaciones"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/observaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="Observaciones"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="textMultiLine" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AR"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/ar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="AR"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="text" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="NSS"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/nss"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="NSS"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="text" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Número de Cuenta Bancaria"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/numero_cuenta_bancaria"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="Número de Cuenta Bancaria"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="text" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Empadronamiento"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/empadronamiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="Empadronamiento"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="text" />
+
+                <Button
+                    android:id="@+id/btnSeleccionarFoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/turquesa"
+                    android:text="Seleccionar Foto"
+                    android:textSize="18sp"
+                    app:cornerRadius="20dp" />
+
+                <ImageView
+                    android:id="@+id/imageViewFoto"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:contentDescription="Foto del residente"
+                    android:layout_marginTop="10dp"/>
+
+                <Button
+                    android:id="@+id/botonActualizar"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/turquesa"
+                    android:text="Actualizar"
+                    android:textSize="18sp"
+                    app:cornerRadius="20dp" />
+
+                <Button
+                    android:id="@+id/botonCancelar"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/turquesa"
+                    android:text="Cancelar"
+                    android:textSize="18sp"
+                    app:cornerRadius="20dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -29,7 +30,6 @@
                 android:padding="24dp">
 
                 <TextView
-                    android:id="@+id/tituloRegistro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -39,148 +39,232 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="DNI"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp" />
+
                 <EditText
                     android:id="@+id/dni"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="DNI"
+                    android:hint="12345678A"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="text" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
                 <EditText
                     android:id="@+id/nombre"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:drawableLeft="@drawable/baseline_person_24"
                     android:drawablePadding="8dp"
-                    android:hint="Nombre"
+                    android:hint="Juan"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="textCapWords" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Primer Apellido"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
                 <EditText
                     android:id="@+id/apellido1"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Primer Apellido"
+                    android:hint="Pérez"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="textCapWords" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Segundo Apellido"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
                 <EditText
                     android:id="@+id/apellido2"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Segundo Apellido"
+                    android:hint="Gómez"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="textCapWords" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha de Nacimiento"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
                 <EditText
                     android:id="@+id/fecha_nacimiento"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:drawableLeft="@drawable/baseline_calendar_month_24"
                     android:drawablePadding="8dp"
-                    android:hint="Fecha de Nacimiento"
+                    android:hint="01/01/1980"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:focusable="false"
                     android:clickable="true" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Teléfono"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
+
                 <EditText
                     android:id="@+id/telefono"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Teléfono"
+                    android:hint="600123456"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="phone" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
                 <EditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Email"
+                    android:hint="juan.perez@example.com"
                     android:inputType="textEmailAddress"
                     android:padding="8dp"
                     android:textColor="@color/black" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AR"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
                 <EditText
                     android:id="@+id/ar"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="AR"
+                    android:hint="ZV1514612156"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="text" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="NSS"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
                 <EditText
                     android:id="@+id/nss"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="NSS"
+                    android:hint="555501234"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="text" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Número de Cuenta Bancaria"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
                 <EditText
                     android:id="@+id/numero_cuenta_bancaria"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Número de Cuenta Bancaria"
+                    android:hint="ES1234567890123456789012"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="text" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Empadronamiento"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
                 <EditText
                     android:id="@+id/empadronamiento"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Empadronamiento"
+                    android:hint="C/ alba de luz 92 1B 50002"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="text" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Observaciones"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
 
                 <EditText
                     android:id="@+id/observaciones"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Observaciones"
+                    android:hint="Los miercoles le visitan"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="text" />
