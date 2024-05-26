@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.example.gabi.administrador.residente.ActualizarResidenteFragment;
 import com.example.gabi.administrador.residente.AgregarResidenteFragment;
@@ -26,55 +27,61 @@ public class ResidentesAdministrador extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_residentes_administrador, container, false);
 
-        Button btnAgregar = view.findViewById(R.id.btnAgregarResidente);
-        Button btnListar = view.findViewById(R.id.btnListarResidentes);
-        Button btnModificar = view.findViewById(R.id.btnModificarResidente);
-        Button btnEliminar = view.findViewById(R.id.btnEliminarResidente);
-        Button btnAsignarHabitacion = view.findViewById(R.id.btnAsignarHabitacion);
+        FrameLayout btnAgregar = view.findViewById(R.id.btnAgregarResidente);
+        FrameLayout btnListar = view.findViewById(R.id.btnListarResidentes);
+        FrameLayout btnModificar = view.findViewById(R.id.btnModificarResidente);
+        FrameLayout btnAsignarHabitacion = view.findViewById(R.id.btnAsignarHabitacion);
 
-        btnAgregar.setOnClickListener(v -> {
+        Button btnAgregarInner = view.findViewById(R.id.btnAgregarResidenteInner);
+        Button btnListarInner = view.findViewById(R.id.btnListarResidentesInner);
+        Button btnModificarInner = view.findViewById(R.id.btnModificarResidenteInner);
+        Button btnAsignarHabitacionInner = view.findViewById(R.id.btnAsignarHabitacionInner);
+
+        View.OnClickListener agregarListener = v -> {
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.frame_layout, new AgregarResidenteFragment())
                     .addToBackStack(null)
                     .commit();
-        });
+        };
 
-        btnListar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.frame_layout, new ListarResidentesFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
+        View.OnClickListener listarListener = v -> {
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.frame_layout, new ListarResidentesFragment())
+                    .addToBackStack(null)
+                    .commit();
+        };
 
-        btnModificar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.frame_layout, new ActualizarResidenteFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
+        View.OnClickListener modificarListener = v -> {
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.frame_layout, new ActualizarResidenteFragment())
+                    .addToBackStack(null)
+                    .commit();
+        };
 
-        btnAsignarHabitacion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AsignarHabitacionFragment fragment = new AsignarHabitacionFragment();
-                Bundle args = new Bundle();
-                args.putInt("residente_id", residenteId); // Pasar el ID del residente seleccionado
-                fragment.setArguments(args);
+        View.OnClickListener asignarListener = v -> {
+            AsignarHabitacionFragment fragment = new AsignarHabitacionFragment();
+            Bundle args = new Bundle();
+            args.putInt("residente_id", residenteId); // Pasar el ID del residente seleccionado
+            fragment.setArguments(args);
 
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.frame_layout, fragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.frame_layout, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        };
 
-        // Deja los otros botones comentados si no se están utilizando ahora.
+        btnAgregar.setOnClickListener(agregarListener);
+        btnAgregarInner.setOnClickListener(agregarListener);
+
+        btnListar.setOnClickListener(listarListener);
+        btnListarInner.setOnClickListener(listarListener);
+
+        btnModificar.setOnClickListener(modificarListener);
+        btnModificarInner.setOnClickListener(modificarListener);
+
+        btnAsignarHabitacion.setOnClickListener(asignarListener);
+        btnAsignarHabitacionInner.setOnClickListener(asignarListener);
+
         return view;
     }
 }
