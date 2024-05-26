@@ -19,6 +19,15 @@ public class DocumentoDTO {
         this.contenido = contenido;
     }
 
+    public DocumentoDTO(int id, String titulo, String descripcion, String nombreArchivo, String tipoArchivo, String fechaSubida) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.nombreArchivo = nombreArchivo;
+        this.tipoArchivo = tipoArchivo;
+        this.fechaSubida = fechaSubida;
+
+    }
     // Getters y setters para todos los campos
 
     public int getId() {

@@ -13,19 +13,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="24dp"
-        android:paddingBottom="80dp">
+        android:padding="16dp"
+        android:paddingBottom="16dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="525dp"
             android:layout_margin="30dp"
             app:cardCornerRadius="30dp"
             app:cardElevation="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="561dp"
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="24dp">
@@ -43,9 +43,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
                     android:text="DNI"
-                    android:textColor="@android:color/black"
-                    android:paddingBottom="5dp" />
+                    android:textColor="@android:color/black" />
 
                 <EditText
                     android:id="@+id/etDNI"
@@ -54,17 +54,17 @@
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
                     android:hint="12345678A"
+                    android:inputType="text"
                     android:padding="8dp"
-                    android:textColor="@android:color/black"
-                    android:inputType="text" />
+                    android:textColor="@android:color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Título"
-                    android:textColor="@android:color/black"
+                    android:layout_marginTop="10dp"
                     android:paddingBottom="5dp"
-                    android:layout_marginTop="10dp"/>
+                    android:text="Título"
+                    android:textColor="@android:color/black" />
 
                 <EditText
                     android:id="@+id/etTitulo"
@@ -73,17 +73,17 @@
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
                     android:hint="Título del archivo"
+                    android:inputType="textCapWords"
                     android:padding="8dp"
-                    android:textColor="@android:color/black"
-                    android:inputType="textCapWords" />
+                    android:textColor="@android:color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Descripción"
-                    android:textColor="@android:color/black"
+                    android:layout_marginTop="10dp"
                     android:paddingBottom="5dp"
-                    android:layout_marginTop="10dp"/>
+                    android:text="Descripción"
+                    android:textColor="@android:color/black" />
 
                 <EditText
                     android:id="@+id/etDescripcion"
@@ -92,9 +92,9 @@
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
                     android:hint="Descripción del archivo"
+                    android:inputType="textCapWords"
                     android:padding="8dp"
-                    android:textColor="@android:color/black"
-                    android:inputType="textCapWords" />
+                    android:textColor="@android:color/black" />
 
                 <Button
                     android:id="@+id/btnSeleccionarArchivo"
@@ -110,10 +110,10 @@
                     android:id="@+id/tvNombreArchivo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Archivo no seleccionado"
-                    android:textColor="@android:color/black"
+                    android:layout_marginTop="10dp"
                     android:padding="8dp"
-                    android:layout_marginTop="10dp"/>
+                    android:text="Archivo no seleccionado"
+                    android:textColor="@android:color/black" />
 
                 <Button
                     android:id="@+id/btnSubirArchivo"

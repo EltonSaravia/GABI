@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -96,8 +97,7 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
                                             dataObject.getString("descripcion"),
                                             dataObject.getString("nombre_archivo"),
                                             dataObject.getString("tipo_archivo"),
-                                            dataObject.getString("fecha_subida"),
-                                            new byte[0]
+                                            dataObject.getString("fecha_subida")
                                     );
                                     documentoList.add(documento);
                                 }
@@ -137,7 +137,75 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
 
     @Override
     public void onDocumentoEliminar(int id) {
-        // Lógica para eliminar documento
+        mostrarDialogoConfirmacion(id);
+    }
+
+    private void mostrarDialogoConfirmacion(int documentoId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Confirmar eliminación");
+        builder.setMessage("¿Está seguro que desea eliminar este documento?");
+
+        builder.setPositiveButton("Eliminar", (dialog, which) -> {
+            // Mostrar mensaje que debe mantener el botón presionado
+            Toast.makeText(getContext(), "Mantén presionado para confirmar", Toast.LENGTH_LONG).show();
+        });
+
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Obtener el botón de eliminar para agregarle el evento de mantener presionado
+        Button botonEliminar = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        botonEliminar.setOnLongClickListener(v -> {
+            eliminarDocumento(documentoId);
+            dialog.dismiss();
+            return true; // Indica que el evento fue manejado
+        });
+    }
+
+    private void eliminarDocumento(int documentoId) {
+        String url = "https://residencialontananza.com/api/eliminarDocumento.php";
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", getContext().MODE_PRIVATE);
+        final String token = sharedPreferences.getString("token", "");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                response -> {
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        String status = jsonResponse.getString("status");
+                        if (status.equals("success")) {
+                            Toast.makeText(getContext(), "Documento eliminado correctamente", Toast.LENGTH_SHORT).show();
+                            buscarDocumentos(); // Refrescar la lista de documentos
+                        } else {
+                            Toast.makeText(getContext(), jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), "Error al procesar la respuesta", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> {
+                    error.printStackTrace();
+                    Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", String.valueOf(documentoId));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+
+        requestQueue.add(stringRequest);
     }
 
     @Override
