@@ -3,13 +3,11 @@ package com.example.gabi;
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +43,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.example.gabi.*;
+
 import dto.DocumentoDTO;
 
 public class DocumentosAdministrador extends Fragment implements DocumentoAdapter.OnDocumentoEliminarListener, DocumentoAdapter.OnDocumentoDescargarListener {
@@ -155,14 +153,21 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
         }
     }
 
+    private DocumentoDTO findDocumentoById(int id) {
+        for (DocumentoDTO documento : documentoList) {
+            if (documento.getId() == id) {
+                return documento;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void onDocumentoEliminar(int id) {
         // Lógica para eliminar documento
     }
 
     @Override
-
-
     public void onDocumentoDescargar(int documentoId) {
         String url = "https://residencialontananza.com/api/descargarDocumento.php";
 
@@ -176,9 +181,18 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
                 response -> {
                     try {
                         if (response != null) {
+                            DocumentoDTO documento = findDocumentoById(documentoId);
+                            if (documento == null) {
+                                Toast.makeText(getContext(), "Documento no encontrado", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            String nombreArchivo = documento.getNombreArchivo();
+                            String tipoArchivo = documento.getTipoArchivo();
+
                             // Save the file to Downloads directory
                             File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                            File file = new File(path, "documento_descargado"); // You can change this to the original file name
+                            File file = new File(path, nombreArchivo);
 
                             FileOutputStream fos = new FileOutputStream(file);
                             fos.write(response);
@@ -188,7 +202,7 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
 
                             // Notify the system about the new download
                             DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
-                            downloadManager.addCompletedDownload(file.getName(), file.getName(), true, "application/octet-stream", file.getAbsolutePath(), file.length(), true);
+                            downloadManager.addCompletedDownload(file.getName(), file.getName(), true, tipoArchivo, file.getAbsolutePath(), file.length(), true);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -209,6 +223,4 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
 
         requestQueue.add(inputStreamVolleyRequest);
     }
-
-
 }
