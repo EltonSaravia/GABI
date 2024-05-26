@@ -8,4 +8,6 @@
     <string name="empleados">Empleados</string>
     <string name="home">Home</string>
     <string name="homeadministrador">Home</string>
+    <string name="descargar">descargar</string>
+    <string name="eliminar">eliminar</string>
 </resources>
