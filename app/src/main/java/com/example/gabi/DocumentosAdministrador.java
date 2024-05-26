@@ -1,7 +1,15 @@
 package com.example.gabi;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +19,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +30,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gabi.administrador.DocumentoAdapter;
+import com.example.gabi.administrador.InputStreamVolleyRequest;
 import com.example.gabi.administrador.documentacion.SubirArchivoFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -28,15 +38,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import com.example.gabi.*;
 import dto.DocumentoDTO;
 
 public class DocumentosAdministrador extends Fragment implements DocumentoAdapter.OnDocumentoEliminarListener, DocumentoAdapter.OnDocumentoDescargarListener {
 
+    private static final int PERMISSION_REQUEST_CODE = 1;
     private EditText etBuscarDNI;
     private Button btnBuscar;
     private RecyclerView recyclerViewDocumentos;
@@ -70,6 +84,11 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
                     .commit();
         });
 
+        // Solicitar permisos de escritura si no están concedidos
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
+
         return view;
     }
 
@@ -97,7 +116,8 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
                                             dataObject.getString("descripcion"),
                                             dataObject.getString("nombre_archivo"),
                                             dataObject.getString("tipo_archivo"),
-                                            dataObject.getString("fecha_subida")
+                                            dataObject.getString("fecha_subida"),
+                                            new byte[0]
                                     );
                                     documentoList.add(documento);
                                 }
@@ -137,66 +157,48 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
 
     @Override
     public void onDocumentoEliminar(int id) {
-        mostrarDialogoConfirmacion(id);
+        // Lógica para eliminar documento
     }
 
-    private void mostrarDialogoConfirmacion(int documentoId) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Confirmar eliminación");
-        builder.setMessage("¿Está seguro que desea eliminar este documento?");
+    @Override
 
-        builder.setPositiveButton("Eliminar", (dialog, which) -> {
-            // Mostrar mensaje que debe mantener el botón presionado
-            Toast.makeText(getContext(), "Mantén presionado para confirmar", Toast.LENGTH_LONG).show();
-        });
 
-        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-        // Obtener el botón de eliminar para agregarle el evento de mantener presionado
-        Button botonEliminar = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        botonEliminar.setOnLongClickListener(v -> {
-            eliminarDocumento(documentoId);
-            dialog.dismiss();
-            return true; // Indica que el evento fue manejado
-        });
-    }
-
-    private void eliminarDocumento(int documentoId) {
-        String url = "https://residencialontananza.com/api/eliminarDocumento.php";
+    public void onDocumentoDescargar(int documentoId) {
+        String url = "https://residencialontananza.com/api/descargarDocumento.php";
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", getContext().MODE_PRIVATE);
         final String token = sharedPreferences.getString("token", "");
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+        Map<String, String> params = new HashMap<>();
+        params.put("id", String.valueOf(documentoId));
+
+        InputStreamVolleyRequest inputStreamVolleyRequest = new InputStreamVolleyRequest(Request.Method.POST, url,
                 response -> {
                     try {
-                        JSONObject jsonResponse = new JSONObject(response);
-                        String status = jsonResponse.getString("status");
-                        if (status.equals("success")) {
-                            Toast.makeText(getContext(), "Documento eliminado correctamente", Toast.LENGTH_SHORT).show();
-                            buscarDocumentos(); // Refrescar la lista de documentos
-                        } else {
-                            Toast.makeText(getContext(), jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
+                        if (response != null) {
+                            // Save the file to Downloads directory
+                            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                            File file = new File(path, "documento_descargado"); // You can change this to the original file name
+
+                            FileOutputStream fos = new FileOutputStream(file);
+                            fos.write(response);
+                            fos.close();
+
+                            Toast.makeText(getContext(), "Documento descargado correctamente", Toast.LENGTH_SHORT).show();
+
+                            // Notify the system about the new download
+                            DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+                            downloadManager.addCompletedDownload(file.getName(), file.getName(), true, "application/octet-stream", file.getAbsolutePath(), file.length(), true);
                         }
-                    } catch (JSONException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
-                        Toast.makeText(getContext(), "Error al procesar la respuesta", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Error al guardar el archivo: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 },
                 error -> {
                     error.printStackTrace();
-                    Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("id", String.valueOf(documentoId));
-                return params;
-            }
-
+                    Toast.makeText(getContext(), "Error de conexión: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }, params) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
@@ -205,11 +207,8 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
             }
         };
 
-        requestQueue.add(stringRequest);
+        requestQueue.add(inputStreamVolleyRequest);
     }
 
-    @Override
-    public void onDocumentoDescargar(int id) {
-        // Lógica para descargar documento
-    }
+
 }
