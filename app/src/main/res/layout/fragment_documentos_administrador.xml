@@ -1,31 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:padding="16dp"
     android:background="@color/turquesa"
     tools:context=".DocumentosAdministrador">
 
-    <Button
-        android:id="@+id/btnSubirArchivo"
+    <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Gestión de Documentos"
+        android:textSize="32sp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnSubirArchivo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:text="Subir Archivo"
-        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/turquesa"
         android:textColor="@android:color/white"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_marginTop="32dp"/>
 
     <Button
         android:id="@+id/btnDescargarArchivo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Descargar Archivo"
-        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/turquesa"
         android:textColor="@android:color/white"
-        android:textSize="18sp"/>
-</LinearLayout>
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/btnSubirArchivo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_marginTop="16dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
