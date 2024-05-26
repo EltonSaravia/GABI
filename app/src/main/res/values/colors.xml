@@ -18,4 +18,6 @@
     <color name="amarillo">#423909</color>
     <color name="rojo">#4B0500</color>
     <color name="verde">#003603</color>
+
+    <color name="status_bar_color">#FFFFFF</color>
 </resources>
