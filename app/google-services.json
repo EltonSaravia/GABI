@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "14098343358",
+    "project_id": "gabi-b4507",
+    "storage_bucket": "gabi-b4507.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14098343358:android:457dd624c2c08074dcc5ef",
+        "android_client_info": {
+          "package_name": "com.example.gabi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM-fQVRk1-YJLSiQalXul7wuJI_uiFDfw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
