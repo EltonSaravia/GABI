@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.gabi.databinding.ActivityAdministradorBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AdministradorActivity extends AppCompatActivity {
 
@@ -18,11 +19,11 @@ public class AdministradorActivity extends AppCompatActivity {
         binding = ActivityAdministradorBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Carga el fragmento inicial
+        String nombreUsuario = getIntent().getStringExtra("nombre");
+
         replaceFragment(new HomeAdministrador());
         binding.bottomNavigationView.setBackground(null);
 
-        // Configura el listener para la navegación
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.homeAdministrador) {
@@ -34,14 +35,18 @@ public class AdministradorActivity extends AppCompatActivity {
             } else if (id == R.id.documentosAdministrador) {
                 replaceFragment(new DocumentosAdministrador());
             } else if (id == R.id.chatAdministrador) {
-                startActivity(new Intent(this, ChatActivity.class));
+                Intent intent = new Intent(this, ChatActivity.class);
+                intent.putExtra("nombre", nombreUsuario); // Pasa el nombre del usuario al ChatActivity
+                startActivity(intent);
             }
             return true;
         });
 
-        // Configura el listener para el FloatingActionButton
-        binding.fabAbrirChat.setOnClickListener(v -> {
-            startActivity(new Intent(this, ChatActivity.class));
+        FloatingActionButton fabAbrirChat = findViewById(R.id.fabAbrirChat);
+        fabAbrirChat.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChatActivity.class);
+            intent.putExtra("nombre", nombreUsuario); // Pasa el nombre del usuario al ChatActivity
+            startActivity(intent);
         });
     }
 

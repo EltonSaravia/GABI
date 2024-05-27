@@ -3,18 +3,21 @@ package com.example.gabi;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.gabi.AdapterMensajes;
+import com.example.gabi.MensajeEnviar;
+import com.example.gabi.MensajeRecibir;
+import com.example.gabi.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
-import com.example.gabi.AdapterMensajes;
-import com.example.gabi.MensajeEnviar;
-import com.example.gabi.MensajeRecibir;
 
 public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -39,12 +42,14 @@ public class ChatActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("chat"); // Sala de chat
+        databaseReference.setValue("dasda");
+        String nombreUsuario = getIntent().getStringExtra("nombre");
 
         buttonSend.setOnClickListener(v -> {
             String messageText = editTextMessage.getText().toString();
             if (!messageText.isEmpty()) {
                 MensajeEnviar mensaje = new MensajeEnviar(
-                        messageText, "Nombre de Usuario", "default", "1", ServerValue.TIMESTAMP
+                        messageText, nombreUsuario, "default", "1", ServerValue.TIMESTAMP
                 );
                 databaseReference.push().setValue(mensaje);
                 editTextMessage.setText("");

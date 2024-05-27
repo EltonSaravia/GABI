@@ -56,15 +56,19 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("LoginResponse", response); // Log the response for debugging
                             if (jsonResponse.getString("status").equals("success")) {
                                 String token = jsonResponse.getString("token");
-                                // Guarda el token en SharedPreferences
+                                String nombre = jsonResponse.getString("nombre");
+
+                                // Guarda el token y el nombre en SharedPreferences
                                 SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("token", token);
+                                editor.putString("nombre", nombre);
                                 editor.apply();
 
                                 // Navegar a la actividad adecuada
                                 if (jsonResponse.getString("role").equals("administrador")) {
                                     Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
+                                    intent.putExtra("nombre", nombre); // Pasa el nombre del usuario
                                     startActivity(intent);
                                     finish();
                                 }
