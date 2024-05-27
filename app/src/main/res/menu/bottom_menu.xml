@@ -9,8 +9,8 @@
         android:title="Empleados"
         android:icon="@drawable/baseline_people_24"/>
     <item
-        android:id="@+id/fab"
-        android:title=""
+        android:id="@+id/chatAdministrador"
+        android:title="Chat"
         android:enabled="false"/>
     <item
         android:id="@+id/residentesAdministrador"

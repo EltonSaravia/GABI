@@ -1,5 +1,6 @@
 package com.example.gabi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -32,8 +33,15 @@ public class AdministradorActivity extends AppCompatActivity {
                 replaceFragment(new ResidentesAdministrador());
             } else if (id == R.id.documentosAdministrador) {
                 replaceFragment(new DocumentosAdministrador());
+            } else if (id == R.id.chatAdministrador) {
+                startActivity(new Intent(this, ChatActivity.class));
             }
             return true;
+        });
+
+        // Configura el listener para el FloatingActionButton
+        binding.fabAbrirChat.setOnClickListener(v -> {
+            startActivity(new Intent(this, ChatActivity.class));
         });
     }
 

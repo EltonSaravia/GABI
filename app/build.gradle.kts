@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services") // Añade esta línea
 }
 
 android {
@@ -26,6 +27,7 @@ android {
         }
     }
     buildFeatures {
+        dataBinding = true
         viewBinding = true
     }
 
@@ -39,6 +41,9 @@ dependencies {
     // Para conectar con las diferentes APIs PHP
     implementation("com.android.volley:volley:1.2.1")
 
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
     // Implementaciones necesarias
     implementation("androidx.core:core-ktx:1.6.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -51,24 +56,24 @@ dependencies {
 
     // Dependencia para usar AsyncTask (si aún la necesitas)
     implementation("androidx.concurrent:concurrent-futures:1.1.0")
-// DEpendencias para firebase chat
+
+    // Dependencias para Firebase
     implementation("com.google.firebase:firebase-auth:21.0.1")
     implementation("com.google.firebase:firebase-database:20.0.3")
     implementation("com.google.firebase:firebase-messaging:23.0.0")
+    implementation("com.google.firebase:firebase-analytics")
+
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+
+    // Add the dependencies for any other desired Firebase products
+    // https://firebase.google.com/docs/android/setup#available-libraries
+
     // Dependencias para pruebas
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
-// Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
-
-
-    // TODO: Add the dependencies for Firebase products you want to use
-    // When using the BoM, don't specify versions in Firebase dependencies
-    implementation("com.google.firebase:firebase-analytics")
-
-
-    // Add the dependencies for any other desired Firebase products
-    // https://firebase.google.com/docs/android/setup#available-libraries
 }
+
+// Añade esta línea al final del archivo opara el servivio de firebase
+apply(plugin = "com.google.gms.google-services")
