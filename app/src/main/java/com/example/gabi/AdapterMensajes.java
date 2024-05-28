@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AdapterMensajes extends RecyclerView.Adapter<AdapterMensajes.HolderMensaje> {
@@ -29,18 +31,25 @@ public class AdapterMensajes extends RecyclerView.Adapter<AdapterMensajes.Holder
     @NonNull
     @Override
     public HolderMensaje onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.card_view_mensajes, parent, false);
-        return new HolderMensaje(view);
+        View v = LayoutInflater.from(context).inflate(R.layout.card_view_mensajes, parent, false);
+        return new HolderMensaje(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull HolderMensaje holder, int position) {
-        holder.getNombre().setText(listMensajes.get(position).getNombre());
-        holder.getMensaje().setText(listMensajes.get(position).getMensaje());
-        holder.getHora().setText(listMensajes.get(position).getHora());
+        MensajeRecibir mensaje = listMensajes.get(position);
+        holder.nombre.setText(mensaje.getNombre());
+        holder.mensaje.setText(mensaje.getMensaje());
 
-        // Cargar la imagen del perfil usando Glide
-        Glide.with(context).load(listMensajes.get(position).getFotoPerfil()).into(holder.getFotoPerfil());
+        // Manejo de la hora del mensaje
+        if (mensaje.getHora() != null) {
+            Long codigoHora = mensaje.getHora();
+            Date d = new Date(codigoHora);
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a"); // a pm o am
+            holder.hora.setText(sdf.format(d));
+        } else {
+            holder.hora.setText("Sin hora");
+        }
     }
 
     @Override
@@ -48,35 +57,16 @@ public class AdapterMensajes extends RecyclerView.Adapter<AdapterMensajes.Holder
         return listMensajes.size();
     }
 
-    public class HolderMensaje extends RecyclerView.ViewHolder {
-
+    public static class HolderMensaje extends RecyclerView.ViewHolder {
         private TextView nombre;
         private TextView mensaje;
         private TextView hora;
-        private ImageView fotoPerfil;
 
-        public HolderMensaje(@NonNull View itemView) {
+        public HolderMensaje(View itemView) {
             super(itemView);
             nombre = itemView.findViewById(R.id.nombreMensaje);
             mensaje = itemView.findViewById(R.id.mensajeMensaje);
             hora = itemView.findViewById(R.id.horaMensaje);
-            fotoPerfil = itemView.findViewById(R.id.fotoPerfilMensaje);
-        }
-
-        public TextView getNombre() {
-            return nombre;
-        }
-
-        public TextView getMensaje() {
-            return mensaje;
-        }
-
-        public TextView getHora() {
-            return hora;
-        }
-
-        public ImageView getFotoPerfil() {
-            return fotoPerfil;
         }
     }
 }

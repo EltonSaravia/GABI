@@ -8,10 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.gabi.AdapterMensajes;
-import com.example.gabi.MensajeEnviar;
-import com.example.gabi.MensajeRecibir;
-import com.example.gabi.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,16 +36,16 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance("https://gabi-b4507-default-rtdb.europe-west1.firebasedatabase.app/");
         databaseReference = database.getReference("chat"); // Sala de chat
-        databaseReference.setValue("dasda");
+
         String nombreUsuario = getIntent().getStringExtra("nombre");
 
         buttonSend.setOnClickListener(v -> {
             String messageText = editTextMessage.getText().toString();
             if (!messageText.isEmpty()) {
                 MensajeEnviar mensaje = new MensajeEnviar(
-                        messageText, nombreUsuario, "default", "1", ServerValue.TIMESTAMP
+                        messageText, nombreUsuario
                 );
                 databaseReference.push().setValue(mensaje);
                 editTextMessage.setText("");
