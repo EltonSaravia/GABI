@@ -35,6 +35,6 @@
         </activity>
 
         <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".auxiliares.AuxiliarActivity"></activity>
     </application>
-
 </manifest>

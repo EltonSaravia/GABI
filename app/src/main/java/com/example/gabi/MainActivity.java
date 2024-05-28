@@ -15,6 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.gabi.auxiliares.AuxiliarActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                             if (jsonResponse.getString("status").equals("success")) {
                                 String token = jsonResponse.getString("token");
                                 String nombre = jsonResponse.getString("nombre");
+                                String role = jsonResponse.getString("role");
 
                                 // Guarda el token y el nombre en SharedPreferences
                                 SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
@@ -66,12 +68,19 @@ public class MainActivity extends AppCompatActivity {
                                 editor.apply();
 
                                 // Navegar a la actividad adecuada
-                                if (jsonResponse.getString("role").equals("administrador")) {
-                                    Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
-                                    intent.putExtra("nombre", nombre); // Pasa el nombre del usuario
-                                    startActivity(intent);
-                                    finish();
+                                Intent intent;
+                                if (role.equals("administrador")) {
+                                    intent = new Intent(MainActivity.this, AdministradorActivity.class);
+                                } else if (role.equals("auxiliar")) {
+                                    intent = new Intent(MainActivity.this, AuxiliarActivity.class);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Rol no reconocido: " + role, Toast.LENGTH_SHORT).show();
+                                    return;
                                 }
+
+                                intent.putExtra("nombre", nombre); // Pasa el nombre del usuario
+                                startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(MainActivity.this, jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
                             }
