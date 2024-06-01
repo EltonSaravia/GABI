@@ -54,17 +54,18 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         if (response.startsWith("{")) {
                             JSONObject jsonResponse = new JSONObject(response);
-                            Log.d("LoginResponse", response); // Log the response for debugging
                             if (jsonResponse.getString("status").equals("success")) {
                                 String token = jsonResponse.getString("token");
                                 String nombre = jsonResponse.getString("nombre");
+                                int trabajadorId = jsonResponse.getInt("user_id"); // Obtener el ID del trabajador
                                 String role = jsonResponse.getString("role");
 
-                                // Guarda el token y el nombre en SharedPreferences
+                                // Guarda el token, el nombre y el ID del trabajador en SharedPreferences
                                 SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("token", token);
                                 editor.putString("nombre", nombre);
+                                editor.putInt("trabajador_id", trabajadorId);
                                 editor.apply();
 
                                 // Navegar a la actividad adecuada
@@ -89,12 +90,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                     } catch (JSONException e) {
                         Toast.makeText(MainActivity.this, "Error en la respuesta del servidor: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e("LoginError", "Error parsing JSON: " + e.getMessage()); // Log the error for debugging
                     }
                 },
                 error -> {
                     Toast.makeText(MainActivity.this, "Error de red: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("NetworkError", "Error in network request: " + error.getMessage()); // Log the error for debugging
                 }) {
             @Override
             protected Map<String, String> getParams() {
@@ -108,4 +107,5 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(stringRequest);
     }
+
 }

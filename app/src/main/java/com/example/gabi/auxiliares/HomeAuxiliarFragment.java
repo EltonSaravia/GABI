@@ -1,66 +1,157 @@
 package com.example.gabi.auxiliares;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.gabi.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeAuxiliarFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class HomeAuxiliarFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private Button btnRegistrarEntrada;
+    private Button btnRegistrarSalida;
+    private String token;
+    private int trabajadorId;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public HomeAuxiliarFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeAuxiliarFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeAuxiliarFragment newInstance(String param1, String param2) {
-        HomeAuxiliarFragment fragment = new HomeAuxiliarFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home_auxiliar, container, false);
+
+        btnRegistrarEntrada = view.findViewById(R.id.btnRegistrarEntrada);
+        btnRegistrarSalida = view.findViewById(R.id.btnRegistrarSalida);
+
+        // Obtener el token y el ID del trabajador de SharedPreferences
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", getActivity().MODE_PRIVATE);
+        token = sharedPreferences.getString("token", null);
+        trabajadorId = sharedPreferences.getInt("trabajador_id", -1); // Asegúrate de guardar el ID del trabajador en SharedPreferences
+
+        btnRegistrarEntrada.setOnClickListener(v -> mostrarConfirmacionEntrada());
+        btnRegistrarSalida.setOnClickListener(v -> mostrarConfirmacionSalida());
+
+        return view;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_auxiliar, container, false);
+    private void mostrarConfirmacionEntrada() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Confirmar Entrada")
+                .setMessage("¿Estás seguro de que deseas registrar tu entrada?")
+                .setPositiveButton("Sí", (dialog, which) -> registrarEntrada())
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    private void mostrarConfirmacionSalida() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Confirmar Salida");
+
+        final EditText input = new EditText(getActivity());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint("Añadir nota (opcional)");
+
+        LinearLayout layout = new LinearLayout(getActivity());
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(input);
+        builder.setView(layout);
+
+        builder.setPositiveButton("Sí", (dialog, which) -> registrarSalida(input.getText().toString()));
+        builder.setNegativeButton("No", null);
+        builder.show();
+    }
+
+    private void registrarEntrada() {
+        String url = "https://residencialontananza.com/aux/registrarEntrada.php";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                response -> {
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        if (jsonResponse.getString("status").equals("success")) {
+                            Toast.makeText(getActivity(), "Entrada registrada correctamente", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        Toast.makeText(getActivity(), "Error en la respuesta del servidor: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> Toast.makeText(getActivity(), "Error de red: " + error.getMessage(), Toast.LENGTH_SHORT).show()) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("trabajador_id", String.valueOf(trabajadorId));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(stringRequest);
+    }
+
+    private void registrarSalida(String notas) {
+        String url = "https://residencialontananza.com/aux/registrarSalida.php";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                response -> {
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        if (jsonResponse.getString("status").equals("success")) {
+                            Toast.makeText(getActivity(), "Salida registrada correctamente", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        Toast.makeText(getActivity(), "Error en la respuesta del servidor: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> Toast.makeText(getActivity(), "Error de red: " + error.getMessage(), Toast.LENGTH_SHORT).show()) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("trabajador_id", String.valueOf(trabajadorId));
+                params.put("notas", notas);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(stringRequest);
     }
 }
