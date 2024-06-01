@@ -19,7 +19,7 @@
         android:id="@+id/bottomAppBar"
         android:layout_gravity="bottom"
         android:background="@color/white"
-        app:fabCradleMargin="10dp"
+        app:fabCradleMargin="1dp"
         app:fabCradleRoundedCornerRadius="50dp">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

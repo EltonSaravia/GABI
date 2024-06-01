@@ -6,12 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import com.example.gabi.*;
+import com.example.gabi.ChatActivity;
 import com.example.gabi.R;
-import com.example.gabi.auxiliares.HomeAuxiliarFragment;
-import com.example.gabi.auxiliares.InformacionAuxiliarFragment;
-import com.example.gabi.auxiliares.TareasAuxiliarFragment;
-import com.example.gabi.auxiliares.TurnosAuxiliarFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,10 +33,6 @@ public class AuxiliarActivity extends AppCompatActivity {
                 replaceFragment(new TareasAuxiliarFragment());
             } else if (id == R.id.informacionAuxiliar) {
                 replaceFragment(new InformacionAuxiliarFragment());
-            } else if (id == R.id.chatAuxiliar) {
-                Intent intent = new Intent(this, ChatActivity.class);
-                intent.putExtra("nombre", nombreUsuario); // Pasa el nombre del usuario al ChatActivity
-                startActivity(intent);
             }
             return true;
         });
