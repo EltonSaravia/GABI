@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@drawable/imagen_fondo_login"
+    android:background="@color/white"
     tools:context=".TrabajadoresAministrador">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Trabajadores"
         android:textSize="64dp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/turquesa"
         android:layout_marginTop="32dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

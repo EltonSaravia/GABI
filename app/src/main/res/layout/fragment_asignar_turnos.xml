@@ -14,44 +14,82 @@
         android:layout_height="wrap_content"
         android:text="Asignar Turnos a los Auxiliares"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="1dp"/>
 
     <DatePicker
         android:id="@+id/datePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="5dp"
         android:datePickerMode="spinner"/>
 
-    <Button
-        android:id="@+id/btnBuscarTrabajadores"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Buscar Trabajadores"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/turquesa"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:cornerRadius="20dp"/>
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="2dp">
 
-    <Button
-        android:id="@+id/btnAsignarNuevoTurno"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnBuscarTrabajadores"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Buscar Trabajadores"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/turquesa"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:cornerRadius="20dp"
+            android:padding="8dp"/>
+
+        <Button
+            android:id="@+id/btnAsignarNuevoTurno"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Asignar Nuevo Turno"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/turquesa"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:cornerRadius="20dp"
+            android:padding="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Asignar Nuevo Turno"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/turquesa"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:cornerRadius="20dp"/>
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="Muestra todos los trabajadores con turno en la fecha indicada."
+            android:textColor="@android:color/black"
+            android:textSize="8sp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Presiona este botón para ir al apartado de asignar turno."
+            android:textColor="@android:color/black"
+            android:textSize="8sp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTrabajadores"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_marginBottom="40dp"
         tools:listitem="@layout/item_trabajador_turno_asignar"/>
-
 </LinearLayout>

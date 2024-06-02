@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,20 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/imagen_fondo_login"
+    android:background="@color/white"
     tools:context=".administrador.AsignarTurnosEmpleadoFragment">
 
-    <Button
-        android:id="@+id/btnAsignarTurno"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/turquesa"
-        android:text="Asignar Turno"
-        android:textSize="18sp"
-        app:cornerRadius="20dp"
-        android:layout_margin="30dp"
-        android:elevation="10dp"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -68,8 +56,8 @@
                 android:id="@+id/radioGroupTurno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/radioButtonDiurno"
@@ -91,6 +79,18 @@
             </RadioGroup>
 
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
+    <Button
+        android:id="@+id/btnAsignarTurno"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+
+        android:backgroundTint="@color/turquesa"
+        android:text="Asignar Turno"
+        android:textSize="18sp"
+        app:cornerRadius="20dp"
+        android:layout_marginBottom="70dp"
+        android:elevation="10dp"/>
 
 </LinearLayout>
