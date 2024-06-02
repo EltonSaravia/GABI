@@ -128,13 +128,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
+                    android:clickable="true"
                     android:drawableLeft="@drawable/baseline_calendar_month_24"
                     android:drawablePadding="8dp"
-                    android:hint="01/01/1980"
-                    android:padding="8dp"
-                    android:textColor="@color/black"
                     android:focusable="false"
-                    android:clickable="true" />
+                    android:hint="1980-12-24"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"

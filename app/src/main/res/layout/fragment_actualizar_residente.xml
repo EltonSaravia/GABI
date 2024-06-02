@@ -39,7 +39,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="DNI"
+                    android:hint="12345678A"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="text" />
@@ -68,7 +68,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Nombre"
+                    android:hint="Marta"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="textCapWords" />
@@ -87,7 +87,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Apellidos"
+                    android:hint="Ruiz Fernandez"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="textCapWords" />
@@ -106,7 +106,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Fecha de Nacimiento"
+                    android:hint="1999-12-25"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:focusable="false"
@@ -126,7 +126,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Teléfono"
+                    android:hint="655635551"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="phone" />
@@ -145,7 +145,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Email"
+                    android:hint="prueba@gabi.es"
                     android:inputType="textEmailAddress"
                     android:padding="8dp"
                     android:textColor="@color/black" />
@@ -164,7 +164,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Observaciones"
+                    android:hint="Le gusta meditar por las mañanas"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="textMultiLine" />
@@ -191,7 +191,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="NSS"
+                    android:text="Numero seguridad social"
                     android:textColor="@color/black"
                     android:paddingBottom="5dp"
                     android:layout_marginTop="10dp"/>
@@ -202,7 +202,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="NSS"
+                    android:hint="50202020503"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="text" />
@@ -221,7 +221,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Número de Cuenta Bancaria"
+                    android:hint="ES************"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="text" />
@@ -240,7 +240,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Empadronamiento"
+                    android:hint="C/ Doctor Iranzo 23 1A"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="text" />

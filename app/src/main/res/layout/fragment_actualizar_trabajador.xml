@@ -41,7 +41,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="DNI"
+                    android:hint="12345678A"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="text" />
@@ -70,7 +70,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Nombre"
+                    android:hint="Luisa"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="textCapWords" />
@@ -89,7 +89,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Primer Apellido"
+                    android:hint="Unlado"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="textCapWords" />
@@ -108,7 +108,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Segundo Apellido"
+                    android:hint="Carpin"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="textCapWords" />
@@ -153,7 +153,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Teléfono"
+                    android:hint="620202580"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="phone" />
@@ -172,7 +172,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Email"
+                    android:hint="ejemplo@gabi.es"
                     android:inputType="textEmailAddress"
                     android:padding="8dp"
                     android:textColor="@color/black" />
@@ -191,7 +191,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"
                     android:drawablePadding="8dp"
-                    android:hint="Contraseña"
+                    android:hint="********"
                     android:inputType="textPassword"
                     android:padding="8dp"
                     android:textColor="@color/black" />
