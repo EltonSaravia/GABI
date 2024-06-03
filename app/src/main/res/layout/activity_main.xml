@@ -13,7 +13,7 @@
     <!-- Espaciador para empujar el CardView hacia abajo -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="200dp" /> <!-- Ajusta este valor según sea necesario -->
+        android:layout_height="200dp" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

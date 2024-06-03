@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Si has olvidado tu contraseña, por favor ingresa tu DNI y te llegará un mail con tu nueva contraseña a tu correo asociado. Si no recuerdas tu correo, ponte en contacto con el administrador."
+        android:textSize="14sp"
+        android:paddingBottom="16dp" />
+
+    <EditText
+        android:id="@+id/dniEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="DNI"
+        android:inputType="text"
+        android:padding="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/btnEnviar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enviar"
+            android:backgroundTint="@color/turquesa" />
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            android:backgroundTint="@color/turquesa"
+            android:layout_marginLeft="8dp" />
+    </LinearLayout>
+</LinearLayout>
