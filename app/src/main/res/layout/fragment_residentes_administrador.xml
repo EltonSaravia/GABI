@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -20,11 +19,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="146dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="3dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/icon_gabi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="362dp"
         android:layout_height="462dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="1sp"
         android:layout_marginBottom="32dp"
         android:alignmentMode="alignMargins"
         android:columnCount="2"
@@ -34,7 +44,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle">
+        app:layout_constraintTop_toBottomOf="@id/logoImageView">
 
         <FrameLayout
             android:id="@+id/btnAgregarResidente"
