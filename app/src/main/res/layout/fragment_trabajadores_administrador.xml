@@ -207,7 +207,7 @@
                     android:backgroundTint="@color/turquesa"
                     android:text="Asignar Tareas"
                     android:textColor="@android:color/white"
-                    android:textSize="14sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
         </FrameLayout>
 
@@ -240,7 +240,7 @@
                     android:backgroundTint="@color/turquesa"
                     android:text="Asignar Turnos"
                     android:textColor="@android:color/white"
-                    android:textSize="14sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
         </FrameLayout>
     </GridLayout>
