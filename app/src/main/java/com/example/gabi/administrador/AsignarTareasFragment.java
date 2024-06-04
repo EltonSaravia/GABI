@@ -66,7 +66,7 @@ public class AsignarTareasFragment extends Fragment {
                 adaptador.setOnItemClickListener(new AdaptadorTrabajadoresTareas.OnItemClickListener() {
                     @Override
                     public void onItemClick(TrabajadorTurnoDTO trabajador) {
-                        asignarTarea(trabajador);
+                        asignarTarea(trabajador, fechaSeleccionada);
                     }
                 });
                 recyclerView.setAdapter(adaptador);
@@ -79,10 +79,11 @@ public class AsignarTareasFragment extends Fragment {
         });
     }
 
-    private void asignarTarea(TrabajadorTurnoDTO trabajador) {
+    private void asignarTarea(TrabajadorTurnoDTO trabajador, String fechaSeleccionada) {
         AsignarTareasEmpleadoFragment fragment = new AsignarTareasEmpleadoFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("trabajador", trabajador);
+        bundle.putString("fechaSeleccionada", fechaSeleccionada);
         fragment.setArguments(bundle);
 
         getParentFragmentManager().beginTransaction()
