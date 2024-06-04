@@ -21,7 +21,10 @@ import dto.TrabajadorTurnoDTO;
 import dto.TareaDTO;
 import managers.TareaManager;
 import managers.TareaCallback;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AsignarTareasEmpleadoFragment extends Fragment {
 
@@ -79,11 +82,15 @@ public class AsignarTareasEmpleadoFragment extends Fragment {
         int minuto = timePickerHora.getMinute();
         String horaTareaAsignada = String.format("%02d:%02d:00", hora, minuto);
 
+        // Obtener la fecha actual
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String fechaTareaAsignada = dateFormat.format(new Date());
+
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
 
         TareaManager tareaManager = new TareaManager(getContext(), token);
-        tareaManager.asignarTarea(trabajador.getId(), tituloTarea, notas, "2024-05-19", horaTareaAsignada, new TareaCallback() {
+        tareaManager.asignarTarea(trabajador.getId(), tituloTarea, notas, fechaTareaAsignada, horaTareaAsignada, new TareaCallback() {
             @Override
             public void onSuccess(String message) {
                 Toast.makeText(getContext(), "Tarea asignada: " + message, Toast.LENGTH_SHORT).show();

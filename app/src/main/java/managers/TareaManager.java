@@ -34,7 +34,7 @@ public class TareaManager {
         new ObtenerTareasAsignadasTask(trabajadorId, callback).execute();
     }
 
-    public void obtenerTareasParaAuxiliar(int trabajadorId, TareaCallback callback) { // Método nuevo para la API especificada
+    public void obtenerTareasParaAuxiliar(int trabajadorId, TareaCallback callback) {
         new ObtenerTareasParaAuxiliarTask(trabajadorId, callback).execute();
     }
 
@@ -153,10 +153,10 @@ public class TareaManager {
                                 jsonObject.getInt("id"),
                                 jsonObject.getString("titulo"),
                                 jsonObject.getString("notas"),
-                                jsonObject.getString("fecha_tarea_asignada"),
-                                jsonObject.getString("hora_tarea_asignada"),
+                                jsonObject.optString("fecha_tarea_asignada", null),
+                                jsonObject.optString("hora_tarea_asignada", null),
                                 jsonObject.getInt("trabajador_id"),
-                                jsonObject.getInt("estado") // Añadido
+                                jsonObject.optInt("estado", 0) // Usamos optInt para manejar el caso donde el campo no exista
                         );
                         tareaList.add(tarea);
                     }
@@ -180,7 +180,7 @@ public class TareaManager {
         }
     }
 
-    private class ObtenerTareasParaAuxiliarTask extends AsyncTask<Void, Void, List<TareaDTO>> { // Clase nueva para la API especificada
+    private class ObtenerTareasParaAuxiliarTask extends AsyncTask<Void, Void, List<TareaDTO>> {
         private int trabajadorId;
         private TareaCallback callback;
         private String error;
@@ -225,8 +225,10 @@ public class TareaManager {
                                 jsonObject.getInt("id"),
                                 jsonObject.getString("titulo"),
                                 jsonObject.getString("notas"),
-                                jsonObject.getInt("estado"), // Añadido
-                                trabajadorId
+                                null,
+                                null,
+                                trabajadorId,
+                                jsonObject.optInt("estado", 0) // Usamos optInt para manejar el caso donde el campo no exista
                         );
                         tareaList.add(tarea);
                     }
@@ -271,7 +273,7 @@ public class TareaManager {
                 connection.setRequestProperty("Authorization", "Bearer " + token);
                 connection.setDoOutput(true);
 
-                String postData = "tarea_id=" + tareaId + "&notas=" + notas + "&estado=1";
+                String postData = "tarea_id=" + tareaId + "&notas=" + notas;
                 OutputStream os = connection.getOutputStream();
                 os.write(postData.getBytes());
                 os.flush();

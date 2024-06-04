@@ -9,7 +9,7 @@ public class TareaDTO implements Serializable {
     private String fechaTareaAsignada;
     private String horaTareaAsignada;
     private int trabajadorId;
-    private int estado; // Añadido
+    private int estado;
 
     // Constructor original
     public TareaDTO(int id, String titulo, String notas, String fechaTareaAsignada, String horaTareaAsignada, int trabajadorId, int estado) {
@@ -19,7 +19,7 @@ public class TareaDTO implements Serializable {
         this.fechaTareaAsignada = fechaTareaAsignada;
         this.horaTareaAsignada = horaTareaAsignada;
         this.trabajadorId = trabajadorId;
-        this.estado = estado; // Añadido
+        this.estado = estado;
     }
 
     // Nuevo constructor sin fecha y hora
@@ -55,7 +55,7 @@ public class TareaDTO implements Serializable {
         return trabajadorId;
     }
 
-    public int getEstado() { // Añadido
+    public int getEstado() {
         return estado;
     }
 
