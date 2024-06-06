@@ -9,6 +9,8 @@
         android:id="@+id/etNotas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Añadir notas" />
-
+        android:hint="Notas"
+        android:inputType="textMultiLine"
+        android:minLines="3"
+        android:maxLines="5"/>
 </LinearLayout>

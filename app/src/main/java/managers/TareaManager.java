@@ -38,9 +38,7 @@ public class TareaManager {
         new ObtenerTareasParaAuxiliarTask(trabajadorId, callback).execute();
     }
 
-    public void completarTarea(int tareaId, String notas, TareaCallback callback) {
-        new CompletarTareaTask(tareaId, notas, callback).execute();
-    }
+
 
     private class AsignarTareaTask extends AsyncTask<Void, Void, String> {
         private int trabajadorId;
@@ -252,28 +250,34 @@ public class TareaManager {
         }
     }
 
+    public void completarTarea(int tareaId, String notas, int estado, TareaCallback callback) {
+        new CompletarTareaTask(tareaId, notas, estado, callback).execute();
+    }
+
     private class CompletarTareaTask extends AsyncTask<Void, Void, String> {
         private int tareaId;
         private String notas;
+        private int estado;
         private TareaCallback callback;
         private String error;
 
-        public CompletarTareaTask(int tareaId, String notas, TareaCallback callback) {
+        public CompletarTareaTask(int tareaId, String notas, int estado, TareaCallback callback) {
             this.tareaId = tareaId;
             this.notas = notas;
+            this.estado = estado;
             this.callback = callback;
         }
 
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("https://residencialontananza.com/api/tareaMarcarCompletada.php");
+                URL url = new URL("https://residencialontananza.com/aux/tareaMarcarCompletada.php");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Authorization", "Bearer " + token);
                 connection.setDoOutput(true);
 
-                String postData = "tarea_id=" + tareaId + "&notas=" + notas;
+                String postData = "tarea_id=" + tareaId + "&notas=" + notas + "&estado=" + estado;
                 OutputStream os = connection.getOutputStream();
                 os.write(postData.getBytes());
                 os.flush();
@@ -311,4 +315,6 @@ public class TareaManager {
             }
         }
     }
+
+
 }

@@ -72,7 +72,7 @@ public class TareaAdapterAuxiliar extends RecyclerView.Adapter<TareaAdapterAuxil
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 String notas = input.getText().toString();
-                tareaManager.completarTarea(tarea.getId(), notas, new TareaCallback() {
+                tareaManager.completarTarea(tarea.getId(), notas, 1, new TareaCallback() {
                     @Override
                     public void onSuccess(String message) {
                         Toast.makeText(context, "Tarea completada", Toast.LENGTH_SHORT).show();
