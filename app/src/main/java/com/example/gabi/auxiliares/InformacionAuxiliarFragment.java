@@ -1,66 +1,161 @@
 package com.example.gabi.auxiliares;
 
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.EditText;
+import android.widget.Toast;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.gabi.R;
+import dto.ResidenteDTO;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link InformacionAuxiliarFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class InformacionAuxiliarFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerView recyclerViewResidentes;
+    private ResidentesInfoCompletaAdapter residentesAdapter;
+    private ArrayList<ResidenteDTO> listaResidentes;
+    private ArrayList<ResidenteDTO> listaResidentesFiltrada;
+    private EditText searchEditText;
 
     public InformacionAuxiliarFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment InformacionAuxiliarFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static InformacionAuxiliarFragment newInstance(String param1, String param2) {
-        InformacionAuxiliarFragment fragment = new InformacionAuxiliarFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_informacion_auxiliar, container, false);
+        View view = inflater.inflate(R.layout.fragment_informacion_auxiliar, container, false);
+
+        recyclerViewResidentes = view.findViewById(R.id.recyclerViewResidentes);
+        recyclerViewResidentes.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        searchEditText = view.findViewById(R.id.searchEditText);
+        listaResidentes = new ArrayList<>();
+        listaResidentesFiltrada = new ArrayList<>();
+        residentesAdapter = new ResidentesInfoCompletaAdapter(listaResidentesFiltrada);
+        recyclerViewResidentes.setAdapter(residentesAdapter);
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filtrarResidentes(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        obtenerResidentes();
+
+        return view;
+    }
+
+    private void obtenerResidentes() {
+        String url = "https://residencialontananza.com/aux/listarResidentesAuxiliares.php";
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", getContext().MODE_PRIVATE);
+        final String token = sharedPreferences.getString("token", "");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                response -> {
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        if (jsonResponse.getString("status").equals("success")) {
+                            JSONArray jsonArray = jsonResponse.getJSONArray("data");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                                int id = jsonObject.getInt("id");
+                                String dni = jsonObject.getString("dni");
+                                String nombre = jsonObject.getString("nombre");
+                                String apellidos = jsonObject.getString("apellidos");
+                                String fechaNacimientoStr = jsonObject.getString("fecha_nacimiento");
+                                java.sql.Date fechaNacimiento = fechaNacimientoStr.equals("0000-00-00") ? null : java.sql.Date.valueOf(fechaNacimientoStr);
+                                String ar = jsonObject.getString("ar");
+                                String nss = jsonObject.getString("nss");
+                                String numeroCuentaBancaria = jsonObject.getString("numero_cuenta_bancaria");
+                                String observaciones = jsonObject.getString("observaciones");
+                                int medicamentos = jsonObject.isNull("medicamentos") ? 0 : jsonObject.getInt("medicamentos");
+                                String fechaIngresoStr = jsonObject.getString("fecha_ingreso");
+                                java.sql.Date fechaIngreso = fechaIngresoStr.equals("0000-00-00") ? null : java.sql.Date.valueOf(fechaIngresoStr);
+                                String activo = jsonObject.getString("activo");
+                                String empadronamiento = jsonObject.getString("empadronamiento");
+                                int edad = jsonObject.isNull("edad") ? 0 : jsonObject.getInt("edad");
+                                int mesCumple = jsonObject.isNull("mes_cumple") ? 0 : jsonObject.getInt("mes_cumple");
+                                byte[] foto = null;
+                                if (!jsonObject.isNull("foto")) {
+                                    String fotoBase64 = jsonObject.getString("foto");
+                                    foto = Base64.decode(fotoBase64, Base64.DEFAULT);
+                                }
+                                int habitacionId = jsonObject.isNull("habitacion_id") ? 0 : jsonObject.getInt("habitacion_id");
+                                boolean estado = jsonObject.getInt("estado") == 1;
+                                String telefono = jsonObject.getString("telefono");
+                                String email = jsonObject.getString("email");
+
+                                ResidenteDTO residente = new ResidenteDTO(id, dni, nombre, apellidos, fechaNacimiento, ar, nss, numeroCuentaBancaria, observaciones, medicamentos, fechaIngreso, activo, empadronamiento, edad, mesCumple, foto, habitacionId, estado, telefono, email);
+                                listaResidentes.add(residente);
+                            }
+                            listaResidentesFiltrada.addAll(listaResidentes);
+                            residentesAdapter.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(getContext(), "Error: " + jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        Toast.makeText(getContext(), "Error en la respuesta del servidor: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> Toast.makeText(getContext(), "Error de red: " + error.getMessage(), Toast.LENGTH_SHORT).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(stringRequest);
+    }
+
+    private void filtrarResidentes(String texto) {
+        listaResidentesFiltrada.clear();
+        if (texto.isEmpty()) {
+            listaResidentesFiltrada.addAll(listaResidentes);
+        } else {
+            for (ResidenteDTO residente : listaResidentes) {
+                if (residente.getNombre().toLowerCase().contains(texto.toLowerCase()) ||
+                        residente.getApellidos().toLowerCase().contains(texto.toLowerCase()) ||
+                        residente.getEmail().toLowerCase().contains(texto.toLowerCase()) ||
+                        residente.getDni().toLowerCase().contains(texto.toLowerCase())) {
+                    listaResidentesFiltrada.add(residente);
+                }
+            }
+        }
+        residentesAdapter.notifyDataSetChanged();
     }
 }
