@@ -13,7 +13,7 @@
     <!-- Espaciador para empujar el CardView hacia abajo -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="200dp" /> <!-- Ajusta este valor según sea necesario -->
+        android:layout_height="220dp" /> <!-- Ajusta este valor según sea necesario -->
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-                android:backgroundTint="#104662"
+                android:backgroundTint="@color/turquesa"
                 android:text="Registrar Entrada"
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />
@@ -58,6 +58,17 @@
                 android:backgroundTint="@color/turquesa"
                 android:text="Registrar Salida"
                 android:textSize="18sp"
+                app:cornerRadius="20dp" />
+
+            <!-- Botón de logout -->
+            <Button
+                android:id="@+id/btnLogoutAuxiliar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/black"
+                android:text="Cerrar Sesión"
+                android:textSize="14sp"
                 app:cornerRadius="20dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

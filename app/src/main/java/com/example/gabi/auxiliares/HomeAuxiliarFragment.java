@@ -1,7 +1,9 @@
 package com.example.gabi.auxiliares;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
@@ -21,6 +23,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.gabi.MainActivity;
 import com.example.gabi.R;
 
 import org.json.JSONException;
@@ -33,6 +36,7 @@ public class HomeAuxiliarFragment extends Fragment {
 
     private Button btnRegistrarEntrada;
     private Button btnRegistrarSalida;
+    private Button btnLogoutAuxiliar;
     private String token;
     private int trabajadorId;
 
@@ -43,6 +47,7 @@ public class HomeAuxiliarFragment extends Fragment {
 
         btnRegistrarEntrada = view.findViewById(R.id.btnRegistrarEntrada);
         btnRegistrarSalida = view.findViewById(R.id.btnRegistrarSalida);
+        btnLogoutAuxiliar = view.findViewById(R.id.btnLogoutAuxiliar);
 
         // Obtener el token y el ID del trabajador de SharedPreferences
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", getActivity().MODE_PRIVATE);
@@ -51,6 +56,7 @@ public class HomeAuxiliarFragment extends Fragment {
 
         btnRegistrarEntrada.setOnClickListener(v -> mostrarConfirmacionEntrada());
         btnRegistrarSalida.setOnClickListener(v -> mostrarConfirmacionSalida());
+        btnLogoutAuxiliar.setOnClickListener(v -> mostrarDialogoLogout());
 
         return view;
     }
@@ -153,5 +159,24 @@ public class HomeAuxiliarFragment extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         queue.add(stringRequest);
+    }
+
+    private void mostrarDialogoLogout() {
+        // Crear y mostrar un diálogo de confirmación
+        new AlertDialog.Builder(getContext())
+                .setTitle("Cerrar Sesión")
+                .setMessage("¿Estás seguro de que deseas cerrar sesión?")
+                .setPositiveButton("Sí", (dialog, which) -> {
+                    // Borrar el token y navegar a la pantalla de login
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.remove("token");
+                    editor.apply();
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }

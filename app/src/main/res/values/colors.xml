@@ -20,4 +20,12 @@
     <color name="verde">#003603</color>
 
     <color name="status_bar_color">#FFFFFF</color>
+
+
+    <!-- Dark Theme colores p -->
+    <color name="dark_gray">#121212</color>
+    <color name="darker_gray">#1D1D1D</color>
+    <color name="dark_teal">#0A7373</color>
+    <color name="darker_teal">#064D4D</color>
+
 </resources>
