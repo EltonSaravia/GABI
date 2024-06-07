@@ -72,54 +72,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DNI:"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:paddingTop="4dp"/>
-            <TextView
-                android:id="@+id/dni"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12345678A"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Teléfono:"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:paddingTop="4dp"/>
-            <TextView
-                android:id="@+id/telefono"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="600123456"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email:"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:paddingTop="4dp"/>
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="juan.perez@example.com"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="Fecha de Nacimiento:"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -130,54 +82,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="01/01/1980"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="AR:"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:paddingTop="4dp"/>
-            <TextView
-                android:id="@+id/ar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="dasdasdasd"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NSS:"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:paddingTop="4dp"/>
-            <TextView
-                android:id="@+id/nss"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="dasdadsasd"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cuenta Bancaria:"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:paddingTop="4dp"/>
-            <TextView
-                android:id="@+id/numero_cuenta_bancaria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ES7620770024003102575766"
                 android:textSize="16sp"
                 android:textColor="@android:color/black"/>
 
@@ -200,96 +104,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Medicamentos:"
+                android:text="Teléfono:"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@android:color/black"
                 android:paddingTop="4dp"/>
             <TextView
-                android:id="@+id/medicamentos"
+                android:id="@+id/telefono"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fecha de Ingreso:"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:paddingTop="4dp"/>
-            <TextView
-                android:id="@+id/fecha_ingreso"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="02/05/2024"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Activo:"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:paddingTop="4dp"/>
-            <TextView
-                android:id="@+id/activo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sí"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Empadronamiento:"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:paddingTop="4dp"/>
-            <TextView
-                android:id="@+id/empadronamiento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="No hay"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edad:"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:paddingTop="4dp"/>
-            <TextView
-                android:id="@+id/edad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mes Cumpleaños:"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:paddingTop="4dp"/>
-            <TextView
-                android:id="@+id/mes_cumple"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
+                android:text="600123456"
                 android:textSize="16sp"
                 android:textColor="@android:color/black"/>
 
@@ -306,22 +130,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Estado:"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:paddingTop="4dp"/>
-            <TextView
-                android:id="@+id/estado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="true"
                 android:textSize="16sp"
                 android:textColor="@android:color/black"/>
         </LinearLayout>
