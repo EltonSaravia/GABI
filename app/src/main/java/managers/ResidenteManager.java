@@ -13,14 +13,12 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import dto.ResidenteDTO;
 
 public class ResidenteManager {
 
     private Context context;
-    private String token;
 
     public ResidenteManager(Context context) {
         this.context = context;
@@ -85,13 +83,13 @@ public class ResidenteManager {
                             dateFormat.parse(data.getString("fecha_ingreso")),
                             data.getString("activo"),
                             data.getString("empadronamiento"),
-                            data.getInt("edad"),
-                            data.getInt("mes_cumple"),
                             data.has("foto") && !data.isNull("foto") ? Base64.decode(data.getString("foto"), Base64.DEFAULT) : null,
                             data.has("habitacion_id") && !data.isNull("habitacion_id") ? data.getInt("habitacion_id") : null,  // Manejo de null
                             data.getBoolean("estado"),
                             data.getString("email"),
-                            data.getString("telefono")
+                            data.getString("telefono"),
+                            data.has("tlfn_familiar_1") && !data.isNull("tlfn_familiar_1") ? data.getString("tlfn_familiar_1") : "+34",  // Valor por defecto
+                            data.has("tlfn_familiar_2") && !data.isNull("tlfn_familiar_2") ? data.getString("tlfn_familiar_2") : "+34"   // Valor por defecto
                     );
                 } else {
                     error = jsonObject.getString("message");

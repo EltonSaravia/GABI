@@ -77,6 +77,32 @@ public class ResidenteDTO {
         this.tlfnFamiliar1 = tlfnFamiliar1;
         this.tlfnFamiliar2 = tlfnFamiliar2;
     }
+    public ResidenteDTO(int id, String dni, String nombre, String apellidos, Date fechaNacimiento, String ar, String nss,
+                        String numeroCuentaBancaria, String observaciones, int medicamentos, Date fechaIngreso, String activo,
+                        String empadronamiento, byte[] foto, Integer habitacionId, boolean estado, String email, String telefono,
+                        String tlfnFamiliar1, String tlfnFamiliar2) {
+        this.id = id;
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.fechaNacimiento = fechaNacimiento;
+        this.ar = ar;
+        this.nss = nss;
+        this.numeroCuentaBancaria = numeroCuentaBancaria;
+        this.observaciones = observaciones;
+        this.medicamentos = medicamentos;
+        this.fechaIngreso = fechaIngreso;
+        this.activo = activo;
+        this.empadronamiento = empadronamiento;
+        this.foto = foto;
+        this.habitacionId = habitacionId;
+        this.estado = estado;
+        this.email = email;
+        this.telefono = telefono;
+        this.tlfnFamiliar1 = tlfnFamiliar1;
+        this.tlfnFamiliar2 = tlfnFamiliar2;
+    }
+
     // Getters y setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

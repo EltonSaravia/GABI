@@ -42,6 +42,7 @@ public class AgregarResidenteFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
 
     EditText txtDNI, txtNombre, txtApellido1, txtApellido2, txtFechaNacimiento, txtTelefono, txtEmail, txtObservaciones, txtAR, txtNSS, txtNumeroCuentaBancaria, txtEmpadronamiento;
+    EditText txtTlfnFamiliar1, txtTlfnFamiliar2;
     Button btnRegistrar, btnCancelar, btnSeleccionarFoto;
     ImageView imageViewFoto;
 
@@ -74,6 +75,8 @@ public class AgregarResidenteFragment extends Fragment {
         btnCancelar = view.findViewById(R.id.botonCancelar);
         btnSeleccionarFoto = view.findViewById(R.id.btnSeleccionarFoto);
         imageViewFoto = view.findViewById(R.id.imageViewFoto);
+        txtTlfnFamiliar1 = view.findViewById(R.id.tlfn_familiar_1);
+        txtTlfnFamiliar2 = view.findViewById(R.id.tlfn_familiar_2);
 
         btnSeleccionarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +162,8 @@ public class AgregarResidenteFragment extends Fragment {
         final String nss = txtNSS.getText().toString().trim();
         final String numeroCuentaBancaria = txtNumeroCuentaBancaria.getText().toString().trim();
         final String empadronamiento = txtEmpadronamiento.getText().toString().trim();
+        final String tlfnFamiliar1 = txtTlfnFamiliar1.getText().toString().trim();
+        final String tlfnFamiliar2 = txtTlfnFamiliar2.getText().toString().trim();
 
         // Validar campos obligatorios
         if (dni.isEmpty() || nombre.isEmpty() || apellido1.isEmpty() || apellido2.isEmpty() || ar.isEmpty() || nss.isEmpty() || fechaNacimiento.isEmpty()) {
@@ -197,6 +202,8 @@ public class AgregarResidenteFragment extends Fragment {
                 }
                 params.put("estado", "1"); // Estado true
                 params.put("activo", "1"); // Activo true
+                params.put("tlfn_familiar_1", tlfnFamiliar1.isEmpty() ? "+34" : "+34" + tlfnFamiliar1);
+                params.put("tlfn_familiar_2", tlfnFamiliar2.isEmpty() ? "+34" : "+34" + tlfnFamiliar2);
                 return params;
             }
 

@@ -31,7 +31,6 @@ public class DescargarArchivoFragment extends Fragment {
     }
 
     private void buscarYDescargarDocumentos(String query) {
-        // Lógica para buscar y descargar documentos del servidor
-        // Puedes usar la lógica proporcionada en la respuesta anterior
+
     }
 }

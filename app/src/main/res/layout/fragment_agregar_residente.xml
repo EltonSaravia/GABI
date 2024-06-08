@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/imagen_fondo_login"
+    android:background="@color/white"
     tools:context=".administrador.residente.AgregarResidenteFragment">
 
     <LinearLayout
@@ -249,6 +249,44 @@
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:inputType="text" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Teléfono Familiar 1"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/tlfn_familiar_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="600123456"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="phone" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Teléfono Familiar 2"
+                    android:textColor="@color/black"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/tlfn_familiar_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawablePadding="8dp"
+                    android:hint="600123456"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="phone" />
 
                 <TextView
                     android:layout_width="match_parent"
