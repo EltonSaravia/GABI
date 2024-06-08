@@ -47,7 +47,7 @@ public class ActualizarResidenteFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    EditText txtDNI, txtNombre, txtApellidos, txtFechaNacimiento, txtTelefono, txtEmail, txtObservaciones, txtAR, txtNSS, txtNumeroCuentaBancaria, txtEmpadronamiento;
+    EditText txtDNI, txtNombre, txtApellidos, txtFechaNacimiento, txtTelefono, txtEmail, txtObservaciones, txtAR, txtNSS, txtNumeroCuentaBancaria, txtEmpadronamiento, txtTlfnFamiliar1, txtTlfnFamiliar2;
     Button btnBuscar, btnActualizar, btnCancelar, btnSeleccionarFoto;
     ImageView imageViewFoto;
 
@@ -75,6 +75,8 @@ public class ActualizarResidenteFragment extends Fragment {
         txtNSS = view.findViewById(R.id.nss);
         txtNumeroCuentaBancaria = view.findViewById(R.id.numero_cuenta_bancaria);
         txtEmpadronamiento = view.findViewById(R.id.empadronamiento);
+        txtTlfnFamiliar1 = view.findViewById(R.id.tlfn_familiar_1);
+        txtTlfnFamiliar2 = view.findViewById(R.id.tlfn_familiar_2);
         btnBuscar = view.findViewById(R.id.botonBuscar);
         btnActualizar = view.findViewById(R.id.botonActualizar);
         btnCancelar = view.findViewById(R.id.botonCancelar);
@@ -186,6 +188,8 @@ public class ActualizarResidenteFragment extends Fragment {
                     txtNSS.setText(residente.getNss());
                     txtNumeroCuentaBancaria.setText(residente.getNumeroCuentaBancaria());
                     txtEmpadronamiento.setText(residente.getEmpadronamiento());
+                    txtTlfnFamiliar1.setText(residente.getTlfnFamiliar1());
+                    txtTlfnFamiliar2.setText(residente.getTlfnFamiliar2());
                     // Asignar foto si existe
                     if (residente.getFoto() != null && residente.getFoto().length > 0) {
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(residente.getFoto(), 0, residente.getFoto().length);
@@ -218,6 +222,8 @@ public class ActualizarResidenteFragment extends Fragment {
         final String nss = txtNSS.getText().toString().trim();
         final String numeroCuentaBancaria = txtNumeroCuentaBancaria.getText().toString().trim();
         final String empadronamiento = txtEmpadronamiento.getText().toString().trim();
+        final String tlfnFamiliar1 = txtTlfnFamiliar1.getText().toString().trim();
+        final String tlfnFamiliar2 = txtTlfnFamiliar2.getText().toString().trim();
 
         // Validar campos obligatorios
         if (dni.isEmpty() || nombre.isEmpty() || apellidos.isEmpty() || ar.isEmpty() || nss.isEmpty() || fechaNacimiento.isEmpty()) {
@@ -252,6 +258,8 @@ public class ActualizarResidenteFragment extends Fragment {
                 params.put("nss", nss.isEmpty() ? "" : nss);
                 params.put("numero_cuenta_bancaria", numeroCuentaBancaria.isEmpty() ? "No hay" : numeroCuentaBancaria);
                 params.put("empadronamiento", empadronamiento.isEmpty() ? "No hay" : empadronamiento);
+                params.put("tlfn_familiar_1", tlfnFamiliar1.isEmpty() ? "+34" : tlfnFamiliar1);
+                params.put("tlfn_familiar_2", tlfnFamiliar2.isEmpty() ? "+34" : tlfnFamiliar2);
                 if (selectedBitmap != null) {
                     params.put("foto", encodeImageToBase64(selectedBitmap));
                 }
