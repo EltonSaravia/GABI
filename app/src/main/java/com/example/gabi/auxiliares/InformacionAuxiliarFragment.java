@@ -116,8 +116,10 @@ public class InformacionAuxiliarFragment extends Fragment {
                                 boolean estado = jsonObject.getInt("estado") == 1;
                                 String telefono = jsonObject.getString("telefono");
                                 String email = jsonObject.getString("email");
+                                String tlfnFamiliar1 = jsonObject.optString("tlfn_familiar_1", null);
+                                String tlfnFamiliar2 = jsonObject.optString("tlfn_familiar_2", null);
 
-                                ResidenteDTO residente = new ResidenteDTO(id, dni, nombre, apellidos, fechaNacimiento, ar, nss, numeroCuentaBancaria, observaciones, medicamentos, fechaIngreso, activo, empadronamiento, edad, mesCumple, foto, habitacionId, estado, telefono, email);
+                                ResidenteDTO residente = new ResidenteDTO(id, dni, nombre, apellidos, fechaNacimiento, ar, nss, numeroCuentaBancaria, observaciones, medicamentos, fechaIngreso, activo, empadronamiento, edad, mesCumple, foto, habitacionId, estado, telefono, email, tlfnFamiliar1, tlfnFamiliar2);
                                 listaResidentes.add(residente);
                             }
                             listaResidentesFiltrada.addAll(listaResidentes);

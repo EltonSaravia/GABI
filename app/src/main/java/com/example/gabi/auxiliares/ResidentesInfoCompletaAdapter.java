@@ -1,13 +1,18 @@
 package com.example.gabi.auxiliares;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.gabi.R;
 import dto.ResidenteDTO;
@@ -44,11 +49,41 @@ public class ResidentesInfoCompletaAdapter extends RecyclerView.Adapter<Resident
         } else {
             holder.foto.setImageResource(R.drawable.foto_generica);
         }
+
+        holder.itemView.setOnLongClickListener(v -> {
+            // Mantén presionado por 10 segundos
+            holder.itemView.postDelayed(() -> mostrarDialogoConfirmacion(v.getContext(), residente), 10000);
+            return true;
+        });
     }
 
     @Override
     public int getItemCount() {
         return listaResidentes.size();
+    }
+
+    private void mostrarDialogoConfirmacion(Context context, ResidenteDTO residente) {
+        new AlertDialog.Builder(context)
+                .setTitle("Enviar SMS de emergencia")
+                .setMessage("¿Deseas enviar un SMS de emergencia a los familiares de " + residente.getNombre() + "?")
+                .setPositiveButton("Sí", (dialog, which) -> {
+                    enviarSMS(context, residente.getTlfnFamiliar1(), "Mensaje de emergencia para " + residente.getNombre());
+                    if (residente.getTlfnFamiliar2() != null) {
+                        enviarSMS(context, residente.getTlfnFamiliar2(), "Mensaje de emergencia para " + residente.getNombre());
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    private void enviarSMS(Context context, String numero, String mensaje) {
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(numero, null, mensaje, null, null);
+            Toast.makeText(context, "SMS enviado a " + numero, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(context, "Error al enviar SMS: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
