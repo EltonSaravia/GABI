@@ -15,7 +15,12 @@
         android:padding="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
-
+        <Button
+            android:id="@+id/btnVerPagos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver estado Pagos"
+            android:layout_marginTop="16dp"/>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

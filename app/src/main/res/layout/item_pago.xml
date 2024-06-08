@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tvResidenteIdLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Residente ID"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tvResidenteId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="84"
+        android:textSize="16sp"
+        android:textColor="@color/turquesa"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvFechaEntradaLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha Entrada"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tvFechaEntrada"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2024-06-08"
+        android:textSize="16sp"
+        android:textColor="@color/turquesa"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvFechaCorrespondePagoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha Corresponde Pago"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tvFechaCorrespondePago"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2024-06-30"
+        android:textSize="16sp"
+        android:textColor="@color/turquesa"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvEstadoImpagoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estado"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tvEstadoImpago"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Impago"
+        android:textSize="16sp"
+        android:textColor="@color/turquesa"
+        android:layout_marginBottom="8dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/turquesa"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+</LinearLayout>

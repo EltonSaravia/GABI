@@ -29,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gabi.administrador.DocumentoAdapter;
 import com.example.gabi.administrador.InputStreamVolleyRequest;
+import com.example.gabi.administrador.documentacion.PagosFragment;
 import com.example.gabi.administrador.documentacion.SubirArchivoFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -50,7 +51,7 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
 
     private static final int PERMISSION_REQUEST_CODE = 1;
     private EditText etBuscarDNI;
-    private Button btnBuscar;
+    private Button btnBuscar, btnVerPagos; // Añadido el botón para ver pagos
     private RecyclerView recyclerViewDocumentos;
     private DocumentoAdapter documentoAdapter;
     private List<DocumentoDTO> documentoList;
@@ -63,6 +64,7 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
 
         etBuscarDNI = view.findViewById(R.id.etBuscarDNI);
         btnBuscar = view.findViewById(R.id.btnBuscar);
+        btnVerPagos = view.findViewById(R.id.btnVerPagos); // Inicializar el botón
         recyclerViewDocumentos = view.findViewById(R.id.recyclerViewDocumentos);
         FloatingActionButton fabSubirArchivo = view.findViewById(R.id.fabSubirArchivo);
 
@@ -74,6 +76,7 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
         requestQueue = Volley.newRequestQueue(getContext());
 
         btnBuscar.setOnClickListener(v -> buscarDocumentos());
+        btnVerPagos.setOnClickListener(v -> abrirPagosFragment()); // Configurar el evento onClick
 
         fabSubirArchivo.setOnClickListener(v -> {
             getParentFragmentManager().beginTransaction()
@@ -151,6 +154,13 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
         } else {
             Toast.makeText(getContext(), "Ingrese un DNI", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void abrirPagosFragment() {
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout, new PagosFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     private DocumentoDTO findDocumentoById(int id) {
@@ -261,7 +271,7 @@ public class DocumentosAdministrador extends Fragment implements DocumentoAdapte
                             // Save the file to Downloads directory
                             File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
                             File file = new File(path, nombreArchivo);
-// momento Javi, esto lo aprendi bien
+
                             FileOutputStream fos = new FileOutputStream(file);
                             fos.write(response);
                             fos.close();
