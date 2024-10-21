@@ -19,6 +19,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gabi.auxiliares.AuxiliarActivity;
+import com.example.gabi.enfermeria.EnfermeriaActivity; // Importar la nueva actividad
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,13 +83,19 @@ public class MainActivity extends AppCompatActivity {
 
                                 // Navegar a la actividad adecuada
                                 Intent intent;
-                                if (role.equals("administrador")) {
-                                    intent = new Intent(MainActivity.this, AdministradorActivity.class);
-                                } else if (role.equals("auxiliar")) {
-                                    intent = new Intent(MainActivity.this, AuxiliarActivity.class);
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Rol no reconocido: " + role, Toast.LENGTH_SHORT).show();
-                                    return;
+                                switch (role) {
+                                    case "administrador":
+                                        intent = new Intent(MainActivity.this, AdministradorActivity.class);
+                                        break;
+                                    case "auxiliar":
+                                        intent = new Intent(MainActivity.this, AuxiliarActivity.class);
+                                        break;
+                                    case "enfermero": // Nuevo caso para enfermero
+                                        intent = new Intent(MainActivity.this, EnfermeriaActivity.class);
+                                        break;
+                                    default:
+                                        Toast.makeText(MainActivity.this, "Rol no reconocido: " + role, Toast.LENGTH_SHORT).show();
+                                        return;
                                 }
 
                                 intent.putExtra("nombre", nombre); // Pasa el nombre del usuario
