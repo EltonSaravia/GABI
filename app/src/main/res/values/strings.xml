@@ -10,4 +10,5 @@
     <string name="homeadministrador">Home</string>
     <string name="descargar">descargar</string>
     <string name="eliminar">eliminar</string>
+    <string name="lista_de_tareas">Lista de Tareas</string>
 </resources>

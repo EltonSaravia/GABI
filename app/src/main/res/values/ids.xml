@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="homeEnfermeria" type="id">homeEnfermeria</item>
-    <item name="turnosEnfermeria" type="id">turnosEnfermeria</item>
-    <item name="tareasEnfermeria" type="id">tareasEnfermeria</item>
-    <item name="informacionEnfermeria" type="id">informacionEnfermeria</item>
+    <item name="homeEnfermeria" type="id"/>
+    <item name="turnosEnfermeria" type="id"/>
+    <item name="tareasEnfermeria" type="id"/>
+    <item name="informacionEnfermeria" type="id"/>
 </resources>

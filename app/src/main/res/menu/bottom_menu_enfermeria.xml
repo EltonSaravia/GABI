@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item
+        android:id="@+id/homeEnfermero"
+        android:title="Home"
+        android:icon="@drawable/baseline_home_24"/>
+    <item
+        android:id="@+id/turnosEnfermero"
+        android:title="Turnos"
+        android:icon="@drawable/baseline_calendar_month_24"/>
+    <item
+        android:id="@+id/emptySpace1"
+        android:title=""
+        android:enabled="false"
+        android:icon="@android:color/transparent"
+        android:visible="false" />
+    <item
+        android:id="@+id/tareasEnfermero"
+        android:title="Tareas"
+        android:icon="@drawable/icon_tareas"/>
+    <item
+        android:id="@+id/informacionEnfermero"
+        android:title="Información"
+        android:icon="@drawable/baseline_person_24"/>
 </menu>

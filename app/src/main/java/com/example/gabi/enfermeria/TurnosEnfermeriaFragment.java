@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
+import com.example.gabi.R;
+
 public class TurnosEnfermeriaFragment extends Fragment {
 
     public TurnosEnfermeriaFragment() {
