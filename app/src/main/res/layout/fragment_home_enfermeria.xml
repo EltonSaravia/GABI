@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
+    <!-- Texto de bienvenida -->
     <TextView
         android:id="@+id/textViewHome"
         android:layout_width="wrap_content"
@@ -11,4 +13,23 @@
         android:text="Bienvenido"
         android:textSize="24sp"
         android:padding="16dp" />
+
+    <!-- RecyclerView para mostrar la lista de administraciones recientes -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerAdministraciones"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp" />
+
+    <!-- Botón flotante para agregar nueva administración -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAgregarAdministracion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:contentDescription="Agregar nueva administración"
+        android:src="@drawable/ic_add" /> <!-- Asegúrate de tener un ícono adecuado en tu proyecto -->
+
 </LinearLayout>

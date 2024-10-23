@@ -30,11 +30,13 @@
         android:theme="@style/Theme.GABI"
         tools:targetApi="31">
 
+        <!-- Actividad para Administrador -->
         <activity
             android:name=".AdministradorActivity"
             android:screenOrientation="portrait"
-            android:exported="false" /> <!-- Evita que pueda accederse si no es desde el login -->
+            android:exported="false" />
 
+        <!-- Actividad Principal (Login) -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -45,14 +47,20 @@
             </intent-filter>
         </activity>
 
+        <!-- Actividad para Chat -->
         <activity android:name=".ChatActivity"
             android:screenOrientation="portrait"></activity>
 
+        <!-- Actividad para Auxiliar -->
         <activity android:name=".auxiliares.AuxiliarActivity"
             android:screenOrientation="portrait"></activity>
 
-        <!-- Nueva actividad para enfermería -->
+        <!-- Actividad para Enfermería -->
         <activity android:name=".enfermeria.EnfermeriaActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <!-- Nueva actividad para mostrar detalles de una administración -->
+        <activity android:name=".enfermeria.DetalleAdministracionActivity"
             android:screenOrientation="portrait"></activity>
 
     </application>
