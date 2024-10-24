@@ -18,7 +18,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerAdministraciones"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="460dp"
         android:layout_weight="1"
         android:padding="16dp" />
 
@@ -28,8 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
+        android:layout_marginBottom="80dp"
         android:contentDescription="Agregar nueva administración"
-        android:src="@drawable/ic_add" /> <!-- Asegúrate de tener un ícono adecuado en tu proyecto -->
+        android:src="@drawable/medicamento" />
 
 </LinearLayout>

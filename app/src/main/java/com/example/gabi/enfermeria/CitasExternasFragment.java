@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gabi.R;
 
-public class InformacionEnfermeriaFragment extends Fragment {
+public class CitasExternasFragment extends Fragment {
 
-    public InformacionEnfermeriaFragment() {
+    public CitasExternasFragment() {
         // Requiere un constructor vacío
     }
 

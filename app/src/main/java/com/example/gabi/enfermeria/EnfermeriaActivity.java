@@ -36,7 +36,7 @@ public class EnfermeriaActivity extends AppCompatActivity {
             } else if (id == R.id.tareasEnfermeria) {
                 replaceFragment(new TareasEnfermeriaFragment());
             } else if (id == R.id.informacionEnfermeria) {
-                replaceFragment(new InformacionEnfermeriaFragment());
+                replaceFragment(new CitasExternasFragment());
             }
             return true;
         });
