@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextDosis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Dosis" />
+
+    <EditText
+        android:id="@+id/editTextUnidad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Unidad" />
+
+    <EditText
+        android:id="@+id/editTextFrecuencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Frecuencia" />
+
+    <EditText
+        android:id="@+id/editTextFechaInicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fecha de Inicio (YYYY-MM-DD)" />
+
+    <EditText
+        android:id="@+id/editTextFechaFin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fecha de Fin (YYYY-MM-DD)" />
+
+    <EditText
+        android:id="@+id/editTextInstrucciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Instrucciones"
+        android:minHeight="100dp" />
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar" />
+
+</LinearLayout>

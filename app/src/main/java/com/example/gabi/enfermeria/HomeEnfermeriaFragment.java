@@ -45,8 +45,9 @@ public class HomeEnfermeriaFragment extends Fragment {
 
         // Manejar clic en el botón para agregar una nueva administración
         fabAgregarAdministracion.setOnClickListener(v -> {
-            // Aquí puedes abrir una nueva actividad o fragmento para agregar una nueva administración
-            Toast.makeText(getContext(), "Agregar nueva administración", Toast.LENGTH_SHORT).show();
+            // Iniciar la actividad para el formulario de tratamiento
+            Intent intent = new Intent(getContext(), FormularioTratamientoActivity.class);
+            startActivity(intent);
         });
 
         // Lista de administraciones simulada

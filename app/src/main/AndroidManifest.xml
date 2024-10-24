@@ -59,6 +59,10 @@
         <activity android:name=".enfermeria.EnfermeriaActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".enfermeria.FormularioTratamientoActivity"
+            android:screenOrientation="portrait"></activity>
+
+
         <!-- Nueva actividad para mostrar detalles de una administración -->
         <activity android:name=".enfermeria.DetalleAdministracionActivity"
             android:screenOrientation="portrait"></activity>
